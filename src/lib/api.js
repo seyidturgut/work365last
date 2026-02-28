@@ -43,6 +43,21 @@ export async function apiFetch(path, { method = "GET", headers = {}, body, token
   const isAbsolute = typeof path === 'string' && /^(https?:)?\/\//i.test(path);
   const url = isAbsolute ? path : buildUrl(path);
 
+  // MOCK MODE: Bypass real API calls for local development
+  const MOCK_MODE = true;
+  if (MOCK_MODE) {
+    console.warn(`[MOCK_MODE] Bypassing real API call to: ${url}`);
+
+    // Return safe defaults based on common patterns
+    if (path.includes('list') || path.includes('index') || path.includes('badges')) {
+      return { data: [], meta: { current_page: 1, last_page: 1 } };
+    }
+    if (path.includes('me') || path.includes('details')) {
+      return { success: true, user: { name: 'Local Developer', email: 'dev@local' } };
+    }
+    return { success: true, message: "Mock response" };
+  }
+
   try {
     const response = await fetch(url, {
       method,

@@ -475,7 +475,7 @@ export default function Fiyatlar() {
             >
               <button onClick={() => toggleEk('plus')} className="w-full text-left">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900">Mükellef Plus</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Work365 Plus</h3>
                   <motion.span animate={{ rotate: ekOpen.plus ? 180 : 0 }} className="text-text">⌄</motion.span>
                 </div>
                 <p className="text-text-light mt-2">Ön muhasebe operasyonunuzu devredin, işinizi büyütmeye odaklanın.</p>
