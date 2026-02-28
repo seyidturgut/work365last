@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+Disallow: /profil
+Disallow: /profil/
+Disallow: /sepet
+Disallow: /odeme
+Disallow: /belgelerim
+Disallow: /belgelerim/
+Disallow: /bildirimler
+Disallow: /siparis/
+Disallow: /guvenlik/
+Disallow: /auth/
+Disallow: /login
+Disallow: /register
+Disallow: /sifre-sifirla
+Disallow: /forgot-password
+Disallow: /maintenance
+Disallow: /payment-result
+Disallow: /3ds-verify
+Disallow: /giris/
+
+Sitemap: https://work365.co/sitemap.xml

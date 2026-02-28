@@ -1,0 +1,164 @@
+/* Mesh Gradient Soft Glass Hero (Light Theme) */
+
+.mesh-hero-background {
+  background-color: #f8fafc;
+  /* Tailwind Slate 50 - Aşırı temiz ve ferah zemin */
+}
+
+/* 1. Orbların Konteyneri (Bulutların uçuştuğu dev gökyüzü) */
+.mesh-orbs-container {
+  position: absolute;
+  inset: -20%;
+  /* Dışarıdan yavaşça içeri süzülmeleri için geniş alan */
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Her bir renk bulutunun temel özelliği */
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  /* Temel blur - devasa bir renk sisi yaratır */
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+  /* Işığın ferah bir şekilde birbirine geçmesini sağlar */
+  will-change: transform;
+}
+
+/* Birinci Orb (Açık Gri / Slate 200) */
+.mesh-orb--primary {
+  top: 10%;
+  left: 20%;
+  width: 50vw;
+  height: 50vw;
+  background-color: rgba(226, 232, 240, 0.4);
+  /* Tailwind Slate 200 */
+  animation: floatOrb1 25s ease-in-out infinite alternate;
+}
+
+/* İkinci Orb (Çok Uçuk Navy / Slate 300) */
+.mesh-orb--secondary {
+  top: 30%;
+  right: 10%;
+  width: 45vw;
+  height: 45vw;
+  background-color: rgba(203, 213, 225, 0.3);
+  /* Tailwind Slate 300 */
+  animation: floatOrb2 28s ease-in-out infinite alternate-reverse;
+}
+
+/* Üçüncü Orb (Premium Accent / Green) - Sadece bir miktar ışıltı */
+.mesh-orb--accent {
+  bottom: 0%;
+  left: 40%;
+  width: 40vw;
+  height: 40vw;
+  background-color: rgba(127, 168, 51, 0.1);
+  /* Base Green but very transparent */
+  animation: floatOrb3 22s ease-in-out infinite alternate;
+}
+
+/* 2. Soft Glass Filtresi (Buzlu Cam) */
+.mesh-glass-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* 
+    Arkadaki orbları tekrar harmanlar ve üzerlerine ince bir beyaz katman ile noise(kumlanma) atar.
+    Bu, devlerin yarattığı olası renk sertliklerini ultra premium bir soft-gradient'e çevirir. 
+  */
+  backdrop-filter: blur(40px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%);
+}
+
+/* 3. Sitenin Geri Kalanına Yumuşak Geçiş (Bottom Fade) */
+.mesh-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30vh;
+  z-index: 3;
+  /* En alttaki site içeriği (bembeyaz veya slate-50 olabilir) ile renklerin bağlantısını pürüzsüzleştirir */
+  background: linear-gradient(to bottom, rgba(248, 250, 252, 0) 0%, rgba(248, 250, 252, 1) 100%);
+}
+
+/* --- YUMUŞAK, ORGANİK ANİMASYONLAR (Float Keyframes) --- */
+
+@keyframes floatOrb1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(15%, 10%) scale(1.1);
+  }
+
+  100% {
+    transform: translate(-10%, 20%) scale(0.95);
+  }
+}
+
+@keyframes floatOrb2 {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(-15%, 20%) scale(1.05) rotate(15deg);
+  }
+
+  100% {
+    transform: translate(10%, -10%) scale(0.9) rotate(-5deg);
+  }
+}
+
+@keyframes floatOrb3 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-20%, -15%) scale(1.15);
+  }
+
+  100% {
+    transform: translate(15%, -25%) scale(1.05);
+  }
+}
+
+/*
+  Responsive Ayarları: Mobilde orblar çok büyük kalmasın diye boyutlarını kısıtlıyoruz.
+*/
+@media (max-width: 768px) {
+  .mesh-orb {
+    filter: blur(60px);
+    /* Mobilde performansı da korur */
+  }
+
+  .mesh-orb--primary {
+    width: 80vw;
+    height: 80vw;
+  }
+
+  .mesh-orb--secondary {
+    width: 75vw;
+    height: 75vw;
+    right: -10%;
+  }
+
+  .mesh-orb--accent {
+    width: 70vw;
+    height: 70vw;
+    bottom: 10%;
+  }
+}
+
+/* Donanım ivmelendirmesi / Düşük güç modu koruması */
+@media (prefers-reduced-motion: reduce) {
+  .mesh-orb {
+    animation: none !important;
+    transform: none !important;
+  }
+}
