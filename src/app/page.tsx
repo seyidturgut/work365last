@@ -17,8 +17,8 @@ export default function Home() {
       <Header />
       <Hero />
       <JourneyCards />
-      <HowItWorks />
       <Features />
+      <HowItWorks />
       <WhyWork365 />
       <Stats />
       <Rewards />

@@ -88,9 +88,9 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
       "Fatura kesim ve operasyon başlangıcı",
     ],
     packages: [
-      { name: "Kur", monthlyPrice: "5.900", yearlyPrice: "3.200", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "15.900", yearlyPrice: "13.200", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "5.900", yearlyPrice: "3.200", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "15.900", yearlyPrice: "13.200", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
     ecosystemModules: [
       {
@@ -206,9 +206,9 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     includedItems: commonPackage,
     processSteps: ["Kuruluş başvurusu", "Şirket sözleşme akışı", "Dijital altyapı kurulumu", "Operasyon paneli başlangıcı"],
     packages: [
-      { name: "Kur", monthlyPrice: "9.900", yearlyPrice: "5.400", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "19.900", yearlyPrice: "15.400", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "9.900", yearlyPrice: "5.400", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "19.900", yearlyPrice: "15.400", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
     ecosystemModules: [
       {
@@ -309,9 +309,9 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     includedItems: commonPackage,
     processSteps: ["Yapı planlama", "Kuruluş evrakları", "Dijital altyapı ve resmi akış", "Operasyon görünürlüğü başlangıcı"],
     packages: [
-      { name: "Kur", monthlyPrice: "11.900", yearlyPrice: "6.500", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "21.900", yearlyPrice: "16.500", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "11.900", yearlyPrice: "6.500", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "21.900", yearlyPrice: "16.500", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
     ecosystemModules: [
       {
@@ -412,9 +412,9 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     includedItems: commonPackage,
     processSteps: ["Yapı doğrulama", "Kuruluş ve belge akışı", "e-İmza / KEP aktivasyonu", "Muhasebe başlangıç görünümü"],
     packages: [
-      { name: "Kur", monthlyPrice: "7.400", yearlyPrice: "4.300", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "17.400", yearlyPrice: "14.300", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "7.400", yearlyPrice: "4.300", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "17.400", yearlyPrice: "14.300", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
     ecosystemModules: [
       {

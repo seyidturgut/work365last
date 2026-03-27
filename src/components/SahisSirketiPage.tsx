@@ -203,10 +203,10 @@ export default function CompanyTypeStoryPage({ config }: CompanyTypeStoryPagePro
                     <ShieldCheck className="h-5 w-5" style={{ color: config.accent }} />
                   </div>
                   <p className="text-[13px] font-bold uppercase tracking-[0.12em]" style={{ color: config.accent }}>
-                    Başlangıç paketi
+                    Kuruluş süreci
                   </p>
                 </div>
-                <p className="mt-4 text-[20px] font-bold tracking-[-0.03em] text-[#0F172A]">5 kalem tek akışta</p>
+                <p className="mt-4 text-[20px] font-bold tracking-[-0.03em] text-[#0F172A]">Temel kuruluş adımları</p>
                 <p className="mt-2 text-[14px] leading-7 text-[#64748B]">{config.includedItems.join(" + ")}</p>
               </div>
 

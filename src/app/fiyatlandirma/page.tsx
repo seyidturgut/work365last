@@ -23,7 +23,7 @@ import TekSeferlikUrunler from "@/components/pricing/TekSeferlikUrunler";
 
 // ─── Şirketini Kur ───────────────────────────────────────────────────────────
 const tierFeatures: Record<string, string[]> = {
-  Kur: [
+  "Şirketini Kur": [
     "Şirket kuruluşu (tescil, ana sözleşme, sicil)",
     "e-İmza (1 yıl)",
     "Sanal ofis (1 yıl)",
@@ -34,15 +34,15 @@ const tierFeatures: Record<string, string[]> = {
     "Marka tescil analizi + teşvik ön analizi",
     "2.400 belge/yıl",
   ],
-  "Kur & Yönet": [
-    "Kur paketindeki her şey",
+  "Şirketini + Dijital Ofisini Kur": [
+    "Şirketini Kur paketindeki her şey",
     "Microsoft 365 Başlangıç lisansı",
     "Kurumsal e-posta + Microsoft Teams",
     "OneDrive & SharePoint depolama",
     "IT yönetim & destek hattı",
   ],
-  "Kur & Büyüt": [
-    "Kur & Yönet paketindeki her şey",
+  "Şirketini + Dijital Ofisini Kur + İşini Büyüt": [
+    "Şirketini + Dijital Ofisini Kur paketindeki her şey",
     "Web sitesi veya sosyal medya yönetimi",
     "Görünür Ol dijital varlık paketi",
     "İşini Büyüt danışmanlık erişimi",
@@ -58,9 +58,9 @@ const companyTypes = [
     accent: "#D97706",
     href: "/sirketini-kur/sahis-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "5.900", yearlyPrice: "3.200", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "15.900", yearlyPrice: "13.200", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "5.900", yearlyPrice: "3.200", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "15.900", yearlyPrice: "13.200", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
   {
@@ -70,9 +70,9 @@ const companyTypes = [
     accent: "#1b98d5",
     href: "/sirketini-kur/limited-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "9.900", yearlyPrice: "5.400", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "19.900", yearlyPrice: "15.400", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "9.900", yearlyPrice: "5.400", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "19.900", yearlyPrice: "15.400", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
   {
@@ -82,9 +82,9 @@ const companyTypes = [
     accent: "#16A34A",
     href: "/sirketini-kur/anonim-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "11.900", yearlyPrice: "6.500", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "21.900", yearlyPrice: "16.500", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "11.900", yearlyPrice: "6.500", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "21.900", yearlyPrice: "16.500", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
   {
@@ -94,9 +94,9 @@ const companyTypes = [
     accent: "#DB2777",
     href: "/sirketini-kur/bilanco-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "7.400", yearlyPrice: "4.300", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "17.400", yearlyPrice: "14.300", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
+      { name: "Şirketini Kur", monthlyPrice: "7.400", yearlyPrice: "4.300", popular: false },
+      { name: "Şirketini + Dijital Ofisini Kur", monthlyPrice: "17.400", yearlyPrice: "14.300", popular: true },
+      { name: "Şirketini + Dijital Ofisini Kur + İşini Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
 ] as const;
@@ -269,7 +269,7 @@ export default function FiyatlandirmaPage() {
           <div className="grid gap-5 md:grid-cols-3">
             {selectedCompany.packages.map((pkg) => {
               const isQuote = pkg.monthlyPrice === "Teklif";
-              const PkgIcon = pkg.name === "Kur" ? Zap : pkg.name === "Kur & Yönet" ? Laptop : TrendingUp;
+              const PkgIcon = pkg.name === "Şirketini Kur" ? Zap : pkg.name === "Şirketini + Dijital Ofisini Kur" ? Laptop : TrendingUp;
               const features = tierFeatures[pkg.name] ?? [];
               const displayPrice = isQuote ? "Teklif" : (yearly ? pkg.yearlyPrice : pkg.monthlyPrice);
               return (
@@ -328,10 +328,10 @@ export default function FiyatlandirmaPage() {
                       <li key={f} className="flex items-start gap-2 text-[13px] leading-6 text-[#475569]">
                         <CheckCircle2
                           className="mt-0.5 h-3.5 w-3.5 shrink-0"
-                          style={{ color: i === 0 && pkg.name !== "Kur" ? `${selectedCompany.accent}70` : selectedCompany.accent }}
-                          strokeWidth={i === 0 && pkg.name !== "Kur" ? 2 : 2.5}
+                          style={{ color: i === 0 && pkg.name !== "Şirketini Kur" ? `${selectedCompany.accent}70` : selectedCompany.accent }}
+                          strokeWidth={i === 0 && pkg.name !== "Şirketini Kur" ? 2 : 2.5}
                         />
-                        <span className={i === 0 && pkg.name !== "Kur" ? "font-semibold text-[#0F172A]" : ""}>
+                        <span className={i === 0 && pkg.name !== "Şirketini Kur" ? "font-semibold text-[#0F172A]" : ""}>
                           {f}
                         </span>
                       </li>
@@ -348,7 +348,7 @@ export default function FiyatlandirmaPage() {
                         : { backgroundColor: "rgb(0 0 0 / 0.05)", color: "#0F172A" }
                     }
                   >
-                    {isQuote ? "Teklif Al" : `${pkg.name} ile Başla`}
+                    {isQuote ? "Teklif Al" : "Başla"}
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
@@ -356,25 +356,6 @@ export default function FiyatlandirmaPage() {
             })}
           </div>
 
-          {/* Progresif indirim */}
-          <div className="mt-8 rounded-[24px] bg-white shadow-sm ring-1 ring-black/6 p-7">
-            <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#16A34A] mb-5">
-              Paket Birleştirme İndirimi
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              {[
-                { label: "1 Hizmet", discount: "—", color: "bg-black/5 text-black/40" },
-                { label: "2 Hizmet", discount: "%10 indirim", color: "bg-[#FEF9C3] text-[#854D0E]" },
-                { label: "3 Hizmet", discount: "%15 indirim", color: "bg-[#FEF3C7] text-[#92400E]" },
-                { label: "4 Hizmet", discount: "%20 indirim", color: "bg-[#DCFCE7] text-[#166534]" },
-              ].map((item) => (
-                <div key={item.label} className={`flex-1 rounded-[16px] ${item.color} px-4 py-4 text-center`}>
-                  <p className="text-[12px] font-bold opacity-70">{item.label}</p>
-                  <p className="text-[17px] font-extrabold mt-1">{item.discount}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

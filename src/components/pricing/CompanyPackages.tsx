@@ -15,7 +15,7 @@ type Props = {
 };
 
 const tierFeatures: Record<string, string[]> = {
-  Kur: [
+  "Şirketini Kur": [
     "Şirket kuruluşu (tescil, ana sözleşme, sicil)",
     "e-İmza (1 yıl)",
     "Sanal ofis (1 yıl)",
@@ -26,15 +26,15 @@ const tierFeatures: Record<string, string[]> = {
     "Marka tescil analizi + teşvik ön analizi",
     "2.400 belge/yıl",
   ],
-  "Kur & Yönet": [
-    "Kur paketindeki her şey",
+  "Şirketini + Dijital Ofisini Kur": [
+    "Şirketini Kur paketindeki her şey",
     "Microsoft 365 Başlangıç lisansı",
     "Kurumsal e-posta + Microsoft Teams",
     "OneDrive & SharePoint depolama",
     "IT yönetim & destek hattı",
   ],
-  "Kur & Büyüt": [
-    "Kur & Yönet paketindeki her şey",
+  "Şirketini + Dijital Ofisini Kur + İşini Büyüt": [
+    "Şirketini + Dijital Ofisini Kur paketindeki her şey",
     "Web sitesi veya sosyal medya yönetimi",
     "Görünür Ol dijital varlık paketi",
     "İşini Büyüt danışmanlık erişimi",
@@ -43,9 +43,9 @@ const tierFeatures: Record<string, string[]> = {
 };
 
 const tierIcons: Record<string, React.ElementType> = {
-  Kur: Zap,
-  "Kur & Yönet": Laptop,
-  "Kur & Büyüt": TrendingUp,
+  "Şirketini Kur": Zap,
+  "Şirketini + Dijital Ofisini Kur": Laptop,
+  "Şirketini + Dijital Ofisini Kur + İşini Büyüt": TrendingUp,
 };
 
 export default function CompanyPackages({ accent, packages }: Props) {
@@ -162,11 +162,11 @@ export default function CompanyPackages({ accent, packages }: Props) {
                       <CheckCircle2
                         className="mt-0.5 h-4 w-4 shrink-0"
                         style={{
-                          color: i === 0 && pkg.name !== "Kur" ? `${accent}80` : accent,
+                          color: i === 0 && pkg.name !== "Şirketini Kur" ? `${accent}80` : accent,
                         }}
-                        strokeWidth={i === 0 && pkg.name !== "Kur" ? 2 : 2.5}
+                        strokeWidth={i === 0 && pkg.name !== "Şirketini Kur" ? 2 : 2.5}
                       />
-                      <span className={i === 0 && pkg.name !== "Kur" ? "font-semibold text-[#0F172A]" : ""}>
+                      <span className={i === 0 && pkg.name !== "Şirketini Kur" ? "font-semibold text-[#0F172A]" : ""}>
                         {f}
                       </span>
                     </li>
@@ -188,7 +188,7 @@ export default function CompanyPackages({ accent, packages }: Props) {
                   {isQuote ? (
                     <>Teklif Al <ArrowRight className="h-4 w-4" /></>
                   ) : (
-                    <>{pkg.name} ile Başla <ArrowRight className="h-4 w-4" /></>
+                    <>Başla <ArrowRight className="h-4 w-4" /></>
                   )}
                 </Link>
               </div>
