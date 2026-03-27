@@ -14,6 +14,7 @@ import {
   Laptop,
   TrendingUp,
   Zap,
+  Sparkles,
 } from "lucide-react";
 import DijitalOfisPlans from "@/components/pricing/DijitalOfisPlans";
 import GorunurOlPlans from "@/components/pricing/GorunurOlPlans";
@@ -138,48 +139,91 @@ export default function FiyatlandirmaPage() {
       <Header />
 
       {/* ─── Hero ─── */}
-      <section className="relative overflow-hidden px-6 pb-10 pt-14">
+      <section className="relative overflow-hidden px-6 pb-10 pt-12">
         {/* Gradient orbs */}
-        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#16A34A] opacity-[0.06] blur-[100px]" />
-        <div className="pointer-events-none absolute -left-20 bottom-0 h-[350px] w-[350px] rounded-full bg-[#1b98d5] opacity-[0.05] blur-[80px]" />
+        <div className="pointer-events-none absolute -right-40 -top-40 h-[600px] w-[600px] rounded-full bg-[#16A34A] opacity-[0.07] blur-[100px]" />
+        <div className="pointer-events-none absolute -left-20 bottom-0 h-[400px] w-[400px] rounded-full bg-[#1b98d5] opacity-[0.05] blur-[80px]" />
 
-        <div className="relative mx-auto max-w-[1230px]">
-          <div className="rounded-[40px] bg-gradient-to-b from-[#F0FDF4] to-white px-8 py-14 text-center md:px-12">
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#DCFCE7] px-5 py-2.5 ring-1 ring-black/5 mb-6">
-              <ShieldCheck className="h-4 w-4 text-[#16A34A]" />
-              <span className="text-[13px] font-bold text-[#16A34A]">Şeffaf Fiyatlandırma</span>
-            </div>
-            <h1 className="text-[42px] md:text-[62px] font-extrabold tracking-[-0.04em] text-[#0F172A] leading-[1.05] mb-6 max-w-[720px] mx-auto">
-              Şeffaf fiyatlandırma,{" "}
-              <span className="text-[#16A34A]">gizli maliyet yok.</span>
-            </h1>
-            <p className="text-[18px] text-[#475569] max-w-[520px] mx-auto leading-relaxed">
-              Tüm paketler +KDV. İhtiyacın kadar al, dilediğinde iptal et.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              {["Şirketini Kur", "Dijital Ofis", "Görünür Ol", "İşini Büyüt"].map((t) => (
-                <span key={t} className="rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-[#475569] ring-1 ring-black/8 shadow-sm">
-                  {t}
-                </span>
-              ))}
+        <div className="mx-auto max-w-[1230px]">
+          <div className="relative rounded-[40px] bg-gradient-to-br from-[#F0FDF4] to-white px-8 py-10 md:px-12 md:py-14">
+            <div className="grid gap-10 lg:grid-cols-[1fr_auto]">
+              {/* Left */}
+              <div className="max-w-[720px]">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#16A34A]/10 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] text-[#16A34A] ring-1 ring-black/5">
+                  <ShieldCheck className="h-4 w-4" />
+                  Şeffaf Fiyatlandırma
+                </div>
+
+                <h1 className="mt-7 text-[30px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#0F172A] md:text-[50px]">
+                  Şeffaf fiyatlandırma,{" "}
+                  <span className="text-[#16A34A]">gizli maliyet yok.</span>
+                </h1>
+
+                <p className="mt-6 max-w-[580px] text-[18px] leading-[1.8] text-[#475569]">
+                  Tüm paketler +KDV. İhtiyacın kadar al, dilediğinde iptal et.
+                </p>
+
+                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="#sirketini-kur"
+                    className="group/btn inline-flex items-center justify-center gap-2 rounded-full bg-[#16A34A] px-8 py-4 text-[15px] font-bold text-white shadow-[0_8px_30px_#16A34A40] transition-all duration-300 hover:scale-[1.03] hover:bg-[#15803D] hover:shadow-lg"
+                  >
+                    Fiyatları İncele <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                  </a>
+                  <a
+                    href="/iletisim"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-8 py-4 text-[15px] font-bold text-[#0F172A] transition-all duration-300 hover:border-black/20 hover:shadow-md"
+                  >
+                    Ücretsiz Danış <ChevronRight className="h-4 w-4" />
+                  </a>
+                </div>
+
+                <div className="mt-8 flex flex-wrap gap-3">
+                  {["Şirketini Kur", "Dijital Ofis", "Görünür Ol", "İşini Büyüt"].map((t) => (
+                    <span key={t} className="rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-[#475569] ring-1 ring-black/8 shadow-sm">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right – Floating stats */}
+              <div className="hidden flex-col justify-center gap-4 lg:flex">
+                {[
+                  { icon: ShieldCheck, label: "Gizli Maliyet", value: "Yok" },
+                  { icon: Sparkles, label: "Hizmet Pilları", value: "4 Ayrı Paket" },
+                  { icon: Zap, label: "Yıllık İndirim", value: "%35–45" },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="flex items-center gap-4 rounded-2xl bg-white/80 px-5 py-4 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#16A34A]/10">
+                      <stat.icon className="h-5 w-5 text-[#16A34A]" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-black/40">{stat.label}</p>
+                      <p className="text-[16px] font-bold text-[#0F172A]">{stat.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── 1. Şirketini Kur ── */}
-      <section className="px-6 py-20 bg-[#F8FAFC]">
+      <section id="sirketini-kur" className="px-6 py-16">
         <div className="max-w-[1230px] mx-auto">
           <div className="mb-10">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D97706]/10">
-                <Building2 className="h-5 w-5 text-[#D97706]" />
-              </div>
-              <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#D97706]">Şirketini Kur</p>
-            </div>
-            <h2 className="text-[28px] font-extrabold tracking-[-0.03em] text-[#0F172A] md:text-[36px]">
+            <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#D97706]">Şirketini Kur</p>
+            <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">
               Şirket tipin ne olursa olsun, her şey dahil.
             </h2>
+            <p className="mt-3 text-[15px] text-[#64748B]">
+              4 farklı şirket tipine özel, her şey dahil paketler. Aylık veya yıllık öde.
+            </p>
           </div>
 
           {/* Aylık / Yıllık toggle */}
@@ -313,8 +357,8 @@ export default function FiyatlandirmaPage() {
           </div>
 
           {/* Progresif indirim */}
-          <div className="mt-8 rounded-[20px] bg-white border border-black/8 p-6">
-            <p className="text-[13px] font-bold text-black/50 uppercase tracking-widest mb-4">
+          <div className="mt-8 rounded-[24px] bg-white shadow-sm ring-1 ring-black/6 p-7">
+            <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#16A34A] mb-5">
               Paket Birleştirme İndirimi
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
@@ -324,9 +368,9 @@ export default function FiyatlandirmaPage() {
                 { label: "3 Hizmet", discount: "%15 indirim", color: "bg-[#FEF3C7] text-[#92400E]" },
                 { label: "4 Hizmet", discount: "%20 indirim", color: "bg-[#DCFCE7] text-[#166534]" },
               ].map((item) => (
-                <div key={item.label} className={`flex-1 rounded-[14px] ${item.color} px-4 py-3 text-center`}>
+                <div key={item.label} className={`flex-1 rounded-[16px] ${item.color} px-4 py-4 text-center`}>
                   <p className="text-[12px] font-bold opacity-70">{item.label}</p>
-                  <p className="text-[15px] font-bold mt-0.5">{item.discount}</p>
+                  <p className="text-[17px] font-extrabold mt-1">{item.discount}</p>
                 </div>
               ))}
             </div>
@@ -347,27 +391,35 @@ export default function FiyatlandirmaPage() {
       <TekSeferlikUrunler />
 
       {/* ── 6. SSS ── */}
-      <section className="px-6 py-20 max-w-[1230px] mx-auto">
-        <h2 className="text-[28px] font-bold text-black mb-10">Sık Sorulan Sorular</h2>
-        <div className="space-y-3 max-w-[760px]">
-          {faqs.map((faq, i) => (
-            <div key={i} className="rounded-[16px] border border-black/8 overflow-hidden">
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-black/2 transition-colors"
-              >
-                <span className="text-[15px] font-bold text-black">{faq.q}</span>
-                <ChevronDown
-                  className={`h-4 w-4 text-black/40 shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`}
-                />
-              </button>
-              {openFaq === i && (
-                <div className="px-6 pb-5">
-                  <p className="text-[14px] text-black/65 leading-relaxed">{faq.a}</p>
-                </div>
-              )}
-            </div>
-          ))}
+      <section className="px-6 py-16">
+        <div className="mx-auto max-w-[1230px]">
+          <div className="mb-10 max-w-[600px]">
+            <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#16A34A]">SSS</p>
+            <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">
+              Sık sorulan sorular.
+            </h2>
+            <p className="mt-3 text-[15px] text-[#64748B]">Aklındaki soruların cevabı burada. Bulamazsan ekibimize sor.</p>
+          </div>
+          <div className="space-y-3 max-w-[760px]">
+            {faqs.map((faq, i) => (
+              <div key={i} className="overflow-hidden rounded-[20px] bg-white shadow-sm ring-1 ring-black/6 transition-shadow duration-200 hover:shadow-md">
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors hover:bg-black/[0.02]"
+                >
+                  <span className="text-[15px] font-bold text-[#0F172A]">{faq.q}</span>
+                  <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/5 transition-all duration-300 ${openFaq === i ? "rotate-180 bg-[#16A34A]/10" : ""}`}>
+                    <ChevronDown className={`h-4 w-4 transition-colors ${openFaq === i ? "text-[#16A34A]" : "text-black/40"}`} />
+                  </div>
+                </button>
+                {openFaq === i && (
+                  <div className="bg-[#F8FAFC] px-6 pb-5 pt-0">
+                    <p className="text-[14px] leading-[1.8] text-[#475569]">{faq.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
