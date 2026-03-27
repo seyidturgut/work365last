@@ -23,12 +23,15 @@ import TekSeferlikUrunler from "@/components/pricing/TekSeferlikUrunler";
 // ─── Şirketini Kur ───────────────────────────────────────────────────────────
 const tierFeatures: Record<string, string[]> = {
   Kur: [
-    "Şirket kuruluşu (tam süreç yönetimi)",
-    "e-İmza (1 yıllık)",
-    "KEP Başlangıç (1 yıllık)",
-    "Sanal Ofis adresi (1 yıllık)",
-    "e-Dönüşüm altyapısı",
-    "Uzman muhasebe & operasyon desteği",
+    "Şirket kuruluşu (tescil, ana sözleşme, sicil)",
+    "e-İmza (1 yıl)",
+    "Sanal ofis (1 yıl)",
+    "e-Dönüşüm aktivasyonu (e-fatura, e-arşiv)",
+    "Online muhasebe danışmanlığı",
+    "Ön muhasebe",
+    "Dijital asistan (hibrit AI + insan)",
+    "Marka tescil analizi + teşvik ön analizi",
+    "2.400 belge/yıl",
   ],
   "Kur & Yönet": [
     "Kur paketindeki her şey",
@@ -51,52 +54,48 @@ const companyTypes = [
     id: "sahis",
     name: "Şahıs Şirketi",
     badge: "Hızlı Başlangıç",
-    setupPrice: "5.900",
     accent: "#D97706",
     href: "/sirketini-kur/sahis-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "3.200", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "13.200", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+      { name: "Kur", monthlyPrice: "5.900", yearlyPrice: "3.200", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "15.900", yearlyPrice: "13.200", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
   {
     id: "limited",
     name: "Limited Şirketi",
     badge: "En Dengeli",
-    setupPrice: "9.900",
     accent: "#1b98d5",
     href: "/sirketini-kur/limited-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "5.400", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "15.400", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+      { name: "Kur", monthlyPrice: "9.900", yearlyPrice: "5.400", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "19.900", yearlyPrice: "15.400", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
   {
     id: "anonim",
     name: "Anonim Şirketi",
     badge: "Kurumsal Yapı",
-    setupPrice: "11.900",
     accent: "#16A34A",
     href: "/sirketini-kur/anonim-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "6.500", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "16.500", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+      { name: "Kur", monthlyPrice: "11.900", yearlyPrice: "6.500", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "21.900", yearlyPrice: "16.500", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
   {
     id: "bilanco",
     name: "Bilanço Şirketi",
     badge: "Operasyon Odaklı",
-    setupPrice: "7.400",
     accent: "#DB2777",
     href: "/sirketini-kur/bilanco-sirketi",
     packages: [
-      { name: "Kur", monthlyPrice: "4.300", popular: false },
-      { name: "Kur & Yönet", monthlyPrice: "14.300", popular: true },
-      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+      { name: "Kur", monthlyPrice: "7.400", yearlyPrice: "4.300", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "17.400", yearlyPrice: "14.300", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", yearlyPrice: "Teklif", popular: false },
     ],
   },
 ] as const;
@@ -128,6 +127,7 @@ const faqs = [
 type CompanyId = "sahis" | "limited" | "anonim" | "bilanco";
 
 export default function FiyatlandirmaPage() {
+  const [yearly, setYearly] = useState(false);
   const [activeCompany, setActiveCompany] = useState<CompanyId>("limited");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -182,6 +182,27 @@ export default function FiyatlandirmaPage() {
             </h2>
           </div>
 
+          {/* Aylık / Yıllık toggle */}
+          <div className="flex items-center gap-3 mb-8">
+            <button
+              onClick={() => setYearly(false)}
+              className={`rounded-full px-5 py-2 text-[14px] font-bold transition-all duration-200 ${
+                !yearly ? "bg-black text-white shadow-sm" : "bg-black/8 text-black/60 hover:bg-black/12"
+              }`}
+            >
+              Aylık
+            </button>
+            <button
+              onClick={() => setYearly(true)}
+              className={`rounded-full px-5 py-2 text-[14px] font-bold transition-all duration-200 ${
+                yearly ? "bg-black text-white shadow-sm" : "bg-black/8 text-black/60 hover:bg-black/12"
+              }`}
+            >
+              Yıllık{" "}
+              <span className="ml-1.5 rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] font-bold text-[#16A34A]">%35–45 indirim</span>
+            </button>
+          </div>
+
           {/* Company type tabs */}
           <div className="flex flex-wrap gap-2 mb-8">
             {companyTypes.map((ct) => (
@@ -200,19 +221,13 @@ export default function FiyatlandirmaPage() {
             ))}
           </div>
 
-          {/* Setup fee note */}
-          <p className="mb-6 text-[14px] text-[#64748B]">
-            <span className="font-semibold text-[#0F172A]">{selectedCompany.name}</span> için kuruluş ücreti:{" "}
-            <span className="font-bold" style={{ color: selectedCompany.accent }}>{selectedCompany.setupPrice} TL +KDV</span>{" "}
-            · Aylık abonelik
-          </p>
-
           {/* 3-tier package grid */}
           <div className="grid gap-5 md:grid-cols-3">
             {selectedCompany.packages.map((pkg) => {
               const isQuote = pkg.monthlyPrice === "Teklif";
               const PkgIcon = pkg.name === "Kur" ? Zap : pkg.name === "Kur & Yönet" ? Laptop : TrendingUp;
               const features = tierFeatures[pkg.name] ?? [];
+              const displayPrice = isQuote ? "Teklif" : (yearly ? pkg.yearlyPrice : pkg.monthlyPrice);
               return (
                 <div
                   key={pkg.name}
@@ -244,21 +259,23 @@ export default function FiyatlandirmaPage() {
                   </div>
 
                   {/* Price */}
-                  <div className="mb-1">
+                  <div className="mb-5">
                     {isQuote ? (
                       <div className="flex items-end gap-1">
                         <span className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">Teklif</span>
                         <span className="mb-1 text-[13px] text-black/50">bazlı</span>
                       </div>
                     ) : (
-                      <div className="flex items-end gap-1">
-                        <span className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{pkg.monthlyPrice}</span>
-                        <span className="mb-1 text-[13px] text-black/50">TL/ay +KDV</span>
-                      </div>
+                      <>
+                        <div className="flex items-end gap-1">
+                          <span className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{displayPrice}</span>
+                          <span className="mb-1 text-[13px] text-black/50">TL/ay +KDV</span>
+                        </div>
+                        {yearly && (
+                          <p className="mt-1 text-[11px] font-semibold text-[#16A34A]">yıllık ödeme</p>
+                        )}
+                      </>
                     )}
-                  </div>
-                  <div className="mb-5 text-[12px] font-medium text-black/40">
-                    + {selectedCompany.setupPrice} TL kuruluş +KDV
                   </div>
 
                   {/* Features */}
