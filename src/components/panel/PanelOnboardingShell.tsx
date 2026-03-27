@@ -21,7 +21,7 @@ const PACKAGE_CHOICES = [
   { slug: "anonim-sirketi", label: "Anonim Şirketi" },
   { slug: "bilanco-sirketi", label: "Bilanço Şirketi" },
   { slug: "m365-0-10-kullanici", label: "Microsoft 365 0-10 Kullanıcı" },
-  { slug: "fikir-asamasi", label: "Kolay Startup - Fikir Aşaması" },
+  { slug: "buyut", label: "İşini Büyüt" },
 ] as const;
 
 function useTypewriter(text: string, enabled: boolean) {

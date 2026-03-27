@@ -31,12 +31,12 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="font-semibold mb-6">Şirket Kur'daki Şirket Türleri</h4>
+          <h4 className="font-semibold mb-6">Şirketini Kur</h4>
           <ul className="space-y-4 text-Work365-text text-sm">
-            <li><Link href="/sirket-kur/sahis-sirketi" className="hover:text-black transition-colors">Şahıs Şirketi</Link></li>
-            <li><Link href="/sirket-kur/limited-sirketi" className="hover:text-black transition-colors">Limited Şirketi</Link></li>
-            <li><Link href="/sirket-kur/anonim-sirketi" className="hover:text-black transition-colors">Anonim Şirketi</Link></li>
-            <li><Link href="/sirket-kur/bilanco-sirketi" className="hover:text-black transition-colors">Bilanço Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/sahis" className="hover:text-black transition-colors">Şahıs Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/limited" className="hover:text-black transition-colors">Limited Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/anonim" className="hover:text-black transition-colors">Anonim Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/bilanco" className="hover:text-black transition-colors">Bilanço Şirketi</Link></li>
           </ul>
         </div>
 
@@ -44,9 +44,9 @@ export default function Footer() {
           <h4 className="font-semibold mb-6">Hizmetler</h4>
           <ul className="space-y-4 text-Work365-text text-sm">
             <li><Link href="/fiyatlandirma" className="hover:text-black transition-colors">Fiyatlandırma</Link></li>
-            <li><Link href="/digital-altyapi" className="hover:text-black transition-colors">Dijital Altyapı</Link></li>
-            <li><Link href="/ekosistem" className="hover:text-black transition-colors">Ekosistem</Link></li>
-            <li><Link href="/kolay-startup" className="hover:text-black transition-colors">KolayStartup</Link></li>
+            <li><Link href="/dijitale-tasi" className="hover:text-black transition-colors">Dijital Ofis</Link></li>
+            <li><Link href="/gorunur-ol" className="hover:text-black transition-colors">Görünür Ol</Link></li>
+            <li><Link href="/buyut" className="hover:text-black transition-colors">İşini Büyüt</Link></li>
             <li><Link href="/iletisim" className="hover:text-black transition-colors">İletişim</Link></li>
           </ul>
         </div>
@@ -70,7 +70,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-[1230px] mx-auto pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-Work365-text">
-        <p>© {new Date().getFullYear()} Work365 Inc. Tüm hakları saklıdır.</p>
+        <p>© {new Date().getFullYear()} Piri Dijital A.Ş. Tüm hakları saklıdır.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
           <Link href="#" className="hover:text-black transition-colors">Gizlilik Politikası</Link>
           <Link href="#" className="hover:text-black transition-colors">Kullanım Şartları</Link>

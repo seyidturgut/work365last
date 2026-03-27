@@ -47,9 +47,6 @@ export default function Testimonials() {
       <div className="max-w-[1230px] mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16 px-4">
-          <span className="text-[#9A7B31] font-bold text-sm uppercase tracking-widest mb-4 block">
-            10.000'den fazla Kurucu
-          </span>
           <h2 className="text-[32px] md:text-[52px] font-bold text-black mb-6 leading-tight max-w-5xl mx-auto">
             Kurucular için tasarlandı. Kurucular tarafından seviliyor.
           </h2>

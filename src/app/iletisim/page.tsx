@@ -109,7 +109,7 @@ export default function IletisimPage() {
                 {[
                   {
                     q: "Hangi konularda yardım alabilirsiniz?",
-                    a: "Şirket kuruluşu, dijital altyapı (e-İmza, KEP, M365), web & sosyal medya modülleri ve KolayStartup hakkında destek veriyoruz.",
+                    a: "Şirket kuruluşu, dijital ofis (e-İmza, KEP, M365), web & sosyal medya yönetimi ve işini büyüt hizmetleri hakkında destek veriyoruz.",
                   },
                   {
                     q: "Görüşme ücretsiz mi?",

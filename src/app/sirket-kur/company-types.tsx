@@ -122,8 +122,8 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
       },
       {
         code: "M4",
-        title: "Kolay Startup Ekosistemi",
-        price: "$99 – $499/ay",
+        title: "İşini Büyüt",
+        price: "Teklif bazlı",
         subtitle: "Dövize endeksli · ~35 TL/$ · 3 ayda kur revizesi",
         points: [
           "Fikir: AI değerlendirme, BMC, Cap table",
@@ -235,8 +235,8 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
       },
       {
         code: "M4",
-        title: "Kolay Startup Ekosistemi",
-        price: "$99 – $499/ay",
+        title: "İşini Büyüt",
+        price: "Teklif bazlı",
         subtitle: "Dövize endeksli · ~35 TL/$ · 3 ayda kur revizesi",
         points: [
           "Fikir: AI değerlendirme, BMC, Cap table",
@@ -333,8 +333,8 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
       },
       {
         code: "M4",
-        title: "Kolay Startup Ekosistemi",
-        price: "$99 – $499/ay",
+        title: "İşini Büyüt",
+        price: "Teklif bazlı",
         subtitle: "Dövize endeksli · ~35 TL/$ · 3 ayda kur revizesi",
         points: [
           "Fikir: AI değerlendirme, BMC, Cap table",
@@ -431,8 +431,8 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
       },
       {
         code: "M4",
-        title: "Kolay Startup Ekosistemi",
-        price: "$99 – $499/ay",
+        title: "İşini Büyüt",
+        price: "Teklif bazlı",
         subtitle: "Dövize endeksli · ~35 TL/$ · 3 ayda kur revizesi",
         points: [
           "Fikir: AI değerlendirme, BMC, Cap table",

@@ -92,9 +92,9 @@ export default function ContactForm() {
           >
             <option value="" disabled>Seçin...</option>
             <option value="sirket-kurulus">Şirket Kuruluşu</option>
-            <option value="dijital-altyapi">Dijital Altyapı</option>
-            <option value="ekosistem">Ekosistem Modülleri</option>
-            <option value="kolay-startup">KolayStartup</option>
+            <option value="dijital-ofis">Dijital Ofis</option>
+            <option value="gorunur-ol">Görünür Ol</option>
+            <option value="buyut">İşini Büyüt</option>
             <option value="diger">Diğer</option>
           </select>
         </div>

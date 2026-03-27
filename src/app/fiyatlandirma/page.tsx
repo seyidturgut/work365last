@@ -169,12 +169,12 @@ const ecosystemModules = [
   },
   {
     code: "M4",
-    name: "Kolay Startup",
-    aLaCarte: "$99–$499/ay",
-    package: "~%15 ↓",
-    model: "USD · ~35 TL/$",
-    description: "Fikir ($99) · MVP ($199) · Piyasaya Sürüldü ($299) · Büyüme ($499). Pitch Deck, Veri Odası, VC köprüsü, MENA erişimi.",
-    color: "text-[#067A52]",
+    name: "İşini Büyüt",
+    aLaCarte: "Teklif bazlı",
+    package: "~%20 ↓",
+    model: "Randevu / proje bazlı",
+    description: "Teşvik analizi, hibe başvurusu, yatırımcı erişimi, uzman kiralama ve işe alım hizmetleri.",
+    color: "text-[#16A34A]",
   },
 ] as const;
 
@@ -555,7 +555,7 @@ export default function PricingPage() {
                 <div key={module.code} className="bg-[#F9FBFC] md:grid md:grid-cols-[1.45fr_0.75fr_0.8fr_0.8fr_1.4fr]">
                   <div className="px-5 py-5">
                     {module.code === "M4" ? (
-                      <Link href="/kolay-startup" className={`group inline-flex items-center gap-1.5 text-[18px] font-bold underline-offset-4 hover:underline ${module.color}`}>
+                      <Link href="/buyut" className={`group inline-flex items-center gap-1.5 text-[18px] font-bold underline-offset-4 hover:underline ${module.color}`}>
                         {module.name}
                         <span className="text-[11px] font-semibold text-[#94A3B8] group-hover:text-current">↗</span>
                       </Link>

@@ -377,56 +377,34 @@ function DigitalAltyapiShowcase() {
 }
 
 function EcosystemShowcase() {
-  const partners = [
+  const services = [
     {
-      name: "Piri",
-      logo: "https://piri.tr/pirilogo-son.svg",
-      logoType: "img" as const,
-      href: "https://piri.tr/",
-      description: "Microsoft 365 kurulum, destek ve yönetimi. Dijital ofis altyapısının operasyonel güvencesi.",
-      badge: "Dijital Ofis",
-      color: "bg-[#F0F7FF]",
-      accent: "text-[#1b98d5]",
-    },
-    {
-      name: "BPM365",
-      logo: "",
-      logoType: "text" as const,
-      href: "https://piri.tr/urunler/is-otomasyonlari-bpm365/",
-      description: "İş süreçleri otomasyonu. Tekrarlayan operasyonları otomatikleştir, verimliliği artır.",
-      badge: "Otomasyon",
-      color: "bg-[#F5F0FF]",
-      accent: "text-[#7C3AED]",
-    },
-    {
-      name: "Rest365",
-      logo: "https://rest365.co/logo.svg",
-      logoType: "img" as const,
-      href: "https://rest365.co/",
-      description: "Restoran ve kafe yönetimi. Sipariş, masa ve mutfak süreçlerini dijitalleştir.",
-      badge: "F&B Yönetimi",
-      color: "bg-[#F0FFF4]",
-      accent: "text-[#059669]",
-    },
-    {
-      name: "E-Tuğra",
-      logo: "https://e-tugra.com.tr/wp-content/uploads/2020/08/etugra-logo-2.png",
-      logoType: "img" as const,
-      href: "https://e-tugra.com.tr/",
-      description: "e-İmza ve KEP çözümleri. Resmi belge süreçlerinde güvenli ve yasal dijital imza.",
-      badge: "e-İmza",
-      color: "bg-[#FFFBF0]",
+      label: "Şirketini Kur",
+      description: "Şahıs, Limited, Anonim veya Bilanço şirketini kurumsal süreçleri takip ederek kur.",
+      href: "/sirketini-kur",
+      color: "bg-[#FFFBEB]",
       accent: "text-[#D97706]",
     },
     {
-      name: "Kolay Startup",
-      logo: "/kolaystartup.png",
-      logoType: "img" as const,
-      href: "https://www.kolaystartup.com/",
-      description: "Girişimci desteği ve startup kaynakları. İş fikrinden kuruluşa giden yolda rehberlik.",
-      badge: "Startup",
-      color: "bg-[#FFF0F5]",
-      accent: "text-[#DB2777]",
+      label: "Dijital Ofis",
+      description: "Kurumsal e-posta, Teams, OneDrive ve IT yönetimi tek pakette.",
+      href: "/dijitale-tasi",
+      color: "bg-[#F0FDFA]",
+      accent: "text-[#0F766E]",
+    },
+    {
+      label: "Görünür Ol",
+      description: "Web sitesi ve sosyal medya yönetimiyle markanı dijitalde büyüt.",
+      href: "/gorunur-ol",
+      color: "bg-[#EFF6FF]",
+      accent: "text-[#1b98d5]",
+    },
+    {
+      label: "İşini Büyüt",
+      description: "Teşvik, hibe, yatırımcı erişimi ve uzman desteğiyle şirketini güçlendir.",
+      href: "/buyut",
+      color: "bg-[#F0FDF4]",
+      accent: "text-[#16A34A]",
     },
   ];
 
@@ -435,60 +413,46 @@ function EcosystemShowcase() {
       <div className="rounded-[38px] bg-[#E8F4FD] px-7 pt-8 pb-7">
         <p className="text-[16px] font-bold text-[#1b98d5]">Work365 Ekosistemi</p>
         <h3 className="mt-5 max-w-[620px] text-[20px] font-bold leading-[1.2] tracking-[-0.03em] text-black md:text-[24px]">
-          Büyümeyi destekleyen entegre iş ortağı ağı.
+          Kuruluştan büyümeye — tek platformda 4 hizmet.
         </h3>
         <p className="mt-5 max-w-[640px] text-[17px] leading-[1.5] text-black/85">
-          Work365, güçlü iş ortakları ile entegre çalışarak şirketinizin dijital altyapısından operasyonel süreçlerine kadar tüm ihtiyaçlarını tek ekosistemde karşılar.
+          Şirketinizin ihtiyaç duyduğu tüm hizmetler tek çatı altında. Kuruluş, dijital ofis, marka ve büyüme.
         </p>
-        <div className="mt-8 grid grid-cols-3 gap-3">
-          {partners.slice(0, 3).map((p) => (
-            <a
-              key={p.name}
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`rounded-[20px] ${p.color} p-4 flex flex-col gap-3 hover:shadow-md transition-shadow`}
+        <div className="mt-8 grid grid-cols-2 gap-3">
+          {services.slice(0, 2).map((s) => (
+            <Link
+              key={s.label}
+              href={s.href}
+              className={`rounded-[20px] ${s.color} p-4 flex flex-col gap-3 hover:shadow-md transition-shadow`}
             >
-              <div className="h-8 flex items-center">
-                {p.logoType === "img" ? (
-                  <img src={p.logo} alt={p.name} className="h-7 w-auto object-contain" />
-                ) : (
-                  <span className="text-xl font-bold tracking-tighter">BPM<span className="text-[#1b98d5]">365</span></span>
-                )}
-              </div>
-              <span className={`text-[11px] font-bold ${p.accent}`}>{p.badge}</span>
-              <p className="text-[12px] leading-[1.5] text-black/70">{p.description}</p>
-            </a>
+              <span className={`text-[11px] font-bold ${s.accent}`}>{s.label}</span>
+              <p className="text-[12px] leading-[1.5] text-black/70">{s.description}</p>
+            </Link>
           ))}
         </div>
       </div>
 
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-2 gap-6 flex-1">
-          {partners.slice(3).map((p) => (
-            <a
-              key={p.name}
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`rounded-[38px] ${p.color} px-7 pt-8 pb-7 flex flex-col gap-3 hover:shadow-md transition-shadow`}
+          {services.slice(2).map((s) => (
+            <Link
+              key={s.label}
+              href={s.href}
+              className={`rounded-[38px] ${s.color} px-7 pt-8 pb-7 flex flex-col gap-3 hover:shadow-md transition-shadow`}
             >
-              <div className="h-8 flex items-center">
-                <img src={p.logo} alt={p.name} className="h-7 w-auto object-contain" />
-              </div>
-              <span className={`text-[13px] font-bold ${p.accent}`}>{p.badge}</span>
-              <h3 className="text-[18px] font-bold leading-[1.2] tracking-[-0.03em] text-black">{p.name}</h3>
-              <p className="text-[13px] leading-[1.5] text-black/70">{p.description}</p>
-            </a>
+              <span className={`text-[13px] font-bold ${s.accent}`}>{s.label}</span>
+              <h3 className="text-[18px] font-bold leading-[1.2] tracking-[-0.03em] text-black">{s.label}</h3>
+              <p className="text-[13px] leading-[1.5] text-black/70">{s.description}</p>
+            </Link>
           ))}
         </div>
         <div className="rounded-[38px] bg-[#E8F4FD] px-7 py-7">
-          <p className="text-[16px] font-bold text-[#1b98d5]">Entegre Çalışıyor</p>
+          <p className="text-[16px] font-bold text-[#1b98d5]">Tek Platform</p>
           <h3 className="mt-4 text-[18px] font-bold leading-[1.2] tracking-[-0.03em] text-black md:text-[21px]">
-            Tüm araçlar Work365 panelinizle senkronize çalışır.
+            Tüm hizmetler Work365 panelinizde tek yerden yönetilir.
           </h3>
-          <Link href="/ekosistem" className="mt-4 flex items-center gap-2 text-[14px] font-semibold text-[#1b98d5] hover:opacity-70 transition-opacity">
-            Ekosistemi Keşfet <ChevronRight className="w-4 h-4" />
+          <Link href="/fiyatlandirma" className="mt-4 flex items-center gap-2 text-[14px] font-semibold text-[#1b98d5] hover:opacity-70 transition-opacity">
+            Fiyatlandırmayı Gör <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -583,16 +547,16 @@ function EcosystemMockup() {
             <p className="mt-1 text-sm font-bold text-black">İş Ortakları</p>
           </div>
           <div className="rounded-full bg-[#E8F4FD] px-3 py-1 text-[10px] font-bold text-[#1b98d5]">
-            5 Ortak
+            4 Hizmet
           </div>
         </div>
 
         <div className="mt-4 grid flex-1 grid-cols-2 gap-2">
           {[
-            { name: "Piri", badge: "Dijital Ofis", color: "bg-[#F0F7FF]" },
-            { name: "BPM365", badge: "Otomasyon", color: "bg-[#F5F0FF]" },
-            { name: "Rest365", badge: "F&B", color: "bg-[#F0FFF4]" },
-            { name: "E-Tuğra", badge: "e-İmza", color: "bg-[#FFFBF0]" },
+            { name: "Şirketini Kur", badge: "Kuruluş", color: "bg-[#FFFBEB]" },
+            { name: "Dijital Ofis", badge: "IT Yönetimi", color: "bg-[#F0FDFA]" },
+            { name: "Görünür Ol", badge: "Marka", color: "bg-[#EFF6FF]" },
+            { name: "İşini Büyüt", badge: "Büyüme", color: "bg-[#F0FDF4]" },
           ].map((p) => (
             <div key={p.name} className={`${p.color} rounded-[16px] p-3 flex flex-col justify-between`}>
               <p className="text-[9px] font-bold text-black/40">{p.badge}</p>
@@ -602,8 +566,8 @@ function EcosystemMockup() {
         </div>
 
         <div className="mt-3 rounded-[16px] bg-white px-3 py-2">
-          <p className="text-[9px] font-semibold text-black/55">+ Kolay Startup</p>
-          <p className="text-[10px] font-bold text-black">Startup Desteği</p>
+          <p className="text-[9px] font-semibold text-black/55">Tek platform</p>
+          <p className="text-[10px] font-bold text-black">Tümü panelden yönetilir</p>
         </div>
       </div>
     </div>
