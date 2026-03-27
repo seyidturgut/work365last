@@ -22,6 +22,7 @@ export type CompanyTypeConfig = {
   badge: string;
   price: string;
   yearly: string;
+  heroImage: string;
   heroTitle: string;
   heroBody: string;
   highlightLabel: string;
@@ -66,6 +67,7 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     badge: "Hızlı Başlangıç",
     price: "5.900 TL +KDV",
     yearly: "3.200 TL/ay +KDV",
+    heroImage: "/happy_founder.png",
     heroTitle: "Türkiye'de en hızlı kurulan şirket yapısı: Şahıs Şirketi.",
     heroBody:
       "Vergi dairesine tek başvuruyla mükellefiyet açın, e-Devlet üzerinden sürecinizi takip edin. Serbest meslek erbapları, freelancerlar ve küçük esnaf için noter şartı olmadan, düşük maliyetle hemen faaliyete geçin.",
@@ -189,6 +191,7 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     badge: "En Dengeli",
     price: "9.900 TL +KDV",
     yearly: "5.400 TL/ay +KDV",
+    heroImage: "/founder_1.png",
     heroTitle: "Büyüme planı olan işler için dengeli şirket yapısı.",
     heroBody:
       "Ortaklı yapı, marka büyütme ve daha düzenli operasyon yönetimi isteyen girişimler için en dengeli başlangıç seçeneği.",
@@ -292,6 +295,7 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     badge: "Kurumsal Yapı",
     price: "11.900 TL +KDV",
     yearly: "6.500 TL/ay +KDV",
+    heroImage: "/auth-startup-team.jpg",
     heroTitle: "Kurumsal yapı ve ölçeklenme hedefi olan şirketler için.",
     heroBody:
       "Hisseli yapı, yatırım süreci ve daha kurumsal operasyon ihtiyacı olan şirketlerde daha uygun hareket alanı sağlayan yapı.",
@@ -395,6 +399,7 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     badge: "Operasyon Odaklı",
     price: "7.400 TL +KDV",
     yearly: "4.300 TL/ay +KDV",
+    heroImage: "/auth-modern-office.jpg",
     heroTitle: "Kayıt disiplini ve yoğun operasyon akışı olan işler için.",
     heroBody:
       "Muhasebe düzeni, evrak yönetimi ve operasyon takibi güçlü ilerlemesi gereken işletmeler için daha kontrollü bir kurgu sunar.",

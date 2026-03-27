@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -87,7 +88,7 @@ export default function SosyalMedyaPage() {
               <span className="text-[13px] font-bold text-[#0F172A]">Sosyal Medya</span>
             </div>
 
-            <div className="grid gap-10 lg:grid-cols-[1fr_auto]">
+            <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
               {/* Left */}
               <div className="max-w-[720px]">
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#1b98d5]/10 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] text-[#1b98d5] ring-1 ring-black/5">
@@ -128,26 +129,12 @@ export default function SosyalMedyaPage() {
                 </div>
               </div>
 
-              {/* Right – Floating stats */}
-              <div className="hidden flex-col justify-center gap-4 lg:flex">
-                {[
-                  { icon: FileText, label: "Başlangıç", value: "15K TL/ay'dan" },
-                  { icon: MessageSquare, label: "Paylaşım", value: "4–12/ay" },
-                  { icon: TrendingUp, label: "Raporlama", value: "Aylık" },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="flex items-center gap-4 rounded-2xl bg-white/80 px-5 py-4 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1b98d5]/10">
-                      <stat.icon className="h-5 w-5 text-[#1b98d5]" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-black/40">{stat.label}</p>
-                      <p className="text-[16px] font-bold text-[#0F172A]">{stat.value}</p>
-                    </div>
-                  </div>
-                ))}
+              {/* Right – Hero image */}
+              <div className="hidden items-end justify-center lg:flex">
+                <div className="relative h-[380px] w-full overflow-hidden rounded-[32px]">
+                  <Image src="/auth-startup-team.jpg" alt="Sosyal Medya Yönetimi" fill className="object-cover object-top" sizes="(max-width: 1280px) 50vw, 560px" priority />
+                  <div className="absolute inset-0 rounded-[32px]" style={{ background: "linear-gradient(to top, #1b98d530 0%, transparent 60%)" }} />
+                </div>
               </div>
             </div>
           </div>

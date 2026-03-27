@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -58,7 +59,7 @@ export default function GorunurOlPage() {
 
         <div className="mx-auto max-w-[1230px]">
           <div className="relative rounded-[40px] bg-gradient-to-br from-[#EFF6FF] to-white px-8 py-10 md:px-12 md:py-14">
-            <div className="grid gap-10 lg:grid-cols-[1fr_auto]">
+            <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
               {/* Left */}
               <div className="max-w-[720px]">
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#1b98d5]/10 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] text-[#1b98d5] ring-1 ring-black/5">
@@ -99,26 +100,12 @@ export default function GorunurOlPage() {
                 </div>
               </div>
 
-              {/* Right – Floating stats */}
-              <div className="hidden flex-col justify-center gap-4 lg:flex">
-                {[
-                  { icon: Globe, label: "Web Sitesi", value: "20K TL'den" },
-                  { icon: Share2, label: "Sosyal Medya", value: "15K TL/ay'dan" },
-                  { icon: Sparkles, label: "Uzman Ekip", value: "7/24 Destek" },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="flex items-center gap-4 rounded-2xl bg-white/80 px-5 py-4 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1b98d5]/10">
-                      <stat.icon className="h-5 w-5 text-[#1b98d5]" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-black/40">{stat.label}</p>
-                      <p className="text-[16px] font-bold text-[#0F172A]">{stat.value}</p>
-                    </div>
-                  </div>
-                ))}
+              {/* Right – Hero image */}
+              <div className="hidden items-end justify-center lg:flex">
+                <div className="relative h-[380px] w-full overflow-hidden rounded-[32px]">
+                  <Image src="/hero_female.png" alt="Görünür Ol" fill className="object-cover object-top" sizes="(max-width: 1280px) 50vw, 560px" priority />
+                  <div className="absolute inset-0 rounded-[32px]" style={{ background: "linear-gradient(to top, #1b98d530 0%, transparent 60%)" }} />
+                </div>
               </div>
             </div>
           </div>

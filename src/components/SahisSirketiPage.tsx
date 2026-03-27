@@ -1,8 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
-  Clock,
   FileCheck,
   Landmark,
   Monitor,
@@ -109,7 +109,7 @@ export default function CompanyTypeStoryPage({ config }: CompanyTypeStoryPagePro
               background: `linear-gradient(135deg, ${config.softAccent.replace("bg-[", "").replace("]", "")} 0%, white 100%)`,
             }}
           >
-            <div className="grid gap-10 lg:grid-cols-[1fr_auto]">
+            <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
               {/* Left content */}
               <div className="max-w-[720px]">
                 <div
@@ -150,29 +150,24 @@ export default function CompanyTypeStoryPage({ config }: CompanyTypeStoryPagePro
                 </div>
               </div>
 
-              {/* Right - Floating stats */}
-              <div className="hidden flex-col justify-center gap-4 lg:flex">
-                {[
-                  { icon: Clock, label: "Süre", value: "2–3 İş Günü" },
-                  { icon: Sparkles, label: "Başvuru", value: "Tek Akışta" },
-                  { icon: ShieldCheck, label: "Süreç", value: "%100 Dijital" },
-                ].map((stat) => (
+              {/* Right - Hero image */}
+              <div className="hidden items-end justify-center lg:flex">
+                <div className="relative h-[380px] w-full overflow-hidden rounded-[32px]">
+                  <Image
+                    src={config.heroImage}
+                    alt={config.name}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1280px) 50vw, 560px"
+                    priority
+                  />
                   <div
-                    key={stat.label}
-                    className="flex items-center gap-4 rounded-2xl bg-white/80 px-5 py-4 shadow-sm ring-1 ring-black/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <div
-                      className="flex h-10 w-10 items-center justify-center rounded-xl"
-                      style={{ backgroundColor: `${config.accent}14` }}
-                    >
-                      <stat.icon className="h-5 w-5" style={{ color: config.accent }} />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-black/40">{stat.label}</p>
-                      <p className="text-[16px] font-bold text-[#0F172A]">{stat.value}</p>
-                    </div>
-                  </div>
-                ))}
+                    className="absolute inset-0 rounded-[32px]"
+                    style={{
+                      background: `linear-gradient(to top, ${config.accent}30 0%, transparent 60%)`,
+                    }}
+                  />
+                </div>
               </div>
             </div>
 
