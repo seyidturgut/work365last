@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 const pillarColors: Record<string, { bg: string; accent: string; border: string }> = {
-  sahis: { bg: "bg-[#FFFBEB]", accent: "text-[#D97706]", border: "border-[#FDE68A]" },
-  limited: { bg: "bg-[#EFF6FF]", accent: "text-[#1b98d5]", border: "border-[#BFDBFE]" },
-  anonim: { bg: "bg-[#F5F3FF]", accent: "text-[#7C3AED]", border: "border-[#DDD6FE]" },
-  bilanco: { bg: "bg-[#F0FDF4]", accent: "text-[#16A34A]", border: "border-[#BBF7D0]" },
+  "sahis-sirketi": { bg: "bg-[#FFFBEB]", accent: "text-[#D97706]", border: "border-[#FDE68A]" },
+  "limited-sirketi": { bg: "bg-[#EFF6FF]", accent: "text-[#1b98d5]", border: "border-[#BFDBFE]" },
+  "anonim-sirketi": { bg: "bg-[#F5F3FF]", accent: "text-[#7C3AED]", border: "border-[#DDD6FE]" },
+  "bilanco-sirketi": { bg: "bg-[#F0FDF4]", accent: "text-[#16A34A]", border: "border-[#BBF7D0]" },
 };
 
 export default function SirketiniKurPage() {

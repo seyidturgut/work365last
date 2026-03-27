@@ -34,7 +34,7 @@ const companyTypes = [
       "Aylık muhasebe & vergi",
       "Dijital panel erişimi",
     ],
-    href: "/sirketini-kur/sahis",
+    href: "/sirketini-kur/sahis-sirketi",
   },
   {
     id: "limited",
@@ -55,7 +55,7 @@ const companyTypes = [
       "Dijital panel erişimi",
       "Ortak yönetimi",
     ],
-    href: "/sirketini-kur/limited",
+    href: "/sirketini-kur/limited-sirketi",
   },
   {
     id: "anonim",
@@ -76,7 +76,7 @@ const companyTypes = [
       "Pay defteri yönetimi",
       "Genel kurul desteği",
     ],
-    href: "/sirketini-kur/anonim",
+    href: "/sirketini-kur/anonim-sirketi",
   },
   {
     id: "bilanco",
@@ -96,7 +96,7 @@ const companyTypes = [
       "Dijital panel erişimi",
       "Bilanço esaslı defter",
     ],
-    href: "/sirketini-kur/bilanco",
+    href: "/sirketini-kur/bilanco-sirketi",
   },
 ] as const;
 

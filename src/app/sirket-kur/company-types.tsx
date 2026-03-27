@@ -51,7 +51,7 @@ const commonPackage = [
 
 export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
   {
-    slug: "sahis",
+    slug: "sahis-sirketi",
     name: "Şahıs Şirketi",
     shortName: "Şahıs",
     icon: UserRound,
@@ -169,7 +169,7 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     ],
   },
   {
-    slug: "limited",
+    slug: "limited-sirketi",
     name: "Limited Şirketi",
     shortName: "Limited",
     icon: Building2,
@@ -267,7 +267,7 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     ],
   },
   {
-    slug: "anonim",
+    slug: "anonim-sirketi",
     name: "Anonim Şirketi",
     shortName: "Anonim",
     icon: Landmark,
@@ -365,7 +365,7 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     ],
   },
   {
-    slug: "bilanco",
+    slug: "bilanco-sirketi",
     name: "Bilanço Şirketi",
     shortName: "Bilanço",
     icon: ReceiptText,

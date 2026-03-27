@@ -33,10 +33,10 @@ export default function Footer() {
         <div>
           <h4 className="font-semibold mb-6">Şirketini Kur</h4>
           <ul className="space-y-4 text-Work365-text text-sm">
-            <li><Link href="/sirketini-kur/sahis" className="hover:text-black transition-colors">Şahıs Şirketi</Link></li>
-            <li><Link href="/sirketini-kur/limited" className="hover:text-black transition-colors">Limited Şirketi</Link></li>
-            <li><Link href="/sirketini-kur/anonim" className="hover:text-black transition-colors">Anonim Şirketi</Link></li>
-            <li><Link href="/sirketini-kur/bilanco" className="hover:text-black transition-colors">Bilanço Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/sahis-sirketi" className="hover:text-black transition-colors">Şahıs Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/limited-sirketi" className="hover:text-black transition-colors">Limited Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/anonim-sirketi" className="hover:text-black transition-colors">Anonim Şirketi</Link></li>
+            <li><Link href="/sirketini-kur/bilanco-sirketi" className="hover:text-black transition-colors">Bilanço Şirketi</Link></li>
           </ul>
         </div>
 

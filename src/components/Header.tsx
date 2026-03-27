@@ -22,25 +22,25 @@ import { useEffect, useMemo, useState } from "react";
 
 const companyItems = [
   {
-    href: "/sirketini-kur/sahis",
+    href: "/sirketini-kur/sahis-sirketi",
     label: "Şahıs Şirketi",
     description: "Hızlı başlangıç ve düşük operasyon yükü",
     icon: UserRound,
   },
   {
-    href: "/sirketini-kur/limited",
+    href: "/sirketini-kur/limited-sirketi",
     label: "Limited Şirketi",
     description: "Dengeli büyüme ve ortaklı kullanım",
     icon: Building2,
   },
   {
-    href: "/sirketini-kur/anonim",
+    href: "/sirketini-kur/anonim-sirketi",
     label: "Anonim Şirketi",
     description: "Kurumsal yapı ve yatırım odaklı kullanım",
     icon: Landmark,
   },
   {
-    href: "/sirketini-kur/bilanco",
+    href: "/sirketini-kur/bilanco-sirketi",
     label: "Bilanço Şirketi",
     description: "Yoğun operasyon ve kayıt disiplini",
     icon: BriefcaseBusiness,
