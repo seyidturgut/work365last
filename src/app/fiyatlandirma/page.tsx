@@ -11,6 +11,9 @@ import {
   ShieldCheck,
   ChevronDown,
   Building2,
+  Laptop,
+  TrendingUp,
+  Zap,
 } from "lucide-react";
 import DijitalOfisPlans from "@/components/pricing/DijitalOfisPlans";
 import GorunurOlPlans from "@/components/pricing/GorunurOlPlans";
@@ -18,87 +21,83 @@ import IsIniBuyutSection from "@/components/pricing/IsIniBuyutSection";
 import TekSeferlikUrunler from "@/components/pricing/TekSeferlikUrunler";
 
 // ─── Şirketini Kur ───────────────────────────────────────────────────────────
+const tierFeatures: Record<string, string[]> = {
+  Kur: [
+    "Şirket kuruluşu (tam süreç yönetimi)",
+    "e-İmza (1 yıllık)",
+    "KEP Başlangıç (1 yıllık)",
+    "Sanal Ofis adresi (1 yıllık)",
+    "e-Dönüşüm altyapısı",
+    "Uzman muhasebe & operasyon desteği",
+  ],
+  "Kur & Yönet": [
+    "Kur paketindeki her şey",
+    "Microsoft 365 Başlangıç lisansı",
+    "Kurumsal e-posta + Microsoft Teams",
+    "OneDrive & SharePoint depolama",
+    "IT yönetim & destek hattı",
+  ],
+  "Kur & Büyüt": [
+    "Kur & Yönet paketindeki her şey",
+    "Web sitesi veya sosyal medya yönetimi",
+    "Görünür Ol dijital varlık paketi",
+    "İşini Büyüt danışmanlık erişimi",
+    "Teşvik, hibe ve yatırımcı desteği",
+  ],
+};
+
 const companyTypes = [
   {
     id: "sahis",
     name: "Şahıs Şirketi",
     badge: "Hızlı Başlangıç",
-    monthly: "5.900",
-    yearly: "3.200",
-    color: "bg-[#FFFBEB]",
-    border: "border-[#FDE68A]",
+    setupPrice: "5.900",
     accent: "#D97706",
-    features: [
-      "Şirket kuruluşu dahil",
-      "e-İmza 1 Yıl",
-      "KEP Başlangıç 1 Yıl",
-      "Sanal ofis 1 Yıl",
-      "Aylık muhasebe & vergi",
-      "Dijital panel erişimi",
-    ],
     href: "/sirketini-kur/sahis-sirketi",
+    packages: [
+      { name: "Kur", monthlyPrice: "3.200", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "13.200", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+    ],
   },
   {
     id: "limited",
     name: "Limited Şirketi",
     badge: "En Dengeli",
-    monthly: "9.900",
-    yearly: "5.400",
-    color: "bg-[#EFF6FF]",
-    border: "border-[#BFDBFE]",
+    setupPrice: "9.900",
     accent: "#1b98d5",
-    popular: true,
-    features: [
-      "Şirket kuruluşu dahil",
-      "e-İmza 1 Yıl",
-      "KEP Başlangıç 1 Yıl",
-      "Sanal ofis 1 Yıl",
-      "Aylık muhasebe & vergi",
-      "Dijital panel erişimi",
-      "Ortak yönetimi",
-    ],
     href: "/sirketini-kur/limited-sirketi",
+    packages: [
+      { name: "Kur", monthlyPrice: "5.400", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "15.400", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+    ],
   },
   {
     id: "anonim",
     name: "Anonim Şirketi",
     badge: "Kurumsal Yapı",
-    monthly: "11.900",
-    yearly: "6.500",
-    color: "bg-[#F0FDF4]",
-    border: "border-[#BBF7D0]",
+    setupPrice: "11.900",
     accent: "#16A34A",
-    features: [
-      "Şirket kuruluşu dahil",
-      "e-İmza 1 Yıl",
-      "KEP Başlangıç 1 Yıl",
-      "Sanal ofis 1 Yıl",
-      "Aylık muhasebe & vergi",
-      "Dijital panel erişimi",
-      "Pay defteri yönetimi",
-      "Genel kurul desteği",
-    ],
     href: "/sirketini-kur/anonim-sirketi",
+    packages: [
+      { name: "Kur", monthlyPrice: "6.500", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "16.500", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+    ],
   },
   {
     id: "bilanco",
     name: "Bilanço Şirketi",
     badge: "Operasyon Odaklı",
-    monthly: "7.400",
-    yearly: "4.300",
-    color: "bg-[#FFF0F5]",
-    border: "border-[#FBCFE8]",
+    setupPrice: "7.400",
     accent: "#DB2777",
-    features: [
-      "Şirket kuruluşu dahil",
-      "e-İmza 1 Yıl",
-      "KEP Başlangıç 1 Yıl",
-      "Sanal ofis 1 Yıl",
-      "Aylık muhasebe & vergi",
-      "Dijital panel erişimi",
-      "Bilanço esaslı defter",
-    ],
     href: "/sirketini-kur/bilanco-sirketi",
+    packages: [
+      { name: "Kur", monthlyPrice: "4.300", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "14.300", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+    ],
   },
 ] as const;
 
@@ -129,7 +128,6 @@ const faqs = [
 type CompanyId = "sahis" | "limited" | "anonim" | "bilanco";
 
 export default function FiyatlandirmaPage() {
-  const [yearly, setYearly] = useState(false);
   const [activeCompany, setActiveCompany] = useState<CompanyId>("limited");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -184,95 +182,117 @@ export default function FiyatlandirmaPage() {
             </h2>
           </div>
 
-          {/* Aylık / Yıllık Toggle */}
-          <div className="flex items-center gap-4 mb-10">
-            <button
-              onClick={() => setYearly(false)}
-              className={`rounded-full px-5 py-2 text-[14px] font-bold transition-colors ${
-                !yearly ? "bg-black text-white" : "bg-black/8 text-black/60 hover:bg-black/12"
-              }`}
-            >
-              Aylık
-            </button>
-            <button
-              onClick={() => setYearly(true)}
-              className={`rounded-full px-5 py-2 text-[14px] font-bold transition-colors ${
-                yearly ? "bg-black text-white" : "bg-black/8 text-black/60 hover:bg-black/12"
-              }`}
-            >
-              Yıllık <span className="ml-1.5 rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] font-bold text-[#16A34A]">%35–45 indirim</span>
-            </button>
-          </div>
-
-          {/* Tabs */}
+          {/* Company type tabs */}
           <div className="flex flex-wrap gap-2 mb-8">
             {companyTypes.map((ct) => (
               <button
                 key={ct.id}
                 onClick={() => setActiveCompany(ct.id as CompanyId)}
-                className={`rounded-full px-5 py-2.5 text-[14px] font-bold transition-colors ${
+                className={`rounded-full px-5 py-2.5 text-[14px] font-bold transition-all duration-200 ${
                   activeCompany === ct.id
-                    ? "bg-black text-white"
+                    ? "text-white shadow-md"
                     : "bg-white border border-black/10 text-black/60 hover:border-black/30"
                 }`}
+                style={activeCompany === ct.id ? { backgroundColor: ct.accent } : undefined}
               >
                 {ct.name}
               </button>
             ))}
           </div>
 
-          {/* Selected company card */}
-          <div className={`rounded-[28px] border-2 ${selectedCompany.border} ${selectedCompany.color} p-8 md:p-10`}>
-            <div className="flex flex-col md:flex-row md:items-start gap-8">
-              <div className="flex-1">
-                <span
-                  className="inline-block rounded-full px-3 py-1 text-[11px] font-bold text-white mb-4"
-                  style={{ backgroundColor: selectedCompany.accent }}
+          {/* Setup fee note */}
+          <p className="mb-6 text-[14px] text-[#64748B]">
+            <span className="font-semibold text-[#0F172A]">{selectedCompany.name}</span> için kuruluş ücreti:{" "}
+            <span className="font-bold" style={{ color: selectedCompany.accent }}>{selectedCompany.setupPrice} TL +KDV</span>{" "}
+            · Aylık abonelik
+          </p>
+
+          {/* 3-tier package grid */}
+          <div className="grid gap-5 md:grid-cols-3">
+            {selectedCompany.packages.map((pkg) => {
+              const isQuote = pkg.monthlyPrice === "Teklif";
+              const PkgIcon = pkg.name === "Kur" ? Zap : pkg.name === "Kur & Yönet" ? Laptop : TrendingUp;
+              const features = tierFeatures[pkg.name] ?? [];
+              return (
+                <div
+                  key={pkg.name}
+                  className={`group flex flex-col rounded-[24px] bg-white p-7 transition-all duration-300 hover:-translate-y-1 ${
+                    pkg.popular
+                      ? "shadow-xl hover:shadow-2xl"
+                      : "shadow-sm ring-1 ring-black/6 hover:shadow-xl"
+                  }`}
+                  style={pkg.popular ? { outline: `2px solid ${selectedCompany.accent}55`, outlineOffset: "-2px" } : undefined}
                 >
-                  {selectedCompany.badge}
-                </span>
-                <h3 className="text-[28px] font-bold text-black mb-1">{selectedCompany.name}</h3>
-                <div className="mt-4 mb-6">
-                  <span className="text-[42px] font-bold text-black">
-                    {yearly ? selectedCompany.yearly : selectedCompany.monthly}
-                  </span>
-                  <span className="text-[15px] text-black/50 ml-2">TL/ay +KDV</span>
-                  {yearly && (
-                    <span className="ml-3 text-[13px] text-black/40">(yıllık peşin)</span>
+                  {pkg.popular && (
+                    <span
+                      className="mb-3 self-start rounded-full px-3 py-1 text-[11px] font-bold text-white"
+                      style={{ backgroundColor: selectedCompany.accent }}
+                    >
+                      En Çok Tercih Edilen
+                    </span>
                   )}
+
+                  {/* Icon + name */}
+                  <div
+                    className="mb-4 inline-flex items-center gap-2 rounded-[12px] px-3 py-1.5 w-fit"
+                    style={{ backgroundColor: `${selectedCompany.accent}14` }}
+                  >
+                    <PkgIcon className="h-4 w-4" style={{ color: selectedCompany.accent }} />
+                    <span className="text-[13px] font-bold" style={{ color: selectedCompany.accent }}>
+                      {pkg.name}
+                    </span>
+                  </div>
+
+                  {/* Price */}
+                  <div className="mb-1">
+                    {isQuote ? (
+                      <div className="flex items-end gap-1">
+                        <span className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">Teklif</span>
+                        <span className="mb-1 text-[13px] text-black/50">bazlı</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-end gap-1">
+                        <span className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{pkg.monthlyPrice}</span>
+                        <span className="mb-1 text-[13px] text-black/50">TL/ay +KDV</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mb-5 text-[12px] font-medium text-black/40">
+                    + {selectedCompany.setupPrice} TL kuruluş +KDV
+                  </div>
+
+                  {/* Features */}
+                  <ul className="mb-6 flex-1 space-y-2.5">
+                    {features.map((f, i) => (
+                      <li key={f} className="flex items-start gap-2 text-[13px] leading-6 text-[#475569]">
+                        <CheckCircle2
+                          className="mt-0.5 h-3.5 w-3.5 shrink-0"
+                          style={{ color: i === 0 && pkg.name !== "Kur" ? `${selectedCompany.accent}70` : selectedCompany.accent }}
+                          strokeWidth={i === 0 && pkg.name !== "Kur" ? 2 : 2.5}
+                        />
+                        <span className={i === 0 && pkg.name !== "Kur" ? "font-semibold text-[#0F172A]" : ""}>
+                          {f}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <Link
+                    href={isQuote ? "/iletisim" : selectedCompany.href}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-full py-3 text-[13px] font-bold text-center transition-all duration-200"
+                    style={
+                      pkg.popular
+                        ? { backgroundColor: selectedCompany.accent, color: "white" }
+                        : { backgroundColor: "rgb(0 0 0 / 0.05)", color: "#0F172A" }
+                    }
+                  >
+                    {isQuote ? "Teklif Al" : `${pkg.name} ile Başla`}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
                 </div>
-                <ul className="space-y-3">
-                  {selectedCompany.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-[15px] text-black/70">
-                      <CheckCircle2
-                        className="h-4 w-4 shrink-0 mt-0.5"
-                        style={{ color: selectedCompany.accent }}
-                        strokeWidth={2.5}
-                      />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="md:w-64 flex flex-col gap-4">
-                <Link
-                  href={selectedCompany.href}
-                  className="rounded-full py-4 text-[15px] font-bold text-center text-white transition-colors hover:opacity-85"
-                  style={{ backgroundColor: selectedCompany.accent }}
-                >
-                  Hemen Başla
-                </Link>
-                <Link
-                  href="/iletisim"
-                  className="rounded-full py-4 text-[15px] font-bold text-center bg-black/6 text-black hover:bg-black/10 transition-colors"
-                >
-                  Ücretsiz Danış
-                </Link>
-                <p className="text-[12px] text-black/40 text-center">
-                  İptal istediğin zaman mümkün
-                </p>
-              </div>
-            </div>
+              );
+            })}
           </div>
 
           {/* Progresif indirim */}

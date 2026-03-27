@@ -22,6 +22,7 @@ import DijitalOfisPlans from "@/components/pricing/DijitalOfisPlans";
 import GorunurOlPlans from "@/components/pricing/GorunurOlPlans";
 import IsIniBuyutSection from "@/components/pricing/IsIniBuyutSection";
 import TekSeferlikUrunler from "@/components/pricing/TekSeferlikUrunler";
+import CompanyPackages from "@/components/pricing/CompanyPackages";
 
 type CompanyTypeStoryPageProps = {
   config: CompanyTypeConfig;
@@ -234,6 +235,9 @@ export default function CompanyTypeStoryPage({ config }: CompanyTypeStoryPagePro
           </div>
         </div>
       </section>
+
+      {/* ─── PAKETLER ─── */}
+      <CompanyPackages config={config} />
 
       {/* ─── STEPS ─── */}
       <section id="adimlar" className="px-6 py-14">

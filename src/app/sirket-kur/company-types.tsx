@@ -38,6 +38,11 @@ export type CompanyTypeConfig = {
     icon: LucideIcon;
     accent?: boolean;
   }[];
+  packages: readonly {
+    name: string;
+    monthlyPrice: string;
+    popular: boolean;
+  }[];
   faq: readonly { question: string; answer: string }[];
 };
 
@@ -80,6 +85,11 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
       "e-İmza, KEP ve e-Devlet entegrasyonu",
       "SGK Bağ-Kur kaydı ve defter tasdiki",
       "Fatura kesim ve operasyon başlangıcı",
+    ],
+    packages: [
+      { name: "Kur", monthlyPrice: "3.200", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "13.200", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
     ],
     ecosystemModules: [
       {
@@ -194,6 +204,11 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     ],
     includedItems: commonPackage,
     processSteps: ["Kuruluş başvurusu", "Şirket sözleşme akışı", "Dijital altyapı kurulumu", "Operasyon paneli başlangıcı"],
+    packages: [
+      { name: "Kur", monthlyPrice: "5.400", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "15.400", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+    ],
     ecosystemModules: [
       {
         code: "M1",
@@ -292,6 +307,11 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     ],
     includedItems: commonPackage,
     processSteps: ["Yapı planlama", "Kuruluş evrakları", "Dijital altyapı ve resmi akış", "Operasyon görünürlüğü başlangıcı"],
+    packages: [
+      { name: "Kur", monthlyPrice: "6.500", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "16.500", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+    ],
     ecosystemModules: [
       {
         code: "M1",
@@ -390,6 +410,11 @@ export const companyTypeConfigs: readonly CompanyTypeConfig[] = [
     ],
     includedItems: commonPackage,
     processSteps: ["Yapı doğrulama", "Kuruluş ve belge akışı", "e-İmza / KEP aktivasyonu", "Muhasebe başlangıç görünümü"],
+    packages: [
+      { name: "Kur", monthlyPrice: "4.300", popular: false },
+      { name: "Kur & Yönet", monthlyPrice: "14.300", popular: true },
+      { name: "Kur & Büyüt", monthlyPrice: "Teklif", popular: false },
+    ],
     ecosystemModules: [
       {
         code: "M1",
