@@ -2,678 +2,658 @@
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Breadcrumb from "@/components/Breadcrumb";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Check, CheckCircle2, ShieldCheck, Sparkles, X } from "lucide-react";
-import { buildPackageSignupHref, formatTl } from "@/lib/pricing";
+import {
+  ChevronRight,
+  CheckCircle2,
+  ShieldCheck,
+  Monitor,
+  Globe,
+  Share2,
+  TrendingUp,
+  ChevronDown,
+} from "lucide-react";
 
-const plans = [
+// ─── Şirketini Kur ───────────────────────────────────────────────────────────
+const companyTypes = [
   {
+    id: "sahis",
     name: "Şahıs Şirketi",
-    price: 4500,
-    yearly: "Defter: 36k/y · Mali müşavirlik: 36k/y",
     badge: "Hızlı Başlangıç",
-    theme: "bg-[#FFF6DD]",
-    highlight: false,
+    monthly: "5.900",
+    yearly: "3.200",
+    color: "bg-[#FFFBEB]",
+    border: "border-[#FDE68A]",
+    accent: "#D97706",
+    features: [
+      "Şirket kuruluşu dahil",
+      "e-İmza 1 Yıl",
+      "KEP Başlangıç 1 Yıl",
+      "Sanal ofis 1 Yıl",
+      "Aylık muhasebe & vergi",
+      "Dijital panel erişimi",
+    ],
+    href: "/sirketini-kur/sahis",
   },
   {
+    id: "limited",
     name: "Limited Şirketi",
-    price: 7500,
-    yearly: "Defter: 72k/y · Mali müşavirlik: 72k/y",
     badge: "En Dengeli",
-    theme: "bg-[#EEF7FF]",
-    highlight: true,
+    monthly: "9.900",
+    yearly: "5.400",
+    color: "bg-[#EFF6FF]",
+    border: "border-[#BFDBFE]",
+    accent: "#1b98d5",
+    popular: true,
+    features: [
+      "Şirket kuruluşu dahil",
+      "e-İmza 1 Yıl",
+      "KEP Başlangıç 1 Yıl",
+      "Sanal ofis 1 Yıl",
+      "Aylık muhasebe & vergi",
+      "Dijital panel erişimi",
+      "Ortak yönetimi",
+    ],
+    href: "/sirketini-kur/limited",
   },
   {
+    id: "anonim",
     name: "Anonim Şirketi",
-    price: 12000,
-    yearly: "Defter: 90k/y · Mali müşavirlik: 90k/y",
     badge: "Kurumsal Yapı",
-    theme: "bg-[#EEF9F1]",
-    highlight: false,
+    monthly: "11.900",
+    yearly: "6.500",
+    color: "bg-[#F0FDF4]",
+    border: "border-[#BBF7D0]",
+    accent: "#16A34A",
+    features: [
+      "Şirket kuruluşu dahil",
+      "e-İmza 1 Yıl",
+      "KEP Başlangıç 1 Yıl",
+      "Sanal ofis 1 Yıl",
+      "Aylık muhasebe & vergi",
+      "Dijital panel erişimi",
+      "Pay defteri yönetimi",
+      "Genel kurul desteği",
+    ],
+    href: "/sirketini-kur/anonim",
   },
   {
+    id: "bilanco",
     name: "Bilanço Şirketi",
-    price: 6000,
-    yearly: "Defter: 55k/y · Mali müşavirlik: 60k/y",
     badge: "Operasyon Odaklı",
-    theme: "bg-[#FFF1F5]",
-    highlight: false,
+    monthly: "7.400",
+    yearly: "4.300",
+    color: "bg-[#FFF0F5]",
+    border: "border-[#FBCFE8]",
+    accent: "#DB2777",
+    features: [
+      "Şirket kuruluşu dahil",
+      "e-İmza 1 Yıl",
+      "KEP Başlangıç 1 Yıl",
+      "Sanal ofis 1 Yıl",
+      "Aylık muhasebe & vergi",
+      "Dijital panel erişimi",
+      "Bilanço esaslı defter",
+    ],
+    href: "/sirketini-kur/bilanco",
   },
 ] as const;
 
-const includedItems = [
-  "Kuruluş",
-  "e-İmza 1Y",
-  "KEP Başlangıç 1Y",
-  "Sanal Ofis 1Y",
-  "e-Dönüşüm",
-] as const;
+// ─── Dijital Ofis ─────────────────────────────────────────────────────────────
+const dijitalOfisPlans = [
+  {
+    name: "Başlangıç",
+    range: "1–10 Kullanıcı",
+    price: "10.000",
+    popular: false,
+    features: [
+      "Microsoft 365 kurulum + lisans",
+      "Kurumsal e-posta + Teams",
+      "OneDrive + MFA",
+      "Help desk desteği",
+    ],
+  },
+  {
+    name: "Profesyonel",
+    range: "11–30 Kullanıcı",
+    price: "15.000",
+    popular: true,
+    features: [
+      "Tüm Başlangıç özellikleri",
+      "SharePoint",
+      "Güvenlik politikaları",
+      "Öncelikli destek",
+    ],
+  },
+  {
+    name: "Kurumsal",
+    range: "31–100 Kullanıcı",
+    price: "20.000",
+    popular: false,
+    features: [
+      "Tüm Profesyonel özellikleri",
+      "Dedicated IT danışman",
+      "SLA garantisi",
+      "Yedekleme izleme",
+    ],
+  },
+];
 
-const tableRows = [
+// ─── Görünür Ol ──────────────────────────────────────────────────────────────
+const sosyalMedyaPlans = [
   {
-    title: "Başlangıç maliyet görünürlüğü",
-    work365: "Fiyat ve temel kapsam ilk ekranda açık şekilde görünür.",
-    market: "Teklifler çoğu zaman parça parça ve sonradan netleşir.",
+    name: "Başlangıç",
+    posts: "4 paylaşım/ay",
+    price: "15.000",
+    popular: false,
+    features: ["4 paylaşım/ay", "Özel gün kutlamaları", "İmaj yönetimi", "Aylık rapor"],
   },
   {
-    title: "Gizli ücret riski",
-    work365: "Paket yapısı baştan görünür olduğu için sürpriz azalır.",
-    market: "Ek süreç, belge ve tedarikçi ücretleri çıkabilir.",
+    name: "Profesyonel",
+    posts: "8 paylaşım/ay",
+    price: "20.000",
+    popular: true,
+    features: [
+      "8 paylaşım/ay",
+      "Özel gün kutlamaları",
+      "İmaj yönetimi",
+      "Marka danışmanlığı",
+      "Aylık rapor",
+    ],
   },
   {
-    title: "Dijital süreç takibi",
-    work365: "Kuruluş, muhasebe ve vergi görünümü tek panelde izlenir.",
-    market: "Süreç takibi çoğu zaman e-posta ve manuel iletişime yayılır.",
+    name: "Premium",
+    posts: "12 paylaşım/ay",
+    price: "30.000",
+    popular: false,
+    features: [
+      "12 paylaşım/ay",
+      "Özel gün kutlamaları",
+      "İmaj yönetimi",
+      "Marka danışmanlığı",
+      "Tasarım danışmanlığı",
+      "Aylık rapor",
+    ],
   },
-  {
-    title: "e-İmza ve KEP dahil olması",
-    work365: "Temel dijital altyapı başlangıç kurgusuna dahildir.",
-    market: "Ayrı sağlayıcılarla ayrı alım ve takip gerekir.",
-  },
-  {
-    title: "Tek panelden yönetim",
-    work365: "İşletme süreçleri tek görünümde toplanır.",
-    market: "Kuruluş, muhasebe ve iletişim farklı araçlara dağılır.",
-  },
-  {
-    title: "Uzman destek erişimi",
-    work365: "Süreç boyunca görünür destek akışı ve yönlendirme vardır.",
-    market: "Destek deneyimi kişiye ve yoğunluğa bağlı değişebilir.",
-  },
-  {
-    title: "Süreç hızının görünür olması",
-    work365: "Durum, bekleyen işler ve ilerleme panelde takip edilir.",
-    market: "İlerleme çoğu zaman kullanıcı açısından şeffaf değildir.",
-  },
-] as const;
+];
 
+const webSitesiPlans = [
+  {
+    name: "Başlangıç",
+    setup: "20.000",
+    monthly: "1.000",
+    description: "1-3 sayfa landing, mobil uyumlu",
+    popular: false,
+    features: ["Hazır şablon, 1-3 sayfa", "Mobil uyumlu tasarım", "Temel SEO", "Analytics kurulumu"],
+  },
+  {
+    name: "Profesyonel",
+    setup: "30.000",
+    monthly: "2.000",
+    description: "5–10 sayfalı kurumsal site, blog",
+    popular: true,
+    features: ["Özel tasarım, 5-10 sayfa", "Blog + iletişim formu", "SEO optimizasyonu", "CRM bağlantısı"],
+  },
+  {
+    name: "Premium",
+    setup: "50.000",
+    monthly: "3.000",
+    description: "Tam özel tasarım, e-ticaret",
+    popular: false,
+    features: ["Tam özel tasarım", "E-ticaret veya özel fonksiyon", "SEO audit + strateji", "Ads entegrasyonu"],
+  },
+];
+
+// ─── Tek Seferlik Ürünler ─────────────────────────────────────────────────────
+const oneTimeProducts = [
+  { name: "Nitelikli e-İmza", price: "1.500 TL/yıl", desc: "Yasal geçerli dijital imza" },
+  { name: "KEP Hesabı", price: "800 TL/yıl", desc: "Kayıtlı elektronik posta" },
+  { name: "Marka Tescil", price: "Teklif bazlı", desc: "Türkpatent marka tescili" },
+  { name: "Sanal Ofis", price: "1.200 TL/yıl", desc: "Yasal adres hizmeti" },
+];
+
+// ─── SSS ─────────────────────────────────────────────────────────────────────
 const faqs = [
   {
-    question: "Başlangıç fiyatına hangi hizmetler dahil?",
-    answer:
-      "Her plan kartında görünen başlangıç kurgusunda kuruluş, e-İmza 1Y, KEP Başlangıç 1Y, sanal ofis 1Y ve e-Dönüşüm yer alır.",
+    q: "Fiyatlara KDV dahil mi?",
+    a: "Hayır. Tüm fiyatlar KDV hariçtir. Faturanıza +%20 KDV eklenir.",
   },
   {
-    question: "Defter ve mali müşavirlik satırları neyi gösteriyor?",
-    answer:
-      "Bu satırlar, ilgili şirket tipinde yıllık operasyon tarafındaki defter ve mali müşavirlik görünümünü özetlemek için yer alır.",
+    q: "Yıllık ödeme yaparsam ne kadar tasarruf ederim?",
+    a: "Yıllık ödeme tercih ettiğinizde aylık fiyata kıyasla yaklaşık %35–45 tasarruf sağlarsınız.",
   },
   {
-    question: "Hangi şirket tipi daha uygun olur?",
-    answer:
-      "Şahıs şirketi sade başlangıçlar için, limited şirket daha dengeli büyüme için, anonim şirket daha kurumsal yapılar için, bilanço şirketi ise operasyon yoğun yapılar için daha uygun olabilir.",
+    q: "Birden fazla hizmet alırsam indirim var mı?",
+    a: "Evet. 2. pilarda %10, 3. pilarda %15, 4. pilarda %20 progresif indirim uygulanır.",
   },
   {
-    question: "Work365 ile süreç nasıl ilerliyor?",
-    answer:
-      "Kurulum ve operasyon adımları tek panelden izlenir; böylece belge, durum ve ilerleme akışı daha görünür hale gelir.",
+    q: "Şirket tipi değiştirmek istersem ne olur?",
+    a: "Hesabınızı dondurup farklı şirket tipine geçiş yapabilirsiniz. Süreç ekibimiz tarafından yönetilir.",
   },
-] as const;
+  {
+    q: "İptal politikası nasıl?",
+    a: "Aboneliği istediğiniz zaman iptal edebilirsiniz. Kalan ayın ücreti iade edilmez.",
+  },
+];
 
-const benefits = [
-  {
-    title: "Daha az ödeyerek daha fazlasını alın",
-    text: "Farklı tedarikçilerden parça parça hizmet toplamak yerine daha net başlangıç kurgusuyla ilerleyin.",
-    color: "bg-[#FFF6DD]",
-  },
-  {
-    title: "Tek panelden görünür süreç yönetimi",
-    text: "Kuruluş ve operasyon tarafını tek görünümde okuyun, dağınık iletişimi azaltın.",
-    color: "bg-[#EEF7FF]",
-  },
-  {
-    title: "Dijital altyapıyı baştan dahil edin",
-    text: "e-İmza, KEP ve temel ihtiyaçları ayrı ayrı kovalamadan başlangıç planına dahil görün.",
-    color: "bg-[#EEF9F1]",
-  },
-] as const;
+type CompanyId = "sahis" | "limited" | "anonim" | "bilanco";
 
-const ecosystemModules = [
-  {
-    code: "M1",
-    name: "Dijital Ofis (Microsoft 365)",
-    aLaCarte: "10k–30k TL/ay",
-    package: "~%15 ↓",
-    model: "0–10 / 10–50 / 50–299 / 300+ kullanıcı",
-    description: "Microsoft 365 lisans, kurulum ve yönetimi tek pakette. 0–10 kullanıcı 10.000 TL/ay'dan başlar, 300+ için teklif bazlı.",
-    color: "text-[#0F8FA3]",
-  },
-  {
-    code: "M2",
-    name: "Web Sitesi",
-    aLaCarte: "500–5.000 TL",
-    package: "~%15 ↓",
-    model: "Kurulum + aylık bakım",
-    description: "Serbest, İşletme ve Kurumsal paketleriyle hızlı yayına çıkın. Bakım ve güncellemeler dahil.",
-    color: "text-[#2158D2]",
-  },
-  {
-    code: "M2-sosyal",
-    name: "Sosyal Medya Yönetimi",
-    aLaCarte: "15k–35k TL/ay",
-    package: "%25 ↓ yıllık",
-    model: "Hf. 1 / 2 / 3 post",
-    description: "Başlangıç (15k) · Büyüme (25k) · Pro (35k). Yıllık ödemede %25 indirim. Enterprise için teklif alın.",
-    color: "text-[#6638D6]",
-  },
-  {
-    code: "M3",
-    name: "Büyüme",
-    aLaCarte: "Yakında",
-    package: "—",
-    model: "Teklif bazlı",
-    description: "Tele satış, reklam yönetimi ve dönüşüm optimizasyonu. Operasyonel kapasite kurulduktan sonra fiyatlandırılacak.",
-    color: "text-[#9B6B2E]",
-  },
-  {
-    code: "M4",
-    name: "İşini Büyüt",
-    aLaCarte: "Teklif bazlı",
-    package: "~%20 ↓",
-    model: "Randevu / proje bazlı",
-    description: "Teşvik analizi, hibe başvurusu, yatırımcı erişimi, uzman kiralama ve işe alım hizmetleri.",
-    color: "text-[#16A34A]",
-  },
-] as const;
+export default function FiyatlandirmaPage() {
+  const [yearly, setYearly] = useState(false);
+  const [activeCompany, setActiveCompany] = useState<CompanyId>("limited");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [gorunurTab, setGorunurTab] = useState<"sosyal" | "web">("sosyal");
 
-export default function PricingPage() {
-  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly");
+  const selectedCompany = companyTypes.find((c) => c.id === activeCompany)!;
 
   return (
     <main className="bg-white pt-[92px]">
       <Header />
-      <Breadcrumb items={[{ label: "Fiyatlandırma", href: "/fiyatlandirma" }]} />
 
-      <section className="mt-4 bg-[#E9EEF6] px-6 py-0">
-        <div className="mx-auto max-w-[1230px]">
-          <div className="flex flex-col gap-4 py-0 md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center gap-4 md:gap-6">
-              <div className="hidden shrink-0 md:block">
-                <img
-                  src="/paran-guvende.webp"
-                  alt="Para güvende görseli"
-                  className="h-auto w-[150px] object-contain lg:w-[180px]"
-                />
+      {/* Hero */}
+      <section className="px-6 py-24 max-w-[1230px] mx-auto text-center">
+        <div className="inline-flex items-center gap-2 rounded-full bg-[#DCFCE7] px-4 py-2 mb-6">
+          <ShieldCheck className="h-4 w-4 text-[#16A34A]" />
+          <span className="text-[13px] font-bold text-[#16A34A]">Şeffaf Fiyatlandırma</span>
+        </div>
+        <h1 className="text-[42px] md:text-[58px] font-bold tracking-tighter text-black leading-tight mb-6 max-w-[680px] mx-auto">
+          Şeffaf fiyatlandırma,{" "}
+          <span className="text-[#16A34A]">gizli maliyet yok.</span>
+        </h1>
+        <p className="text-[18px] text-black/60 max-w-[520px] mx-auto leading-relaxed">
+          Tüm paketler +KDV. İhtiyacın kadar al, dilediğinde iptal et.
+        </p>
+      </section>
+
+      {/* ── 1. Şirketini Kur ── */}
+      <section className="px-6 py-20 bg-[#F8FAFC]">
+        <div className="max-w-[1230px] mx-auto">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="text-[28px] font-bold text-black">Şirketini Kur</span>
+          </div>
+          <p className="text-[15px] text-black/50 mb-10">
+            Şirket tipin ne olursa olsun, kuruluştan muhasebeye her şey dahil.
+          </p>
+
+          {/* Aylık / Yıllık Toggle */}
+          <div className="flex items-center gap-4 mb-10">
+            <button
+              onClick={() => setYearly(false)}
+              className={`rounded-full px-5 py-2 text-[14px] font-bold transition-colors ${
+                !yearly ? "bg-black text-white" : "bg-black/8 text-black/60 hover:bg-black/12"
+              }`}
+            >
+              Aylık
+            </button>
+            <button
+              onClick={() => setYearly(true)}
+              className={`rounded-full px-5 py-2 text-[14px] font-bold transition-colors ${
+                yearly ? "bg-black text-white" : "bg-black/8 text-black/60 hover:bg-black/12"
+              }`}
+            >
+              Yıllık <span className="ml-1.5 rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] font-bold text-[#16A34A]">%35–45 indirim</span>
+            </button>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {companyTypes.map((ct) => (
+              <button
+                key={ct.id}
+                onClick={() => setActiveCompany(ct.id as CompanyId)}
+                className={`rounded-full px-5 py-2.5 text-[14px] font-bold transition-colors ${
+                  activeCompany === ct.id
+                    ? "bg-black text-white"
+                    : "bg-white border border-black/10 text-black/60 hover:border-black/30"
+                }`}
+              >
+                {ct.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Selected company card */}
+          <div className={`rounded-[28px] border-2 ${selectedCompany.border} ${selectedCompany.color} p-8 md:p-10`}>
+            <div className="flex flex-col md:flex-row md:items-start gap-8">
+              <div className="flex-1">
+                <span
+                  className="inline-block rounded-full px-3 py-1 text-[11px] font-bold text-white mb-4"
+                  style={{ backgroundColor: selectedCompany.accent }}
+                >
+                  {selectedCompany.badge}
+                </span>
+                <h3 className="text-[28px] font-bold text-black mb-1">{selectedCompany.name}</h3>
+                <div className="mt-4 mb-6">
+                  <span className="text-[42px] font-bold text-black">
+                    {yearly ? selectedCompany.yearly : selectedCompany.monthly}
+                  </span>
+                  <span className="text-[15px] text-black/50 ml-2">TL/ay +KDV</span>
+                  {yearly && (
+                    <span className="ml-3 text-[13px] text-black/40">(yıllık peşin)</span>
+                  )}
+                </div>
+                <ul className="space-y-3">
+                  {selectedCompany.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-[15px] text-black/70">
+                      <CheckCircle2
+                        className="h-4 w-4 shrink-0 mt-0.5"
+                        style={{ color: selectedCompany.accent }}
+                        strokeWidth={2.5}
+                      />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
               </div>
-
-              <div className="max-w-[700px]">
-                <h2 className="text-[22px] font-bold tracking-[-0.04em] text-black md:text-[28px]">
-                  Kusursuz üretim veya paranız iade.
-                </h2>
-                <p className="mt-2 text-[14px] leading-6 text-black/72 md:text-[15px] md:leading-7">
-                  Şirketinizin doğru şekilde kurulmasının ne kadar önemli olduğunu biliyoruz. Hizmetimizden kaynaklanan bir kuruluş hatası olursa, o kısmı sorgusuz sualsiz iade edeceğiz.
+              <div className="md:w-64 flex flex-col gap-4">
+                <Link
+                  href={selectedCompany.href}
+                  className="rounded-full py-4 text-[15px] font-bold text-center text-white transition-colors hover:opacity-85"
+                  style={{ backgroundColor: selectedCompany.accent }}
+                >
+                  Hemen Başla
+                </Link>
+                <Link
+                  href="/iletisim"
+                  className="rounded-full py-4 text-[15px] font-bold text-center bg-black/6 text-black hover:bg-black/10 transition-colors"
+                >
+                  Ücretsiz Danış
+                </Link>
+                <p className="text-[12px] text-black/40 text-center">
+                  İptal istediğin zaman mümkün
                 </p>
               </div>
             </div>
-
-            <Link
-              href="/hizmet-sartlari/para-iade-kosullari"
-              className="inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-white px-4 py-2.5 text-[14px] font-bold text-black shadow-sm ring-1 ring-black/6 transition-colors hover:bg-black hover:text-white md:self-center"
-            >
-              Şartlara bakın <ArrowRight className="h-4 w-4" />
-            </Link>
           </div>
-        </div>
-      </section>
 
-      <section className="px-6 pb-10 pt-6">
-        <div className="mx-auto max-w-[1230px]">
-          <div className="mx-auto max-w-[920px] text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#FFF4D0] px-4 py-2 text-[12px] font-bold uppercase tracking-[0.12em] text-[#9A7B31]">
-              <Sparkles className="h-4 w-4" />
-              Fiyatlandırma
-            </span>
-            <h1 className="mt-6 text-[30px] font-bold leading-[1.02] tracking-[-0.05em] text-black md:text-[50px]">
-              Yüksek danışmanlık ücretleri yerine daha net ve görünür başlangıç paketleri.
-            </h1>
-            <p className="mx-auto mt-6 max-w-[760px] text-[18px] leading-8 text-black/70">
-              Şirket kurulumunu, dijital altyapıyı ve başlangıç kapsamını ilk ekranda görün. Farklı teklifleri toplamak yerine, ne aldığınızı en baştan bilin.
+          {/* Progresif indirim */}
+          <div className="mt-8 rounded-[20px] bg-white border border-black/8 p-6">
+            <p className="text-[13px] font-bold text-black/50 uppercase tracking-widest mb-4">
+              Paket Birleştirme İndirimi
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="flex flex-col sm:flex-row gap-3">
+              {[
+                { label: "1 Hizmet", discount: "—", color: "bg-black/5 text-black/40" },
+                { label: "2 Hizmet", discount: "%10 indirim", color: "bg-[#FEF9C3] text-[#854D0E]" },
+                { label: "3 Hizmet", discount: "%15 indirim", color: "bg-[#FEF3C7] text-[#92400E]" },
+                { label: "4 Hizmet", discount: "%20 indirim", color: "bg-[#DCFCE7] text-[#166534]" },
+              ].map((item) => (
+                <div key={item.label} className={`flex-1 rounded-[14px] ${item.color} px-4 py-3 text-center`}>
+                  <p className="text-[12px] font-bold opacity-70">{item.label}</p>
+                  <p className="text-[15px] font-bold mt-0.5">{item.discount}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. Dijital Ofis ── */}
+      <section className="px-6 py-20 max-w-[1230px] mx-auto">
+        <div className="flex items-center gap-3 mb-2">
+          <Monitor className="h-6 w-6 text-[#1b98d5]" />
+          <span className="text-[28px] font-bold text-black">Dijital Ofis</span>
+        </div>
+        <p className="text-[15px] text-black/50 mb-10">
+          Microsoft 365 kurulum, lisans ve yönetimi — tek pakette.
+        </p>
+        <div className="grid md:grid-cols-3 gap-6">
+          {dijitalOfisPlans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`rounded-[28px] bg-white border-2 p-8 flex flex-col ${
+                plan.popular ? "border-[#1b98d5] shadow-lg" : "border-black/10"
+              }`}
+            >
+              {plan.popular && (
+                <span className="self-start rounded-full bg-[#1b98d5] px-3 py-1 text-[11px] font-bold text-white mb-4">
+                  En Çok Tercih Edilen
+                </span>
+              )}
+              <p className="text-[12px] font-bold uppercase tracking-widest text-black/40">{plan.range}</p>
+              <h3 className="mt-2 text-[22px] font-bold text-black">{plan.name}</h3>
+              <div className="mt-4 mb-6">
+                <span className="text-[36px] font-bold text-black">{plan.price}</span>
+                <span className="text-[14px] text-black/50 ml-1">TL/ay +KDV</span>
+              </div>
+              <ul className="space-y-3 mb-8 flex-1">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-[14px] text-black/70">
+                    <CheckCircle2 className="h-4 w-4 text-[#1b98d5] shrink-0 mt-0.5" strokeWidth={2.5} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
               <Link
-                href="/kayit-ol"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-7 py-4 text-[15px] font-bold text-white"
+                href="/iletisim"
+                className={`rounded-full py-3.5 text-[14px] font-bold text-center transition-colors ${
+                  plan.popular
+                    ? "bg-[#1b98d5] text-white hover:bg-[#1580b3]"
+                    : "bg-black/5 text-black hover:bg-black/10"
+                }`}
               >
-                Hemen Başlayın <ArrowRight className="h-4 w-4" />
+                Teklif Al
               </Link>
-              <a
-                href="#planlar"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-7 py-4 text-[15px] font-bold text-black"
-              >
-                Planları Karşılaştır
-              </a>
             </div>
+          ))}
+        </div>
+        <div className="mt-6 rounded-[20px] bg-black text-white p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-white/50">Enterprise</p>
+            <p className="text-[18px] font-bold mt-1">100+ Kullanıcı — Özel Kapsam</p>
           </div>
+          <Link
+            href="/iletisim"
+            className="shrink-0 rounded-full bg-white px-6 py-3 text-[14px] font-bold text-black hover:bg-gray-100 transition-colors"
+          >
+            Teklif İste
+          </Link>
         </div>
       </section>
 
-      {/* Platform Baz Bedeli */}
-      <section className="px-6 pb-4 pt-2">
-        <div className="mx-auto max-w-[1230px]">
-          <div className="flex flex-col items-start justify-between gap-4 rounded-[28px] border border-[#1b98d5]/20 bg-[#F0F9FF] px-6 py-5 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1b98d5] text-white">
-                <ShieldCheck className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#1b98d5]">Zorunlu · Tüm Müşteriler</p>
-                <p className="mt-1 text-[18px] font-bold text-black">Platform Baz Bedeli</p>
-                <p className="mt-0.5 text-[14px] text-black/60">Aylık işletme ücreti — tüm hizmetlere erişim için gerekli</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-6 text-right">
-              <div>
-                <p className="text-[13px] font-semibold text-black/50">Aylık</p>
-                <p className="mt-1 text-[28px] font-bold tracking-[-0.04em] text-black">390 TL</p>
-              </div>
-              <div>
-                <p className="text-[13px] font-semibold text-[#1b98d5]">Yıllık · %30 İndirim</p>
-                <p className="mt-1 text-[28px] font-bold tracking-[-0.04em] text-black">275 TL<span className="text-[16px] text-black/50">/ay</span></p>
-                <p className="text-[12px] text-black/40">Toplam 3.300 TL/yıl</p>
-              </div>
-            </div>
+      {/* ── 3. Görünür Ol ── */}
+      <section className="px-6 py-20 bg-[#F8FAFC]">
+        <div className="max-w-[1230px] mx-auto">
+          <div className="flex items-center gap-3 mb-2">
+            <Globe className="h-6 w-6 text-[#1b98d5]" />
+            <span className="text-[28px] font-bold text-black">Görünür Ol</span>
           </div>
-        </div>
-      </section>
+          <p className="text-[15px] text-black/50 mb-10">
+            Web sitesi ve sosyal medya yönetimiyle markanı dijitalde büyüt.
+          </p>
 
-      <section id="planlar" className="px-6 pb-12 pt-4">
-        <div className="mx-auto max-w-[1230px]">
-          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-[14px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">Şirket Kuruluşu</p>
-              <h2 className="mt-3 text-[32px] font-bold tracking-[-0.04em] text-black md:text-[44px]">
-                Şirket tipine göre ne aldığınızı doğrudan karşılaştırın.
-              </h2>
-            </div>
-            <div className="inline-flex w-full max-w-[290px] rounded-full bg-white p-1 shadow-sm ring-1 ring-black/8">
-              <button
-                type="button"
-                onClick={() => setBillingPeriod("monthly")}
-                className={`flex-1 rounded-full px-4 py-3 text-[14px] font-bold transition ${
-                  billingPeriod === "monthly" ? "bg-black text-white" : "text-black/55"
-                }`}
-              >
-                Aylık
-              </button>
-              <button
-                type="button"
-                onClick={() => setBillingPeriod("yearly")}
-                className={`flex-1 rounded-full px-4 py-3 text-[14px] font-bold transition ${
-                  billingPeriod === "yearly" ? "bg-[#1b98d5] text-white" : "text-black/55"
-                }`}
-              >
-                Yıllık %15 İndirim
-              </button>
-            </div>
+          {/* Sub-tabs */}
+          <div className="flex gap-2 mb-8">
+            <button
+              onClick={() => setGorunurTab("sosyal")}
+              className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-bold transition-colors ${
+                gorunurTab === "sosyal" ? "bg-black text-white" : "bg-white border border-black/10 text-black/60 hover:border-black/30"
+              }`}
+            >
+              <Share2 className="h-4 w-4" /> Sosyal Medya
+            </button>
+            <button
+              onClick={() => setGorunurTab("web")}
+              className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-bold transition-colors ${
+                gorunurTab === "web" ? "bg-black text-white" : "bg-white border border-black/10 text-black/60 hover:border-black/30"
+              }`}
+            >
+              <Globe className="h-4 w-4" /> Web Sitesi
+            </button>
           </div>
 
-          <div className="grid gap-4 xl:grid-cols-4">
-            {plans.map((plan) => {
-              const displayPrice =
-                billingPeriod === "yearly" ? Math.round(plan.price * 0.85) : plan.price;
-              return (
-              <div
-                key={plan.name}
-                className={`relative flex h-full flex-col rounded-[34px] bg-white p-5 shadow-sm ring-1 ring-black/6 ${
-                  plan.highlight ? "border-2 border-[#1b98d5]" : ""
-                }`}
-              >
-                {plan.highlight ? (
-                  <div className="absolute right-5 top-5 rounded-full bg-[#1b98d5] px-3 py-1 text-[11px] font-bold text-white">
-                    Önerilen
-                  </div>
-                ) : null}
-
-                <div className={`rounded-[26px] px-4 py-4 ${plan.theme}`}>
-                  <div className="inline-flex rounded-full bg-white/80 px-3 py-1 text-[11px] font-bold text-black/65 ring-1 ring-black/5">
-                    {plan.badge}
-                  </div>
-                  <p className="mt-3 text-[16px] font-bold text-black">{plan.name}</p>
-                  <p className="mt-3 text-[38px] font-bold tracking-[-0.05em] text-black">
-                    {formatTl(displayPrice)}
-                  </p>
-                  {billingPeriod === "yearly" ? (
-                    <p className="mt-2 text-[13px] font-semibold leading-6 text-black/45 line-through">
-                      {formatTl(plan.price)}
-                    </p>
-                  ) : null}
-                  <p className="mt-2 text-[13px] font-semibold leading-6 text-black/55">{plan.yearly}</p>
-                </div>
-
-                <div className="mt-4 flex-1 space-y-2">
-                  {includedItems.map((item) => (
-                    <div key={item} className="flex items-center gap-2 rounded-[18px] bg-[#F8F8F7] px-3 py-3">
-                      <Check className="h-4 w-4 text-[#00A86B]" />
-                      <span className="text-[14px] font-medium text-black/72">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <Link
-                  href={buildPackageSignupHref(plan.name, displayPrice, {
-                    label: plan.name,
-                    source: "Fiyatlandırma sayfasından seçildi",
-                    term: billingPeriod === "yearly" ? "Yıllık plan" : "Aylık plan",
-                    description: `${plan.badge} paket. ${plan.yearly}`,
-                    features: includedItems,
-                  })}
-                  className={`mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-bold ${
-                    plan.highlight ? "bg-[#1b98d5] text-white" : "bg-black text-white"
+          {/* Sosyal Medya */}
+          {gorunurTab === "sosyal" && (
+            <div className="grid md:grid-cols-3 gap-6">
+              {sosyalMedyaPlans.map((plan) => (
+                <div
+                  key={plan.name}
+                  className={`rounded-[28px] bg-white border-2 p-8 flex flex-col ${
+                    plan.popular ? "border-[#1b98d5] shadow-lg" : "border-black/10"
                   }`}
                 >
-                  Bu Paketle Başla <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* M0 Ek Hizmetler */}
-      <section className="px-6 pb-12 pt-2">
-        <div className="mx-auto max-w-[1230px] rounded-[38px] bg-white px-6 py-8 shadow-sm ring-1 ring-black/5 md:px-8 md:py-10">
-          <p className="text-[14px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">M0 — Ek Hizmetler</p>
-          <h2 className="mt-3 text-[28px] font-bold tracking-[-0.04em] text-black md:text-[38px]">
-            Kuruluşa ek olarak ihtiyacınıza göre seçin.
-          </h2>
-          <p className="mt-3 text-[16px] leading-7 text-black/60">
-            Aşağıdaki hizmetler şirket kuruluş paketinize bağımsız olarak eklenebilir.
-          </p>
-
-          <div className="mt-8 space-y-6">
-
-            {/* e-İmza */}
-            <div>
-              <p className="mb-3 text-[15px] font-bold text-black">e-İmza (E-Tuğra Nitelikli)</p>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[22px] border border-[#DCE7F1] bg-[#F8FAFC] px-5 py-4">
-                  <p className="text-[15px] font-bold text-black">1 Yıllık</p>
-                  <p className="mt-1 text-[28px] font-bold tracking-[-0.04em] text-black">2.300 TL</p>
-                  <p className="mt-1 text-[13px] text-black/50">Yıllık 192 TL/ay karşılığı</p>
-                </div>
-                <div className="rounded-[22px] border-2 border-[#1b98d5] bg-[#F0F9FF] px-5 py-4">
-                  <div className="flex items-center justify-between">
-                    <p className="text-[15px] font-bold text-black">3 Yıllık</p>
-                    <span className="rounded-full bg-[#1b98d5] px-2.5 py-1 text-[11px] font-bold text-white">En iyi değer</span>
+                  {plan.popular && (
+                    <span className="self-start rounded-full bg-[#1b98d5] px-3 py-1 text-[11px] font-bold text-white mb-4">
+                      En Çok Tercih Edilen
+                    </span>
+                  )}
+                  <h3 className="text-[22px] font-bold text-black">{plan.name}</h3>
+                  <p className="mt-1 text-[13px] font-semibold text-[#1b98d5]">{plan.posts}</p>
+                  <div className="mt-5 mb-6">
+                    <span className="text-[32px] font-bold text-black">{plan.price}</span>
+                    <span className="text-[14px] text-black/50 ml-1">TL/ay +KDV</span>
                   </div>
-                  <p className="mt-1 text-[28px] font-bold tracking-[-0.04em] text-black">4.600 TL</p>
-                  <p className="mt-1 text-[13px] font-semibold text-[#1b98d5]">1.300 TL tasarruf · 128 TL/ay</p>
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-[14px] text-black/70">
+                        <CheckCircle2 className="h-4 w-4 text-[#1b98d5] shrink-0 mt-0.5" strokeWidth={2.5} />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/iletisim"
+                    className={`rounded-full py-3.5 text-[14px] font-bold text-center transition-colors ${
+                      plan.popular
+                        ? "bg-[#1b98d5] text-white hover:bg-[#1580b3]"
+                        : "bg-black/5 text-black hover:bg-black/10"
+                    }`}
+                  >
+                    Teklif Al
+                  </Link>
                 </div>
-              </div>
+              ))}
             </div>
+          )}
 
-            {/* KEP */}
-            <div>
-              <p className="mb-3 text-[15px] font-bold text-black">KEP — Kayıtlı Elektronik Posta</p>
-              <p className="mb-3 text-[13px] text-black/50">Ek yetkili: +99 TL/adet · Tüm paketlerde geçerli</p>
-              <div className="overflow-hidden rounded-[22px] ring-1 ring-[#DCE7F1]">
-                <div className="hidden bg-[#F8FAFC] md:grid md:grid-cols-4">
-                  {["Paket", "Kontör", "1 Yıl", "3 Yıl"].map((h) => (
-                    <div key={h} className="px-4 py-3 text-[13px] font-bold text-black/60">{h}</div>
-                  ))}
-                </div>
-                {[
-                  { name: "Başlangıç", kontor: "0 kontör", y1: "520 TL", y3: "1.215 TL" },
-                  { name: "Standart", kontor: "20 kontör", y1: "855 TL", y3: "1.550 TL" },
-                  { name: "Pro", kontor: "50 kontör", y1: "1.149 TL", y3: "1.844 TL" },
-                  { name: "Kurumsal", kontor: "100+ kontör", y1: "1.779 TL", y3: "2.474 TL" },
-                ].map((row, i) => (
-                  <div key={row.name} className={`md:grid md:grid-cols-4 ${i % 2 === 0 ? "bg-white" : "bg-[#FAFBFC]"} border-t border-[#DCE7F1]`}>
-                    <div className="px-4 py-3 text-[15px] font-bold text-black">{row.name}</div>
-                    <div className="px-4 py-3 text-[15px] text-black/60">{row.kontor}</div>
-                    <div className="px-4 py-3 text-[15px] font-semibold text-black">{row.y1}</div>
-                    <div className="px-4 py-3 text-[15px] font-semibold text-[#1b98d5]">{row.y3}</div>
+          {/* Web Sitesi */}
+          {gorunurTab === "web" && (
+            <div className="grid md:grid-cols-3 gap-6">
+              {webSitesiPlans.map((plan) => (
+                <div
+                  key={plan.name}
+                  className={`rounded-[28px] bg-white border-2 p-8 flex flex-col ${
+                    plan.popular ? "border-[#1b98d5] shadow-lg" : "border-black/10"
+                  }`}
+                >
+                  {plan.popular && (
+                    <span className="self-start rounded-full bg-[#1b98d5] px-3 py-1 text-[11px] font-bold text-white mb-4">
+                      En Çok Tercih Edilen
+                    </span>
+                  )}
+                  <h3 className="text-[22px] font-bold text-black">{plan.name}</h3>
+                  <p className="mt-1 text-[13px] text-black/50">{plan.description}</p>
+                  <div className="mt-5 mb-1">
+                    <span className="text-[32px] font-bold text-black">{plan.setup}</span>
+                    <span className="text-[14px] text-black/50 ml-1">TL kurulum +KDV</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Muhasebe + Dijital Asistan yan yana */}
-            <div className="grid gap-6 lg:grid-cols-2">
-              {/* Muhasebe */}
-              <div>
-                <p className="mb-1 text-[15px] font-bold text-black">Online Muhasebe Danışmanlığı</p>
-                <p className="mb-3 text-[13px] text-black/50">2026 SMMM asgari tarifesinin %72 altında</p>
-                <div className="space-y-3">
-                  {[
-                    { name: "Başlangıç", kriter: "≤50 belge/ay · <1M TL ciro", ay: "990 TL/ay", yillik: "695 TL/ay yıllık" },
-                    { name: "Standart", kriter: "51–300 belge · 1–10M TL", ay: "1.790 TL/ay", yillik: "1.255 TL/ay yıllık" },
-                    { name: "Kurumsal", kriter: "300+ belge · 10M+ TL", ay: "2.990 TL/ay", yillik: "2.095 TL/ay yıllık" },
-                  ].map((row) => (
-                    <div key={row.name} className="flex items-center justify-between rounded-[18px] border border-[#DCE7F1] bg-[#F8FAFC] px-4 py-3.5">
-                      <div>
-                        <p className="text-[14px] font-bold text-black">{row.name}</p>
-                        <p className="text-[12px] text-black/50">{row.kriter}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[14px] font-bold text-black">{row.ay}</p>
-                        <p className="text-[12px] font-semibold text-[#1b98d5]">{row.yillik}</p>
-                      </div>
-                    </div>
-                  ))}
+                  <p className="text-[13px] text-black/50 mb-6">+ {plan.monthly} TL/ay bakım +KDV</p>
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-[14px] text-black/70">
+                        <CheckCircle2 className="h-4 w-4 text-[#1b98d5] shrink-0 mt-0.5" strokeWidth={2.5} />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/iletisim"
+                    className={`rounded-full py-3.5 text-[14px] font-bold text-center transition-colors ${
+                      plan.popular
+                        ? "bg-[#1b98d5] text-white hover:bg-[#1580b3]"
+                        : "bg-black/5 text-black hover:bg-black/10"
+                    }`}
+                  >
+                    Teklif Al
+                  </Link>
                 </div>
-              </div>
-
-              {/* Dijital Asistan */}
-              <div>
-                <p className="mb-1 text-[15px] font-bold text-black">Dijital Asistan (AI+İnsan)</p>
-                <p className="mb-3 text-[13px] text-black/50">Belge işleme · Fatura kesilemez</p>
-                <div className="space-y-3">
-                  {[
-                    { name: "Başlangıç", kriter: "0–50 belge/ay", ay: "490 TL/ay", yillik: "345 TL/ay yıllık" },
-                    { name: "Standart", kriter: "51–200 belge/ay", ay: "990 TL/ay", yillik: "695 TL/ay yıllık" },
-                    { name: "Pro", kriter: "200+ belge/ay", ay: "1.990 TL/ay", yillik: "1.395 TL/ay yıllık" },
-                  ].map((row) => (
-                    <div key={row.name} className="flex items-center justify-between rounded-[18px] border border-[#DCE7F1] bg-[#F8FAFC] px-4 py-3.5">
-                      <div>
-                        <p className="text-[14px] font-bold text-black">{row.name}</p>
-                        <p className="text-[12px] text-black/50">{row.kriter}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[14px] font-bold text-black">{row.ay}</p>
-                        <p className="text-[12px] font-semibold text-[#1b98d5]">{row.yillik}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
-
-            {/* Marka Tescil + Teşvik + Sanal Ofis */}
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="rounded-[22px] border border-[#DCE7F1] bg-[#F8FAFC] px-5 py-5">
-                <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">Marka Tescil</p>
-                <p className="mt-3 text-[26px] font-bold tracking-[-0.04em] text-black">4.900 TL</p>
-                <p className="mt-1 text-[13px] text-black/50">TPE harcı dahil · 1 sınıf</p>
-                <div className="mt-3 space-y-1.5 text-[13px] text-black/60">
-                  <p>+ 1.500 TL / ek sınıf</p>
-                  <p>+ 290 TL/ay takip & yenileme</p>
-                </div>
-              </div>
-              <div className="rounded-[22px] border border-[#DCE7F1] bg-[#F8FAFC] px-5 py-5">
-                <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">Teşvik Analizi</p>
-                <p className="mt-3 text-[13px] text-black/50">KOSGEB · TÜBİTAK · Ticaret Bak.</p>
-                <p className="mt-2 text-[26px] font-bold tracking-[-0.04em] text-black">990 TL</p>
-                <p className="mt-1 text-[13px] text-black/50">Tek seferlik AI analizi</p>
-                <p className="mt-2 text-[13px] text-black/60">+ 290 TL/ay aktif başvuru takibi</p>
-              </div>
-              <div className="rounded-[22px] border border-[#DCE7F1] bg-[#F8FAFC] px-5 py-5">
-                <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">Sanal Ofis</p>
-                <p className="mt-3 text-[13px] font-semibold text-[#16A34A]">Kuruluşta 1 Yıl Ücretsiz</p>
-                <p className="mt-2 text-[26px] font-bold tracking-[-0.04em] text-black">490 TL<span className="text-[15px] text-black/50">/ay</span></p>
-                <p className="mt-1 text-[13px] text-black/50">Devam aboneliği</p>
-                <p className="mt-1 text-[13px] font-semibold text-[#1b98d5]">345 TL/ay yıllık (%30 ↓)</p>
-              </div>
-            </div>
-
-          </div>
+          )}
         </div>
       </section>
 
-      <section className="px-6 py-10">
-        <div className="mx-auto max-w-[1230px]">
-          <div className="grid gap-4 lg:grid-cols-3">
-            {benefits.map((item) => (
-              <div key={item.title} className={`rounded-[30px] px-6 py-6 ${item.color}`}>
-                <div className="inline-flex rounded-full bg-white/80 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-black/60">
-                  Avantaj
-                </div>
-                <h3 className="mt-4 text-[24px] font-bold tracking-[-0.03em] text-black">{item.title}</h3>
-                <p className="mt-3 text-[15px] leading-7 text-black/68">{item.text}</p>
-              </div>
-            ))}
-          </div>
+      {/* ── 4. İşini Büyüt ── */}
+      <section className="px-6 py-20 max-w-[1230px] mx-auto">
+        <div className="flex items-center gap-3 mb-2">
+          <TrendingUp className="h-6 w-6 text-[#16A34A]" />
+          <span className="text-[28px] font-bold text-black">İşini Büyüt</span>
         </div>
-      </section>
-
-      <section className="px-6 py-12">
-        <div className="mx-auto max-w-[1230px] rounded-[38px] bg-white px-6 py-8 shadow-sm ring-1 ring-black/5 md:px-8 md:py-10">
-          <div className="max-w-[920px]">
-            <p className="text-[14px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">Ekosistem Modülleri</p>
-            <h2 className="mt-3 text-[32px] font-bold tracking-[-0.04em] text-black md:text-[44px]">
-              İşinizi büyüten ekosistem modüllerini tek yapı içinde ekleyin.
-            </h2>
-            <p className="mt-4 text-[17px] leading-8 text-black/70">
-              Her modül operasyon paketine eklenebilir. İhtiyacınız olan modülleri tek tek seçebilir ya da tüm ekosistemi birlikte alarak daha avantajlı bir yapıyla ilerleyebilirsiniz.
+        <p className="text-[15px] text-black/50 mb-8">
+          Teşvik analizi, hibe başvurusu, yatırımcı erişimi ve uzman kiralama.
+        </p>
+        <div className="rounded-[28px] bg-[#F0FDF4] border border-[#BBF7D0] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-[22px] font-bold text-black mb-2">Teklif Bazlı Fiyatlandırma</h3>
+            <p className="text-[15px] text-black/65 max-w-[520px]">
+              Her şirketin ihtiyacı farklı. Teşvik analizi, hibe desteği, yatırımcı erişimi ve uzman kiralama için ekibimizle görüşün.
             </p>
           </div>
-
-          <div className="mt-8 overflow-hidden rounded-[28px] ring-1 ring-[#D7E0EA]">
-            <div className="hidden bg-[#142552] text-white md:grid md:grid-cols-[1.45fr_0.75fr_0.8fr_0.8fr_1.4fr]">
-              {["Modül", "Tekil alım /ay", "Pakette /ay", "Model", "Açıklama"].map((item) => (
-                <div key={item} className="px-5 py-4 text-[15px] font-bold">
-                  {item}
-                </div>
-              ))}
-            </div>
-
-            <div className="divide-y divide-[#D7E0EA]">
-              {ecosystemModules.map((module) => (
-                <div key={module.code} className="bg-[#F9FBFC] md:grid md:grid-cols-[1.45fr_0.75fr_0.8fr_0.8fr_1.4fr]">
-                  <div className="px-5 py-5">
-                    {module.code === "M4" ? (
-                      <Link href="/buyut" className={`group inline-flex items-center gap-1.5 text-[18px] font-bold underline-offset-4 hover:underline ${module.color}`}>
-                        {module.name}
-                        <span className="text-[11px] font-semibold text-[#94A3B8] group-hover:text-current">↗</span>
-                      </Link>
-                    ) : (
-                      <p className={`text-[18px] font-bold ${module.color}`}>{module.name}</p>
-                    )}
-                  </div>
-                  <div className="px-5 py-5 md:border-l md:border-[#D7E0EA]">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-black/40 md:hidden">Tekil alım /ay</p>
-                    <p className="mt-1 text-[17px] font-bold text-[#1A2952]">{module.aLaCarte}</p>
-                  </div>
-                  <div className="px-5 py-5 md:border-l md:border-[#D7E0EA]">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-black/40 md:hidden">Pakette /ay</p>
-                    <p className="mt-1 text-[17px] font-bold text-black/55">{module.package}</p>
-                  </div>
-                  <div className="px-5 py-5 md:border-l md:border-[#D7E0EA]">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-black/40 md:hidden">Model</p>
-                    <p className="mt-1 text-[17px] font-medium text-black/55">{module.model}</p>
-                  </div>
-                  <div className="px-5 py-5 md:border-l md:border-[#D7E0EA]">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-black/40 md:hidden">Açıklama</p>
-                    <p className="mt-1 text-[17px] leading-8 text-black/74">{module.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Link
+            href="/buyut"
+            className="shrink-0 flex items-center gap-2 rounded-full bg-[#16A34A] px-7 py-3.5 text-[14px] font-bold text-white hover:bg-[#15803D] transition-colors"
+          >
+            Detayları İncele <ChevronRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
-      <section className="px-6 py-12">
-        <div className="mx-auto max-w-[1230px]">
-          <div className="mb-8 flex flex-col gap-3">
-            <p className="text-[14px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">Karşılaştırmalı görünüm</p>
-            <h2 className="text-[34px] font-bold tracking-[-0.04em] text-black md:text-[46px]">
-              Piyasadaki alternatiflere göre neden daha görünür bir başlangıç sağlıyoruz?
-            </h2>
-          </div>
-
-          <div className="overflow-hidden rounded-[36px] bg-white shadow-sm ring-1 ring-black/6">
-            <div className="grid border-b border-black/5 bg-[#FBFBFB] md:grid-cols-[0.9fr_1.05fr_1.05fr]">
-              <div className="hidden px-6 py-5 md:block" />
-              <div className="px-6 py-5 text-center text-[18px] font-bold text-black">Work365</div>
-              <div className="px-6 py-5 text-center text-[18px] font-bold text-black/70">Piyasadaki Alternatifler</div>
-            </div>
-
-            {tableRows.map((row, index) => (
-              <div
-                key={row.title}
-                className={`grid border-b border-black/5 last:border-b-0 md:grid-cols-[0.9fr_1.05fr_1.05fr] ${
-                  index % 2 === 0 ? "bg-white" : "bg-[#FCFCFC]"
-                }`}
-              >
-                <div className="px-6 py-5 text-[15px] font-bold text-black">{row.title}</div>
-                <div className="px-6 py-5">
-                  <div className="flex items-start gap-3 rounded-[22px] bg-[#EFF9F5] px-4 py-4">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#00A86B]" />
-                    <span className="text-[14px] leading-7 text-black/72">{row.work365}</span>
-                  </div>
-                </div>
-                <div className="px-6 py-5">
-                  <div className="flex items-start gap-3 rounded-[22px] bg-[#FFF5F5] px-4 py-4">
-                    <X className="mt-0.5 h-5 w-5 shrink-0 text-[#D84C6F]" />
-                    <span className="text-[14px] leading-7 text-black/72">{row.market}</span>
-                  </div>
-                </div>
+      {/* ── 5. Tek Seferlik Ürünler ── */}
+      <section className="px-6 py-20 bg-[#F8FAFC]">
+        <div className="max-w-[1230px] mx-auto">
+          <h2 className="text-[28px] font-bold text-black mb-2">Tek Seferlik Ürünler</h2>
+          <p className="text-[15px] text-black/50 mb-10">Şirket paketlerine ek olarak alınabilir.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {oneTimeProducts.map((p) => (
+              <div key={p.name} className="rounded-[20px] bg-white border border-black/8 p-6">
+                <h3 className="text-[16px] font-bold text-black mb-1">{p.name}</h3>
+                <p className="text-[13px] text-black/50 mb-4">{p.desc}</p>
+                <p className="text-[15px] font-bold text-black">{p.price}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="px-6 pb-16 pt-8">
-        <div className="mx-auto max-w-[1230px] rounded-[42px] bg-[linear-gradient(135deg,#FFF4D0_0%,#EAF5FF_50%,#EAF8EF_100%)] px-7 py-10 md:px-10 md:py-12">
-          <p className="text-[14px] font-bold uppercase tracking-[0.12em] text-[#9A7B31]">Karar desteği</p>
-          <h2 className="mt-4 text-[34px] font-bold tracking-[-0.04em] text-black md:text-[48px]">
-            Hangi yapıda ne dahil, hangi şirkette hangi maliyet oluşur?
-          </h2>
-          <p className="mt-5 max-w-[760px] text-[18px] leading-8 text-black/70">
-            Şirket tipi, başlangıç kapsamı ve yıllık operasyon görünümünü aynı bakışta okuyarak daha sağlıklı karar verin.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/kayit-ol"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-7 py-4 text-[15px] font-bold text-white"
-            >
-              Hemen Başlayın <ArrowRight className="h-4 w-4" />
-            </Link>
-            <a
-              href="#planlar"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-7 py-4 text-[15px] font-bold text-black"
-            >
-              Planlara Dön
-            </a>
-          </div>
+      {/* ── 6. SSS ── */}
+      <section className="px-6 py-20 max-w-[1230px] mx-auto">
+        <h2 className="text-[28px] font-bold text-black mb-10">Sık Sorulan Sorular</h2>
+        <div className="space-y-3 max-w-[760px]">
+          {faqs.map((faq, i) => (
+            <div key={i} className="rounded-[16px] border border-black/8 overflow-hidden">
+              <button
+                onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-black/2 transition-colors"
+              >
+                <span className="text-[15px] font-bold text-black">{faq.q}</span>
+                <ChevronDown
+                  className={`h-4 w-4 text-black/40 shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`}
+                />
+              </button>
+              {openFaq === i && (
+                <div className="px-6 pb-5">
+                  <p className="text-[14px] text-black/65 leading-relaxed">{faq.a}</p>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
-      <section id="sss" className="px-6 pb-20 pt-2">
-        <div className="mx-auto max-w-[980px]">
-          <div className="mb-8 text-center">
-            <p className="text-[14px] font-bold uppercase tracking-[0.12em] text-[#1b98d5]">Sıkça Sorulanlar</p>
-            <h2 className="mt-3 text-[32px] font-bold tracking-[-0.04em] text-black md:text-[42px]">
-              Fiyatlandırma hakkında en çok sorulanlar
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq) => (
-              <details key={faq.question} className="rounded-[26px] bg-white px-6 py-5 shadow-sm ring-1 ring-black/5">
-                <summary className="cursor-pointer list-none text-[17px] font-bold text-black">
-                  {faq.question}
-                </summary>
-                <p className="pt-4 text-[15px] leading-8 text-black/68">{faq.answer}</p>
-              </details>
-            ))}
-          </div>
+      {/* ── CTA ── */}
+      <section className="px-6 py-20 bg-[#F8FAFC]">
+        <div className="max-w-[1230px] mx-auto text-center">
+          <h2 className="text-[32px] font-bold text-black mb-4">Hangi paketi seçeceğinden emin değil misin?</h2>
+          <p className="text-[16px] text-black/55 mb-8">
+            Ekibimizle 15 dakika konuşalım, ihtiyacına en uygun paketi belirleyelim.
+          </p>
+          <Link
+            href="/iletisim"
+            className="inline-flex items-center gap-2 rounded-full bg-black px-8 py-4 text-[15px] font-bold text-white hover:bg-gray-800 transition-colors"
+          >
+            Ücretsiz Danış <ChevronRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
