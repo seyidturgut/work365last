@@ -5,10 +5,12 @@ import Header from "@/components/Header";
 import Link from "next/link";
 import { useState } from "react";
 import {
+  ArrowRight,
   ChevronRight,
   CheckCircle2,
   ShieldCheck,
   ChevronDown,
+  Building2,
 } from "lucide-react";
 import DijitalOfisPlans from "@/components/pricing/DijitalOfisPlans";
 import GorunurOlPlans from "@/components/pricing/GorunurOlPlans";
@@ -134,33 +136,53 @@ export default function FiyatlandirmaPage() {
   const selectedCompany = companyTypes.find((c) => c.id === activeCompany)!;
 
   return (
-    <main className="bg-white pt-[92px]">
+    <main className="bg-[#FAFBFC] pt-[92px]">
       <Header />
 
-      {/* Hero */}
-      <section className="px-6 py-24 max-w-[1230px] mx-auto text-center">
-        <div className="inline-flex items-center gap-2 rounded-full bg-[#DCFCE7] px-4 py-2 mb-6">
-          <ShieldCheck className="h-4 w-4 text-[#16A34A]" />
-          <span className="text-[13px] font-bold text-[#16A34A]">Şeffaf Fiyatlandırma</span>
+      {/* ─── Hero ─── */}
+      <section className="relative overflow-hidden px-6 pb-10 pt-14">
+        {/* Gradient orbs */}
+        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#16A34A] opacity-[0.06] blur-[100px]" />
+        <div className="pointer-events-none absolute -left-20 bottom-0 h-[350px] w-[350px] rounded-full bg-[#1b98d5] opacity-[0.05] blur-[80px]" />
+
+        <div className="relative mx-auto max-w-[1230px]">
+          <div className="rounded-[40px] bg-gradient-to-b from-[#F0FDF4] to-white px-8 py-14 text-center md:px-12">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#DCFCE7] px-5 py-2.5 ring-1 ring-black/5 mb-6">
+              <ShieldCheck className="h-4 w-4 text-[#16A34A]" />
+              <span className="text-[13px] font-bold text-[#16A34A]">Şeffaf Fiyatlandırma</span>
+            </div>
+            <h1 className="text-[42px] md:text-[62px] font-extrabold tracking-[-0.04em] text-[#0F172A] leading-[1.05] mb-6 max-w-[720px] mx-auto">
+              Şeffaf fiyatlandırma,{" "}
+              <span className="text-[#16A34A]">gizli maliyet yok.</span>
+            </h1>
+            <p className="text-[18px] text-[#475569] max-w-[520px] mx-auto leading-relaxed">
+              Tüm paketler +KDV. İhtiyacın kadar al, dilediğinde iptal et.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              {["Şirketini Kur", "Dijital Ofis", "Görünür Ol", "İşini Büyüt"].map((t) => (
+                <span key={t} className="rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-[#475569] ring-1 ring-black/8 shadow-sm">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
-        <h1 className="text-[42px] md:text-[58px] font-bold tracking-tighter text-black leading-tight mb-6 max-w-[680px] mx-auto">
-          Şeffaf fiyatlandırma,{" "}
-          <span className="text-[#16A34A]">gizli maliyet yok.</span>
-        </h1>
-        <p className="text-[18px] text-black/60 max-w-[520px] mx-auto leading-relaxed">
-          Tüm paketler +KDV. İhtiyacın kadar al, dilediğinde iptal et.
-        </p>
       </section>
 
       {/* ── 1. Şirketini Kur ── */}
       <section className="px-6 py-20 bg-[#F8FAFC]">
         <div className="max-w-[1230px] mx-auto">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-[28px] font-bold text-black">Şirketini Kur</span>
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D97706]/10">
+                <Building2 className="h-5 w-5 text-[#D97706]" />
+              </div>
+              <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#D97706]">Şirketini Kur</p>
+            </div>
+            <h2 className="text-[28px] font-extrabold tracking-[-0.03em] text-[#0F172A] md:text-[36px]">
+              Şirket tipin ne olursa olsun, her şey dahil.
+            </h2>
           </div>
-          <p className="text-[15px] text-black/50 mb-10">
-            Şirket tipin ne olursa olsun, kuruluştan muhasebeye her şey dahil.
-          </p>
 
           {/* Aylık / Yıllık Toggle */}
           <div className="flex items-center gap-4 mb-10">
@@ -313,18 +335,30 @@ export default function FiyatlandirmaPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="px-6 py-20 bg-[#F8FAFC]">
-        <div className="max-w-[1230px] mx-auto text-center">
-          <h2 className="text-[32px] font-bold text-black mb-4">Hangi paketi seçeceğinden emin değil misin?</h2>
-          <p className="text-[16px] text-black/55 mb-8">
-            Ekibimizle 15 dakika konuşalım, ihtiyacına en uygun paketi belirleyelim.
-          </p>
-          <Link
-            href="/iletisim"
-            className="inline-flex items-center gap-2 rounded-full bg-black px-8 py-4 text-[15px] font-bold text-white hover:bg-gray-800 transition-colors"
-          >
-            Ücretsiz Danış <ChevronRight className="h-4 w-4" />
-          </Link>
+      <section className="px-6 pb-16 pt-4">
+        <div
+          className="relative mx-auto max-w-[1230px] overflow-hidden rounded-[40px] px-8 py-14 text-white md:px-12"
+          style={{ background: "linear-gradient(135deg, #0F172A 0%, #16A34Acc 100%)" }}
+        >
+          <div className="pointer-events-none absolute -right-20 -top-20 h-[300px] w-[300px] rounded-full bg-[#16A34A] opacity-20 blur-[60px]" />
+          <div className="pointer-events-none absolute -bottom-10 -left-10 h-[200px] w-[200px] rounded-full bg-white opacity-10 blur-[40px]" />
+          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-[640px]">
+              <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-white/60">Fiyatlandırma</p>
+              <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-white md:text-[44px]">
+                Hangi paketi seçeceğinden emin değil misin?
+              </h2>
+              <p className="mt-5 text-[17px] leading-8 text-white/70">
+                Ekibimizle 15 dakika konuşalım, ihtiyacına en uygun paketi birlikte belirleyelim.
+              </p>
+            </div>
+            <Link
+              href="/iletisim"
+              className="group/cta inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-bold text-[#0F172A] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-xl"
+            >
+              Ücretsiz Danış <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </section>
 
