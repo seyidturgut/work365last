@@ -180,69 +180,6 @@ export default function Hero() {
       </div>
 
       {/* Brand Logos Banner */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-        className="mt-16 bg-white rounded-3xl py-8 px-12 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 flex-wrap w-full"
-      >
-        <h3 className="text-xl font-bold text-black">Ekosistem Ortakları</h3>
-        
-        <div className="flex items-center gap-10 flex-wrap justify-center [&_img]:h-8 [&_img]:w-auto">
-          <a
-            href="https://piri.tr/?utm_source=work365&utm_medium=homepage&utm_campaign=destekleyen_markalar&utm_content=logo_1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-200 ease-out hover:-translate-y-1"
-          >
-            <img
-              src="https://piri.tr/pirilogo-son.svg"
-              alt="Piri"
-            />
-          </a>
-          <a
-            href="https://piri.tr/urunler/is-otomasyonlari-bpm365/?utm_source=work365&utm_medium=homepage&utm_campaign=destekleyen_markalar&utm_content=logo_2"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-2xl font-bold tracking-tighter text-black transition-transform duration-200 ease-out hover:-translate-y-1"
-          >
-            BPM<span className="text-[#1b98d5]">365</span>
-          </a>
-          <a
-            href="https://rest365.co/?utm_source=work365&utm_medium=homepage&utm_campaign=destekleyen_markalar&utm_content=logo_3"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-200 ease-out hover:-translate-y-1"
-          >
-            <img
-              src="https://rest365.co/logo.svg"
-              alt="Rest365"
-            />
-          </a>
-          <a
-            href="https://e-tugra.com.tr/?utm_source=work365&utm_medium=homepage&utm_campaign=destekleyen_markalar&utm_content=logo_4"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-200 ease-out hover:-translate-y-1"
-          >
-            <img
-              src="https://e-tugra.com.tr/wp-content/uploads/2020/08/etugra-logo-2.png"
-              alt="E-Tuğra"
-            />
-          </a>
-          <a
-            href="https://www.kolaystartup.com/?utm_source=work365&utm_medium=homepage&utm_campaign=destekleyen_markalar&utm_content=logo_5"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-200 ease-out hover:-translate-y-1"
-          >
-            <img
-              src="/kolaystartup.png"
-              alt="Kolay Startup"
-            />
-          </a>
-        </div>
-      </motion.div>
       <CompanyAdvisorModal open={isAdvisorOpen} onClose={() => setIsAdvisorOpen(false)} />
     </section>
   );
