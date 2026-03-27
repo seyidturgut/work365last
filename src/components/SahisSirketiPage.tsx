@@ -18,6 +18,10 @@ import Breadcrumb from "@/components/Breadcrumb";
 import type { CompanyTypeConfig } from "@/app/sirket-kur/company-types";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { buildPackageSignupHref } from "@/lib/pricing";
+import DijitalOfisPlans from "@/components/pricing/DijitalOfisPlans";
+import GorunurOlPlans from "@/components/pricing/GorunurOlPlans";
+import IsIniBuyutSection from "@/components/pricing/IsIniBuyutSection";
+import TekSeferlikUrunler from "@/components/pricing/TekSeferlikUrunler";
 
 type CompanyTypeStoryPageProps = {
   config: CompanyTypeConfig;
@@ -320,75 +324,11 @@ export default function CompanyTypeStoryPage({ config }: CompanyTypeStoryPagePro
         </div>
       </section>
 
-      {/* ─── ECOSYSTEM MODULES ─── */}
-      {config.ecosystemModules?.length ? (
-        <section className="px-6 py-14">
-          <div className="mx-auto max-w-[1230px]">
-            <div className="mb-10 max-w-[860px]">
-              <p className="text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: config.accent }}>
-                Ek alınabilir modüller
-              </p>
-              <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[44px]">
-                İhtiyaç büyüdükçe yapınızı modüler şekilde genişletin.
-              </h2>
-              <p className="mt-4 text-[17px] leading-8 text-[#64748B]">
-                Dijital ofis, web varlığı, içerik üretimi ve startup ekosistemi gibi modülleri ana paketinize sonradan ekleyin.
-              </p>
-            </div>
-
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {config.ecosystemModules.map((module) => {
-                const ModuleIcon = module.icon;
-
-                return (
-                  <div
-                    key={module.code}
-                    className={`group rounded-[24px] bg-white px-6 py-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-                      module.accent
-                        ? "ring-2 ring-[#7C3AED]/40 hover:ring-[#7C3AED]/60"
-                        : "ring-1 ring-black/6 hover:ring-black/12"
-                    }`}
-                  >
-                    <div
-                      className={`inline-flex rounded-[16px] p-3.5 transition-transform duration-300 group-hover:scale-110 ${
-                        module.accent ? "bg-[#F0E7FF]" : "bg-[#F1F5F9]"
-                      }`}
-                    >
-                      <ModuleIcon
-                        className="h-6 w-6"
-                        style={{ color: module.accent ? "#7C3AED" : config.accent }}
-                      />
-                    </div>
-                    <h3 className="mt-5 text-[20px] font-bold tracking-[-0.03em] text-[#0F172A]">
-                      {module.title}
-                    </h3>
-                    <p className="mt-3 text-[20px] font-extrabold tracking-[-0.03em]" style={{ color: config.accent }}>
-                      {module.price}
-                    </p>
-                    <p className="mt-2 text-[14px] leading-7 text-[#64748B]">{module.subtitle}</p>
-
-                    <div className="mt-5 space-y-3">
-                      {module.points.map((point) => (
-                        <div key={point} className="flex items-start gap-3">
-                          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
-                          <p className="text-[14px] leading-7 text-[#475569]">{point}</p>
-                        </div>
-                      ))}
-                    </div>
-
-                    {module.accent ? (
-                      <div className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[#EFE6FF] px-4 py-2 text-[13px] font-bold text-[#7C3AED]">
-                        <Sparkles className="h-3.5 w-3.5" />
-                        Girişim Platformu
-                      </div>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      ) : null}
+      {/* ─── EK HİZMET FİYATLANDIRMASI ─── */}
+      <DijitalOfisPlans />
+      <GorunurOlPlans />
+      <IsIniBuyutSection />
+      <TekSeferlikUrunler />
 
       {/* ─── FAQ ─── */}
       <section className="px-6 pb-14 pt-8">
