@@ -170,9 +170,9 @@ export default function Header() {
 
             {/* Dijital Ofis — tek link */}
             <Link
-              href="/dijitale-tasi"
+              href="/digital-ofis"
               className={`whitespace-nowrap tracking-[-0.01em] transition-opacity hover:opacity-70 ${
-                pathname === "/dijitale-tasi" ? "text-black" : ""
+                pathname === "/digital-ofis" ? "text-black" : ""
               }`}
             >
               Dijital Ofis
@@ -334,7 +334,7 @@ export default function Header() {
 
               {/* Dijital Ofis mobile */}
               <Link
-                href="/dijitale-tasi"
+                href="/digital-ofis"
                 className="flex items-center justify-between rounded-[18px] bg-[#F7F9FC] px-4 py-3 text-[14px] font-bold text-black"
               >
                 <span className="flex items-center gap-3">

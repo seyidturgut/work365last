@@ -105,6 +105,13 @@ export default function SosyalMedyaPage() {
                   Markanızın sesini bulun, hedef kitlenize ulaşın. İçerik oluşturmak için zaman harcamayın — biz halledelim.
                 </p>
 
+                <div className="mt-7 lg:hidden">
+                  <div className="relative h-[250px] w-full overflow-hidden rounded-[30px]">
+                    <Image src="/auth-startup-team.jpg" alt="Sosyal Medya Yönetimi" fill className="object-cover object-top" sizes="100vw" priority />
+                    <div className="absolute inset-0 rounded-[30px]" style={{ background: "linear-gradient(to top, #1b98d530 0%, transparent 60%)" }} />
+                  </div>
+                </div>
+
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/iletisim"

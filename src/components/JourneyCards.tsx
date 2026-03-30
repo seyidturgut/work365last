@@ -22,7 +22,7 @@ const cards = [
     icon: Monitor,
     label: "Dijital Ofis",
     desc: "Microsoft 365, kurumsal e-posta, Teams ve help desk tek pakette.",
-    href: "/dijitale-tasi",
+    href: "/digital-ofis",
     image:
       "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=800&h=500&q=80&auto=format&fit=crop",
     accent: "#0EA5E9",

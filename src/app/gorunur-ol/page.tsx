@@ -76,6 +76,13 @@ export default function GorunurOlPage() {
                   Web sitesi ve sosyal medya yönetimiyle markanı dijitalde büyüt. İki güçlü kanalı tek çatı altında yönet.
                 </p>
 
+                <div className="mt-7 lg:hidden">
+                  <div className="relative h-[250px] w-full overflow-hidden rounded-[30px]">
+                    <Image src="/hero_female.png" alt="Görünür Ol" fill className="object-cover object-top" sizes="100vw" priority />
+                    <div className="absolute inset-0 rounded-[30px]" style={{ background: "linear-gradient(to top, #1b98d530 0%, transparent 60%)" }} />
+                  </div>
+                </div>
+
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/iletisim"

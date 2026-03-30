@@ -101,6 +101,13 @@ export default function WebSitesiPage() {
                   Kurulum + aylık bakım dahil. Gizli maliyet yok.
                 </p>
 
+                <div className="mt-7 lg:hidden">
+                  <div className="relative h-[250px] w-full overflow-hidden rounded-[30px]">
+                    <Image src="/founder_2.png" alt="Web Sitesi" fill className="object-cover object-top" sizes="100vw" priority />
+                    <div className="absolute inset-0 rounded-[30px]" style={{ background: "linear-gradient(to top, #1b98d530 0%, transparent 60%)" }} />
+                  </div>
+                </div>
+
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/iletisim"

@@ -115,6 +115,13 @@ export default function IsIniBuyutPage() {
                   Teşvik analizi, hibe başvurusu, yatırımcı erişimi ve uzman kiralama — ihtiyacın olduğunda, ihtiyacın kadar.
                 </p>
 
+                <div className="mt-7 lg:hidden">
+                  <div className="relative h-[250px] w-full overflow-hidden rounded-[30px]">
+                    <Image src="/auth-growth-meeting.jpg" alt="İşini Büyüt" fill className="object-cover object-top" sizes="100vw" priority />
+                    <div className="absolute inset-0 rounded-[30px]" style={{ background: "linear-gradient(to top, #16A34A30 0%, transparent 60%)" }} />
+                  </div>
+                </div>
+
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/iletisim"

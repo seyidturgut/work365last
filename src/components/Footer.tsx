@@ -44,7 +44,7 @@ export default function Footer() {
           <h4 className="font-semibold mb-6">Hizmetler</h4>
           <ul className="space-y-4 text-Work365-text text-sm">
             <li><Link href="/fiyatlandirma" className="hover:text-black transition-colors">Fiyatlandırma</Link></li>
-            <li><Link href="/dijitale-tasi" className="hover:text-black transition-colors">Dijital Ofis</Link></li>
+            <li><Link href="/digital-ofis" className="hover:text-black transition-colors">Dijital Ofis</Link></li>
             <li><Link href="/gorunur-ol" className="hover:text-black transition-colors">Görünür Ol</Link></li>
             <li><Link href="/buyut" className="hover:text-black transition-colors">İşini Büyüt</Link></li>
             <li><Link href="/iletisim" className="hover:text-black transition-colors">İletişim</Link></li>

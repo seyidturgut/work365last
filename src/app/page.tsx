@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import JourneyCards from "@/components/JourneyCards";
 import HowItWorks from "@/components/HowItWorks";
 import Features from "@/components/Features";
 import WhyWork365 from "@/components/WhyWork365";
@@ -16,7 +15,6 @@ export default function Home() {
     <main className="min-h-screen">
       <Header />
       <Hero />
-      <JourneyCards />
       <Features />
       <HowItWorks />
       <WhyWork365 />
@@ -29,4 +27,3 @@ export default function Home() {
     </main>
   );
 }
-
