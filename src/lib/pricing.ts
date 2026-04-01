@@ -139,6 +139,17 @@ export function parseTlString(value: string) {
   return Number.isFinite(numericValue) ? numericValue : 0;
 }
 
+export function calculateSavingsPercent(monthlyValue: string | number, yearlyValue: string | number) {
+  const monthly = typeof monthlyValue === "number" ? monthlyValue : parseTlString(monthlyValue);
+  const yearly = typeof yearlyValue === "number" ? yearlyValue : parseTlString(yearlyValue);
+
+  if (!Number.isFinite(monthly) || !Number.isFinite(yearly) || monthly <= 0 || yearly <= 0 || yearly >= monthly) {
+    return 0;
+  }
+
+  return Math.round(((monthly - yearly) / monthly) * 100);
+}
+
 export function buildPackageSignupHref(
   company: string,
   price: number | string,

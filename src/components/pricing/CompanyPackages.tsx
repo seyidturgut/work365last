@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import BillingToggle from "@/components/pricing/BillingToggle";
+import PricingValue from "@/components/pricing/PricingValue";
+import { calculateSavingsPercent } from "@/lib/pricing";
 import { ArrowRight, CheckCircle2, Globe, Laptop, TrendingUp, Zap } from "lucide-react";
 
 type Props = {
@@ -50,6 +53,18 @@ const tierIcons: Record<string, React.ElementType> = {
 
 export default function CompanyPackages({ accent, packages }: Props) {
   const [yearly, setYearly] = useState(false);
+  const discountValues = packages
+    .filter((pkg) => pkg.monthlyPrice !== "Teklif" && pkg.yearlyPrice !== "Teklif")
+    .map((pkg) => calculateSavingsPercent(pkg.monthlyPrice, pkg.yearlyPrice))
+    .filter((value) => value > 0);
+  const minDiscount = discountValues.length ? Math.min(...discountValues) : 0;
+  const maxDiscount = discountValues.length ? Math.max(...discountValues) : 0;
+  const savingsLabel =
+    minDiscount && maxDiscount
+      ? minDiscount === maxDiscount
+        ? `~%${minDiscount} tasarruf`
+        : `~%${minDiscount}-%${maxDiscount} tasarruf`
+      : null;
 
   return (
     <section className="px-6 py-14">
@@ -71,27 +86,7 @@ export default function CompanyPackages({ accent, packages }: Props) {
         </div>
 
         {/* Aylık / Yıllık toggle */}
-        <div className="mb-8 flex items-center gap-3">
-          <button
-            onClick={() => setYearly(false)}
-            className={`rounded-full px-5 py-2 text-[14px] font-bold transition-all duration-200 ${
-              !yearly ? "bg-black text-white shadow-sm" : "bg-black/8 text-black/60 hover:bg-black/12"
-            }`}
-          >
-            Aylık
-          </button>
-          <button
-            onClick={() => setYearly(true)}
-            className={`rounded-full px-5 py-2 text-[14px] font-bold transition-all duration-200 ${
-              yearly ? "bg-black text-white shadow-sm" : "bg-black/8 text-black/60 hover:bg-black/12"
-            }`}
-          >
-            Yıllık{" "}
-            <span className="ml-1.5 rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] font-bold text-[#166534]">
-              %35–45 indirim
-            </span>
-          </button>
-        </div>
+        <BillingToggle yearly={yearly} onChange={setYearly} savingsLabel={savingsLabel} className="mb-8" />
 
         {/* 3-column package grid */}
         <div className="grid gap-6 md:grid-cols-3">
@@ -143,15 +138,12 @@ export default function CompanyPackages({ accent, packages }: Props) {
                       <span className="mb-1.5 text-[14px] text-black/50">bazlı</span>
                     </div>
                   ) : (
-                    <>
-                      <div className="flex items-end gap-1.5">
-                        <span className="text-[36px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{displayPrice}</span>
-                        <span className="mb-1.5 text-[14px] text-black/50">TL/ay +KDV</span>
-                      </div>
-                      {yearly && (
-                        <p className="mt-1 text-[12px] font-semibold text-[#16A34A]">yıllık ödeme</p>
-                      )}
-                    </>
+                    <PricingValue
+                      currentPrice={displayPrice}
+                      crossedPrice={yearly ? `₺${pkg.monthlyPrice}/ay` : null}
+                      suffix={yearly ? "/ ay · KDV hariç · Yıllık" : "/ ay · KDV hariç · Aylık"}
+                      priceClassName="text-[36px]"
+                    />
                   )}
                 </div>
 

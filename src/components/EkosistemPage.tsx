@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import BillingToggle from "@/components/pricing/BillingToggle";
+import PricingValue from "@/components/pricing/PricingValue";
 import {
   ArrowRight,
   CheckCircle2,
@@ -22,7 +24,7 @@ import {
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Breadcrumb from "@/components/Breadcrumb";
-import { buildPackageSignupHref } from "@/lib/pricing";
+import { buildPackageSignupHref, calculateSavingsPercent } from "@/lib/pricing";
 
 /* ─── DATA ─── */
 
@@ -156,32 +158,6 @@ function SectionTag({ children, color = "#7C3AED" }: { children: React.ReactNode
   );
 }
 
-function PeriodToggle({ active, onToggle }: { active: "monthly" | "yearly"; onToggle: (v: "monthly" | "yearly") => void }) {
-  return (
-    <div className="inline-flex items-center gap-1 rounded-full bg-[#F1F5F9] p-1">
-      <button
-        onClick={() => onToggle("monthly")}
-        className={`rounded-full px-5 py-2.5 text-[13px] font-bold transition-all duration-300 ${
-          active === "monthly" ? "bg-white text-[#0F172A] shadow-sm" : "text-[#64748B] hover:text-[#0F172A]"
-        }`}
-      >
-        Aylık
-      </button>
-      <button
-        onClick={() => onToggle("yearly")}
-        className={`rounded-full px-5 py-2.5 text-[13px] font-bold transition-all duration-300 ${
-          active === "yearly" ? "bg-white text-[#0F172A] shadow-sm" : "text-[#64748B] hover:text-[#0F172A]"
-        }`}
-      >
-        Yıllık
-        <span className="ml-2 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-700">
-          %15 İndirim
-        </span>
-      </button>
-    </div>
-  );
-}
-
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
   return (
@@ -210,6 +186,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
 export default function EkosistemPage() {
   const [m1Period, setM1Period] = useState<"monthly" | "yearly">("yearly");
+  const savingsLabel = `~%${calculateSavingsPercent(m1Plans[0].monthly, m1Plans[0].yearly)} tasarruf`;
 
   return (
     <main className="bg-[#FAFBFC] pt-[92px]">
@@ -334,7 +311,7 @@ export default function EkosistemPage() {
                 Microsoft 365 Business lisansları dahil. Piri Dijital operasyonel güvencesi ile kurulum, destek ve yönetim tek elden sağlanır. Kullanıcı sayısına göre ölçeklenir.
               </p>
             </div>
-            <PeriodToggle active={m1Period} onToggle={setM1Period} />
+            <BillingToggle yearly={m1Period === "yearly"} onChange={(value) => setM1Period(value ? "yearly" : "monthly")} savingsLabel={savingsLabel} />
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -361,12 +338,12 @@ export default function EkosistemPage() {
                 </div>
 
                 <div className="mt-5">
-                  <p className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">
-                    {m1Period === "monthly" ? plan.monthly : plan.yearly}
-                  </p>
-                  <p className="mt-1 text-[13px] text-[#64748B]">
-                    / ay {m1Period === "yearly" && <span className="text-emerald-600 font-semibold">(yıllık taahhüt)</span>}
-                  </p>
+                  <PricingValue
+                    currentPrice={m1Period === "monthly" ? plan.monthly : plan.yearly}
+                    crossedPrice={m1Period === "yearly" ? plan.monthly : null}
+                    suffix={m1Period === "yearly" ? "/ ay · KDV hariç · Yıllık" : "/ ay · KDV hariç · Aylık"}
+                    priceClassName="text-[30px]"
+                  />
                 </div>
 
                 <div className="mt-5 space-y-3">

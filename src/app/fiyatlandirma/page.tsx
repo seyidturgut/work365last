@@ -2,12 +2,15 @@
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { buildPackageSignupHref, parseTlString } from "@/lib/pricing";
+import BillingToggle from "@/components/pricing/BillingToggle";
+import PricingValue from "@/components/pricing/PricingValue";
+import { buildPackageSignupHref, calculateSavingsPercent, parseTlString } from "@/lib/pricing";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { Ref } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, Check, CheckCircle2, ChevronDown, CircleDollarSign, FileSignature, Globe, Landmark, Mail, Sparkles, TrendingUp } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronDown, CircleDollarSign, FileSignature, Globe, Landmark, Mail, Sparkles, TrendingUp } from "lucide-react";
 
 type CompanyTypeKey = "sahis" | "limited" | "anonim" | "bilanco";
 type OfficeTierKey = "do10" | "do30" | "do100" | "do300";
@@ -25,6 +28,7 @@ type SelectPlan = {
   key: string;
   label: string;
   price: string;
+  yearlyPrice?: string;
   sublabel: string;
   features: string[];
   description: string;
@@ -43,6 +47,10 @@ type StoreItem = {
   description: string;
   features: string[];
   href: string;
+  bannerBg: string;
+  iconColor: string;
+  buttonBg: string;
+  priceColor: string;
 };
 
 const discountRibbon = [
@@ -120,6 +128,7 @@ const officePlans: SelectPlan[] = [
     key: "do10",
     label: "1–10 kişi",
     price: "10.000",
+    yearlyPrice: "7.000",
     sublabel: "Başlangıç düzeyi ekipler için hazır kurulum",
     description: "Küçük ekipler için e-posta, dosya paylaşımı ve temel IT desteğini tek akışta kurun.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -137,6 +146,7 @@ const officePlans: SelectPlan[] = [
     key: "do30",
     label: "11–30 kişi",
     price: "15.000",
+    yearlyPrice: "10.500",
     sublabel: "Büyüyen ekipler için daha güçlü operasyon katmanı",
     description: "Lisans, güvenlik ve kullanıcı yönetimini büyüyen ekip yapısına uygun biçimde düzenleyin.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -154,6 +164,7 @@ const officePlans: SelectPlan[] = [
     key: "do100",
     label: "31–100 kişi",
     price: "20.000",
+    yearlyPrice: "14.000",
     sublabel: "Kurumsal ekipler için merkezi kontrol ve güvenlik",
     description: "Yetki yönetimi, güvenlik ve ekip iş birliğini daha kontrollü bir altyapıda toplayın.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -175,7 +186,7 @@ const officePlans: SelectPlan[] = [
     description: "Çok kullanıcılı yapılarda lisans, geçiş ve güvenlik mimarisini size özel tasarlıyoruz.",
     source: "Fiyatlandırma sayfasından seçildi",
     quote: true,
-    ctaLabel: "Teklif Al",
+    ctaLabel: "Özel İhtiyacınız mı var? Teklif Al",
     features: [
       "Microsoft 365 lisans planlaması",
       "Kurumsal e-posta + Teams + OneDrive",
@@ -191,8 +202,9 @@ const officePlans: SelectPlan[] = [
 const socialPlans: SelectPlan[] = [
   {
     key: "sm4",
-    label: "Haftada 1 paylaşım",
+    label: "Ayda 4 paylaşım",
     price: "15.000",
+    yearlyPrice: "12.750",
     sublabel: "Temel görünürlük için düzenli içerik akışı",
     description: "Markanızı görünür kılacak ilk düzenli içerik ritmini profesyonel bir akışla başlatın.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -200,7 +212,7 @@ const socialPlans: SelectPlan[] = [
     features: [
       "Post veya reels formatında içerik",
       "Paylaşım takvimi + içerik planlaması",
-      "Özel gün paylaşımları",
+      "Özel gün paylaşımları (ücretsiz)",
       "İmaj yönetimi",
       "İletişim ve marka danışmanlığı",
       "Tasarım ve içerik danışmanlığı",
@@ -208,8 +220,9 @@ const socialPlans: SelectPlan[] = [
   },
   {
     key: "sm8",
-    label: "Haftada 2 paylaşım",
+    label: "Ayda 8 paylaşım",
     price: "20.000",
+    yearlyPrice: "17.000",
     sublabel: "Sürekli görünürlük için dengeli içerik planı",
     description: "Daha sık içerik üretimiyle markanızın görünürlüğünü ve iletişim ritmini güçlendirin.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -217,7 +230,7 @@ const socialPlans: SelectPlan[] = [
     features: [
       "Post veya reels formatında içerik",
       "Paylaşım takvimi + içerik planlaması",
-      "Özel gün paylaşımları",
+      "Özel gün paylaşımları (ücretsiz)",
       "İmaj yönetimi",
       "İletişim ve marka danışmanlığı",
       "Tasarım ve içerik danışmanlığı",
@@ -225,8 +238,9 @@ const socialPlans: SelectPlan[] = [
   },
   {
     key: "sm12",
-    label: "Haftada 3 paylaşım",
+    label: "Ayda 12 paylaşım",
     price: "30.000",
+    yearlyPrice: "25.500",
     sublabel: "Yüksek frekanslı iletişim için premium akış",
     description: "Yoğun paylaşım temposuyla markanızı daha güçlü, daha düzenli ve daha hatırlanır hale getirin.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -234,7 +248,7 @@ const socialPlans: SelectPlan[] = [
     features: [
       "Post veya reels formatında içerik",
       "Paylaşım takvimi + içerik planlaması",
-      "Özel gün paylaşımları",
+      "Özel gün paylaşımları (ücretsiz)",
       "İmaj yönetimi",
       "İletişim ve marka danışmanlığı",
       "Tasarım ve içerik danışmanlığı",
@@ -247,6 +261,7 @@ const webPlans: SelectPlan[] = [
     key: "web1",
     label: "Landing Page",
     price: "20.000",
+    yearlyPrice: "17.000",
     sublabel: "Tek sayfalı hızlı başlangıç sitesi",
     description: "Hızlı yayına çıkmak isteyen markalar için net mesaj veren tek sayfalı bir web vitrini.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -265,6 +280,7 @@ const webPlans: SelectPlan[] = [
     key: "web2",
     label: "Kurumsal Site",
     price: "30.000",
+    yearlyPrice: "25.500",
     sublabel: "Kurumsal anlatım için çok sayfalı yapı",
     description: "Hizmetlerinizi ve markanızı daha güçlü anlatmak için kapsamlı kurumsal site kurgusu kurun.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -283,6 +299,7 @@ const webPlans: SelectPlan[] = [
     key: "web3",
     label: "Premium",
     price: "50.000",
+    yearlyPrice: "42.500",
     sublabel: "Özel tasarım ve görünürlük odaklı üst paket",
     description: "Daha güçlü tasarım, daha yüksek güven ve daha iyi görünürlük hedefi için premium web paketi seçin.",
     source: "Fiyatlandırma sayfasından seçildi",
@@ -332,6 +349,10 @@ const storeItems: StoreItem[] = [
     name: "e-İmza",
     price: "2.300 TL",
     note: "1 yıllık · E-Tuğra Nitelikli",
+    bannerBg: "bg-[#EEF6FF]",
+    iconColor: "text-[#1B98D5]",
+    buttonBg: "bg-[#1B98D5]",
+    priceColor: "text-[#1B98D5]",
     description: "Resmi işlemler için gerekli e-İmza sürecini güvenli ve hızlı biçimde tamamlayın.",
     features: ["Başvuru ve kimlik doğrulama takibi", "Yenileme hatırlatması", "Abonelere ilk yıl dahil"],
     href: buildPackageSignupHref("e-İmza 1 Yıl", 2300, {
@@ -347,6 +368,10 @@ const storeItems: StoreItem[] = [
     name: "KEP",
     price: "520 TL'den",
     note: "1 yıllık · 4 paket seçeneği",
+    bannerBg: "bg-[#F3F0FF]",
+    iconColor: "text-[#7C3AED]",
+    buttonBg: "bg-[#7C3AED]",
+    priceColor: "text-[#7C3AED]",
     description: "Resmi tebligat ve kayıtlı e-posta süreçlerini işletmeniz için hızlıca aktive edin.",
     features: ["Başlangıç: 520 TL", "Standart: 855 TL", "Pro: 1.149 TL", "Kurumsal: 1.779 TL"],
     href: buildPackageSignupHref("KEP Başlangıç", 520, {
@@ -362,6 +387,10 @@ const storeItems: StoreItem[] = [
     name: "Marka Tescil",
     price: "4.900 TL",
     note: "TPE harcı dahil",
+    bannerBg: "bg-[#FFF7ED]",
+    iconColor: "text-[#D97706]",
+    buttonBg: "bg-[#D97706]",
+    priceColor: "text-[#D97706]",
     description: "Markanızı başvurudan takibe kadar tek akışta koruma altına alın.",
     features: ["TPE harcı dahil", "Benzerlik araştırması", "Başvuru takibi"],
     href: buildPackageSignupHref("Marka Tescil", 4900, {
@@ -377,6 +406,10 @@ const storeItems: StoreItem[] = [
     name: "Sanal Ofis",
     price: "490 TL / ay",
     note: "Yıllık ödemede: ayda 345 TL",
+    bannerBg: "bg-[#F0FDFA]",
+    iconColor: "text-[#0D9488]",
+    buttonBg: "bg-[#0D9488]",
+    priceColor: "text-[#0D9488]",
     description: "Prestijli iş adresi ve tebligat yönetimini fiziksel ofis yükü olmadan kullanın.",
     features: ["Ticaret sicil kaydı için uygun", "Tebligat + posta + kargo alımı", "Yıllık ödeme avantajı"],
     href: buildPackageSignupHref("Sanal Ofis", 490, {
@@ -418,19 +451,23 @@ const faqs = [
 
 export default function FiyatlandirmaPage() {
   const [companyType, setCompanyType] = useState<CompanyTypeKey>("sahis");
-  const [yearly, setYearly] = useState(false);
+  const [yearly, setYearly] = useState(true);
   const [officeKey, setOfficeKey] = useState<OfficeTierKey>("do10");
+  const [officeYearly, setOfficeYearly] = useState(true);
   const [socialKey, setSocialKey] = useState<SocialTierKey>("sm4");
+  const [socialYearly, setSocialYearly] = useState(true);
   const [webKey, setWebKey] = useState<WebTierKey>("web1");
+  const [webYearly, setWebYearly] = useState(true);
   const [openFaq, setOpenFaq] = useState(0);
   const [activeStoreItem, setActiveStoreItem] = useState<StoreItem | null>(null);
   const [activeSection, setActiveSection] = useState("sirketini-kur");
   const [isStickyPinned, setIsStickyPinned] = useState(false);
-  const stickySentinelRef = useRef<HTMLDivElement | null>(null);
+  const stickyTitleRef = useRef<HTMLHeadingElement | null>(null);
 
   const trPlan = companyPricing[companyType];
   const trPrice = yearly ? trPlan.yearly : trPlan.monthly;
   const trPriceValue = parseTlString(trPrice);
+  const trSavingsLabel = `~%${calculateSavingsPercent(trPlan.monthly, trPlan.yearly)} tasarruf`;
   const trSignupHref = buildPackageSignupHref(trPlan.label, trPriceValue, {
     label: trPlan.label,
     source: "Fiyatlandırma sayfasından seçildi",
@@ -443,36 +480,34 @@ export default function FiyatlandirmaPage() {
   const activeSocial = socialPlans.find((plan) => plan.key === socialKey)!;
   const activeWeb = webPlans.find((plan) => plan.key === webKey)!;
 
+  const officeDisplayPrice = officeYearly && activeOffice.yearlyPrice ? activeOffice.yearlyPrice : activeOffice.price;
   const officeHref = activeOffice.quote
-    ? "/contact"
-    : buildPackageSignupHref(`Dijital Ofis ${activeOffice.label}`, activeOffice.price, {
+    ? "/iletisim"
+    : buildPackageSignupHref(`Dijital Ofis ${activeOffice.label}`, officeDisplayPrice, {
         label: `Dijital Ofis ${activeOffice.label}`,
         source: activeOffice.source,
-        term: "Aylık plan",
+        term: officeYearly ? "Yıllık plan" : "Aylık plan",
         description: activeOffice.description,
         features: activeOffice.features,
       });
 
-  const socialHref = buildPackageSignupHref(`Sosyal Medya ${activeSocial.label}`, activeSocial.price, {
+  const socialDisplayPrice = socialYearly && activeSocial.yearlyPrice ? activeSocial.yearlyPrice : activeSocial.price;
+  const socialHref = buildPackageSignupHref(`Sosyal Medya ${activeSocial.label}`, socialDisplayPrice, {
     label: `Sosyal Medya ${activeSocial.label}`,
     source: activeSocial.source,
-    term: activeSocial.term,
+    term: socialYearly ? "Yıllık plan" : "Aylık plan",
     description: activeSocial.description,
     features: activeSocial.features,
   });
 
-  const webHref = buildPackageSignupHref(`Web Sitesi ${activeWeb.label}`, activeWeb.price, {
+  const webDisplayPrice = webYearly && activeWeb.yearlyPrice ? activeWeb.yearlyPrice : activeWeb.price;
+  const webHref = buildPackageSignupHref(`Web Sitesi ${activeWeb.label}`, webDisplayPrice, {
     label: `Web Sitesi ${activeWeb.label}`,
     source: activeWeb.source,
-    term: activeWeb.term,
+    term: webYearly ? "Yıllık plan" : "Aylık plan",
     description: activeWeb.description,
     features: activeWeb.features,
   });
-
-  const heroTags = useMemo(
-    () => ["Şirketini Kur", "Dijital Ofis", "Görünür Ol", "İşini Büyüt"],
-    []
-  );
 
   const stickyNavItems = useMemo(
     () => [
@@ -514,7 +549,7 @@ export default function FiyatlandirmaPage() {
   }, [stickyNavItems]);
 
   useEffect(() => {
-    if (!stickySentinelRef.current) return;
+    if (!stickyTitleRef.current) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -522,12 +557,12 @@ export default function FiyatlandirmaPage() {
         setIsStickyPinned(!entry.isIntersecting);
       },
       {
-        rootMargin: "-88px 0px 0px 0px",
+        rootMargin: "-56px 0px 0px 0px",
         threshold: 0,
       }
     );
 
-    observer.observe(stickySentinelRef.current);
+    observer.observe(stickyTitleRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -535,7 +570,7 @@ export default function FiyatlandirmaPage() {
     const element = document.getElementById(sectionId);
     if (!element) return;
 
-    const stickyOffset = 170;
+    const stickyOffset = 132;
     const top = element.getBoundingClientRect().top + window.scrollY - stickyOffset;
     window.scrollTo({ top, behavior: "smooth" });
     setActiveSection(sectionId);
@@ -550,10 +585,10 @@ export default function FiyatlandirmaPage() {
             key={item.id}
             type="button"
             onClick={() => scrollToSection(item.id)}
-            className={`shrink-0 rounded-full border px-4 py-2 text-[13px] font-semibold transition-all ${
+            className={`shrink-0 rounded-full border px-4 py-2.5 text-[13px] font-semibold tracking-[-0.01em] transition-all ${
               isActive
-                ? "border-[#1B98D5] bg-[#1B98D5] text-white shadow-[0_6px_18px_rgba(27,152,213,0.24)]"
-                : "border-black/10 bg-[#F8FAFC] text-[#475569] hover:border-[#1B98D5]/35"
+                ? "border-[#1B98D5] bg-[#1B98D5] text-white shadow-[0_10px_24px_rgba(27,152,213,0.20)]"
+                : "border-[#D7E7F2] bg-white text-[#52657A] hover:border-[#A9D7EF] hover:text-[#1B98D5]"
             }`}
           >
             {item.label}
@@ -566,103 +601,14 @@ export default function FiyatlandirmaPage() {
   return (
     <main className="bg-[#FAFBFC] pt-[92px] text-[#0F172A]">
       <Header />
-
-      <section className="relative overflow-hidden px-6 pb-8 pt-12">
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[640px] w-[640px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(27,152,213,0.11)_0%,transparent_68%)]" />
-        <div className="mx-auto max-w-[1230px]">
-          <div className="relative overflow-hidden rounded-[40px] border border-black/6 bg-white px-8 py-10 shadow-[0_24px_70px_rgba(15,23,42,0.05)] md:px-12 md:py-12">
-            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#DCFCE7] px-5 py-2 text-[12px] font-bold uppercase tracking-[0.16em] text-[#15803D]">
-                  <Check className="h-4 w-4" />
-                  Net fiyat, sürpriz maliyet yok
-                </div>
-                <h1 className="mt-6 max-w-[14ch] text-[34px] font-extrabold leading-[1.04] tracking-[-0.05em] text-[#0F172A] md:text-[52px]">
-                  Tum fiyatlari net gorun,
-                  <span className="bg-[linear-gradient(135deg,#1B98D5,#7C3AED)] bg-clip-text text-transparent"> size en uygun paketi hemen secin.</span>
-                </h1>
-                <p className="mt-4 max-w-[54ch] text-[16px] leading-8 text-[#64748B]">
-                  Kurulus, dijital ofis ve gorunurluk paketlerini tek ekranda karsilastirin. Uygun paketi secip sureci aninda baslatin.
-                </p>
-
-                <div className="mt-7 flex flex-wrap items-center gap-3">
-                  {heroTags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-black/8 bg-[#F8FAFC] px-4 py-2 text-[13px] font-semibold text-[#475569]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-7">
-                  <a
-                    href="#sirketini-kur"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1B98D5] px-7 py-3.5 text-[14px] font-bold text-white transition-transform hover:-translate-y-0.5"
-                  >
-                    Paketleri incele
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <div className="w-full rounded-[30px] border border-[#D9E8F6] bg-[linear-gradient(180deg,#F8FBFF_0%,#EEF6FF_100%)] p-7 shadow-[0_20px_60px_rgba(27,152,213,0.10)]">
-                  <div className="relative h-[210px] w-full overflow-hidden rounded-[22px]">
-                    <Image
-                      src="/auth-modern-office.jpg"
-                      alt="Fiyatlandirma hero gorseli"
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 40vw"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/45 via-transparent to-transparent" />
-                    <p className="absolute bottom-4 left-4 text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Tek panelde net secim</p>
-                  </div>
-                  <p className="mt-5 text-[12px] font-bold uppercase tracking-[0.18em] text-[#1B98D5]">Doğru başlangıç</p>
-                  <h2 className="mt-3 text-[24px] font-bold tracking-[-0.04em] text-[#0F172A]">
-                    Ihtiyaciniz kadar alin, gereksiz maliyetten kacinin.
-                  </h2>
-                  <div className="mt-5 space-y-3">
-                    {[
-                      "Abonelik modullerini ihtiyaciniza gore birlestirin.",
-                      "Tek seferlik urunleri ayri satin alin.",
-                    ].map((item) => (
-                      <div key={item} className="flex items-start gap-3 rounded-[18px] bg-white px-4 py-3 text-[14px] text-[#475569]">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#16A34A]" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                    <Link
-                      href="/contact"
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-6 py-3 text-[13px] font-bold text-[#0F172A] transition-colors hover:bg-[#F8FAFC]"
-                    >
-                      Uzmanla görüş
-                    </Link>
-                  </div>
-                </div>
+      {isStickyPinned ? (
+        <div className="fixed inset-x-0 top-[64px] z-40 hidden px-6 md:block">
+          <div className="mx-auto max-w-[1230px]">
+            <div className="rounded-[22px] border border-[#DCEAF4] bg-white/96 px-3 py-2 shadow-[0_16px_34px_rgba(15,23,42,0.10)] backdrop-blur-xl">
+              <div className="flex items-center justify-center">
+                {renderDesktopStickyNav()}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <div ref={stickySentinelRef} className="h-px w-full" />
-
-      <section className="hidden px-6 pb-4 md:block">
-        <div className="mx-auto max-w-[1230px]">
-          <div className="rounded-[20px] border border-black/8 bg-white/90 p-2 shadow-[0_12px_34px_rgba(15,23,42,0.08)] backdrop-blur">
-            {renderDesktopStickyNav()}
-          </div>
-        </div>
-      </section>
-      {isStickyPinned ? (
-        <div className="fixed left-1/2 top-[88px] z-40 hidden w-[calc(100%-3rem)] max-w-[1230px] -translate-x-1/2 px-0 md:block">
-          <div className="rounded-[20px] border border-black/8 bg-white/95 p-2 shadow-[0_14px_34px_rgba(15,23,42,0.14)] backdrop-blur">
-            {renderDesktopStickyNav()}
           </div>
         </div>
       ) : null}
@@ -672,6 +618,7 @@ export default function FiyatlandirmaPage() {
           <SectionHead
             badge="Şirketini Kur"
             badgeTone="bg-[#FEF3C7] text-[#92400E]"
+            titleRef={stickyTitleRef}
             title="Şirketinizi kurmak için en doğru paketi tek ekranda seçin."
             description="Kuruluş süreci, muhasebe başlangıcı ve temel dijital ihtiyaçlar tek pakette net şekilde görünür."
             motto="Kuruluşu hızlandırın, ilk operasyonu sadeleştirin."
@@ -698,42 +645,15 @@ export default function FiyatlandirmaPage() {
 
               <div className="grid gap-0 xl:grid-cols-[minmax(0,1fr)_360px] xl:items-stretch">
                 <div className="space-y-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setYearly(false)}
-                      className={`rounded-full px-4 py-2 text-[13px] font-bold transition-all ${
-                        !yearly ? "bg-[#0F172A] text-white" : "bg-black/5 text-[#64748B]"
-                      }`}
-                    >
-                      Aylık
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setYearly(true)}
-                      className={`rounded-full px-4 py-2 text-[13px] font-bold transition-all ${
-                        yearly ? "bg-[#0F172A] text-white" : "bg-black/5 text-[#64748B]"
-                      }`}
-                    >
-                      Yıllık
-                    </button>
-                    <span className="rounded-full bg-[#DCFCE7] px-3 py-1.5 text-[11px] font-bold text-[#15803D]">
-                      ~%40 tasarruf
-                    </span>
-                  </div>
+                  <BillingToggle yearly={yearly} onChange={setYearly} savingsLabel={trSavingsLabel} />
 
                   <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-end">
-                    <div>
-                      <div className="min-h-[20px] text-[14px] text-[#94A3B8]">{yearly ? `₺${trPlan.monthly}/ay` : "\u00A0"}</div>
-                      <div className="mt-1 flex flex-wrap items-end gap-2">
-                        <span className="text-[18px] font-bold text-[#0F172A]">₺</span>
-                        <span className="text-[46px] font-extrabold leading-none tracking-[-0.05em] text-[#0F172A]">{trPrice}</span>
-                        <span className="pb-1 text-[14px] text-[#64748B]">{yearly ? "/ ay · Yıllık ödeme" : "/ ay · Aylık ödeme"}</span>
-                      </div>
-                      <p className="mt-2 text-[13px] text-[#64748B]">
-                        {trPlan.label} · {yearly ? "Yıllık ödeme" : "Aylık ödeme"} · KDV hariç
-                      </p>
-                    </div>
+                    <PricingValue
+                      currentPrice={trPrice}
+                      crossedPrice={yearly ? `₺${trPlan.monthly}/ay` : null}
+                      suffix={yearly ? "/ ay · KDV hariç · Yıllık" : "/ ay · KDV hariç · Aylık"}
+                      meta={`${trPlan.label} · ${yearly ? "Yıllık ödeme" : "Aylık ödeme"}`}
+                    />
 
                     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
                       <Link
@@ -744,10 +664,10 @@ export default function FiyatlandirmaPage() {
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                       <Link
-                        href="/contact"
+                        href="/iletisim"
                         className="inline-flex items-center justify-center rounded-[16px] border border-black/10 bg-white px-6 py-3.5 text-[14px] font-bold text-[#0F172A] transition-colors hover:bg-[#F8FAFC]"
                       >
-                        Teklif Al
+                        Özel İhtiyaçlarınız için Teklif Al
                       </Link>
                     </div>
                   </div>
@@ -799,6 +719,9 @@ export default function FiyatlandirmaPage() {
               imageAlt="Dijital ofis paketi için modern ofis görseli"
               visualEyebrow="Merkezi yönetim"
               visualCopy="E-posta, dosya paylaşımı ve kullanıcı yönetimini tek bir düzenli ofis katmanında toplayın."
+              yearly={officeYearly}
+              onYearlyChange={setOfficeYearly}
+              displayPrice={officeDisplayPrice}
             />
           </div>
 
@@ -816,6 +739,10 @@ export default function FiyatlandirmaPage() {
               imageAlt="Sosyal medya görünürlüğü için marka odaklı görsel"
               visualEyebrow="Sürekli görünürlük"
               visualCopy="Markanız için düzenli bir içerik ritmi kurun, görünürlüğü tesadüfe bırakmayın."
+              yearly={socialYearly}
+              onYearlyChange={setSocialYearly}
+              displayPrice={socialDisplayPrice}
+              yearlySavingsLabel="~%15 tasarruf"
             />
           </div>
 
@@ -833,6 +760,10 @@ export default function FiyatlandirmaPage() {
               imageAlt="Web sitesi paketi için dijital ürün odaklı görsel"
               visualEyebrow="Dijital vitrin"
               visualCopy="Markanızı güçlü anlatan, hızlı yayına çıkan ve güven veren bir web yüzeyiyle ilerleyin."
+              yearly={webYearly}
+              onYearlyChange={setWebYearly}
+              displayPrice={webDisplayPrice}
+              yearlySavingsLabel="~%15 tasarruf"
             />
           </div>
         </div>
@@ -842,9 +773,9 @@ export default function FiyatlandirmaPage() {
         <div className="mx-auto max-w-[1230px] rounded-[34px] bg-[linear-gradient(135deg,#0F172A_0%,#1E3A5F_55%,#0F172A_100%)] px-8 py-10 text-white shadow-[0_24px_70px_rgba(15,23,42,0.20)] md:px-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-[28px] font-extrabold tracking-[-0.04em] text-white">Modül indirimi sadece abonelik servislerinde geçerlidir.</h2>
+              <h2 className="text-[28px] font-extrabold tracking-[-0.04em] text-white">Daha fazla modül, daha fazla avantaj.</h2>
               <p className="mt-2 max-w-[54ch] text-[15px] text-white/78">
-                Yalnızca Dijital Ofis ve Sosyal Medya birlikte alındığında modül indirimi uygulanır. Web Sitesi, Şirketini Kur, İşini Büyüt ve Mağaza ürünleri bu kapsama dahil değildir.
+                Abonelik modüllerini birlikte kullanarak kademeli indirimlerden faydalanabilirsiniz.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -856,7 +787,7 @@ export default function FiyatlandirmaPage() {
               ))}
             </div>
           </div>
-          <p className="mt-5 text-[13px] text-white/58">Örnek: Dijital Ofis + Sosyal Medya kombinasyonunda indirim devreye girer.</p>
+          <p className="mt-5 text-[13px] text-white/58">⚠️ Uyarı: İndirim yalnızca abonelik modüllerinin birlikte alınması durumunda uygulanır. Mağaza ürünleri bu kapsama dahil değildir.</p>
         </div>
       </section>
 
@@ -865,19 +796,21 @@ export default function FiyatlandirmaPage() {
           <SectionHead
             badge="Mağaza"
             badgeTone="bg-[#EEF3F8] text-[#334155]"
-            title="İhtiyacınız olan tek seferlik ürünleri hemen seçin."
-            description="Abonelikten bağımsız satın alabileceğiniz temel ürünleri tek yerde topladık."
+            title="İşinizi destekleyen tüm ürün ve servisler burada."
+            description="İhtiyacınıza göre seçin, tek platformdan kolayca yönetin ve hemen kullanmaya başlayın."
           />
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {storeItems.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.name} className="rounded-[24px] border border-black/8 bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.04)]">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#EEF6FF] text-[#1B98D5]">
-                    <Icon className="h-6 w-6" />
+                <div key={item.name} className="overflow-hidden rounded-[24px] border border-black/8 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.04)]">
+                  <div className={`relative flex h-[140px] items-center justify-center ${item.bannerBg}`}>
+                    <Icon className={`h-20 w-20 opacity-15 ${item.iconColor}`} aria-hidden />
+                    <Icon className={`absolute h-12 w-12 ${item.iconColor}`} aria-hidden />
                   </div>
-                  <h3 className="mt-5 text-[20px] font-bold tracking-[-0.03em] text-[#0F172A]">{item.name}</h3>
-                  <p className="mt-2 text-[24px] font-extrabold tracking-[-0.04em] text-[#1B98D5]">{item.price}</p>
+                  <div className="p-6">
+                  <h3 className="text-[20px] font-bold tracking-[-0.03em] text-[#0F172A]">{item.name}</h3>
+                  <p className={`mt-2 text-[24px] font-extrabold tracking-[-0.04em] ${item.priceColor}`}>{item.price}</p>
                   <p className="mt-1 text-[12px] text-[#94A3B8]">{item.note}</p>
                   <p className="mt-4 line-clamp-3 text-[14px] leading-7 text-[#64748B]">{item.description}</p>
                   <div className="mt-5 flex gap-2">
@@ -890,10 +823,11 @@ export default function FiyatlandirmaPage() {
                     </button>
                     <Link
                       href={item.href}
-                      className="flex-1 rounded-[14px] bg-[#1B98D5] px-4 py-2.5 text-center text-[13px] font-semibold text-white transition-transform hover:-translate-y-0.5"
+                      className={`flex-1 rounded-[14px] px-4 py-2.5 text-center text-[13px] font-semibold text-white transition-transform hover:-translate-y-0.5 ${item.buttonBg}`}
                     >
                       Başvur
                     </Link>
+                  </div>
                   </div>
                 </div>
               );
@@ -937,7 +871,7 @@ export default function FiyatlandirmaPage() {
           </div>
           <div className="mt-8 text-center">
             <Link
-              href="/contact"
+              href="/iletisim"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-[#16A34A] px-8 py-3.5 text-[14px] font-bold text-white transition-transform hover:-translate-y-0.5"
             >
               Randevu Al
@@ -1056,12 +990,14 @@ function SectionHead({
   title,
   description,
   motto,
+  titleRef,
 }: {
   badge: string;
   badgeTone: string;
   title: string;
   description?: string;
   motto?: string;
+  titleRef?: Ref<HTMLHeadingElement>;
 }) {
   return (
     <div className="mb-8">
@@ -1071,7 +1007,9 @@ function SectionHead({
         </span>
         {motto ? <span className="text-[14px] italic text-[#64748B]">{motto}</span> : null}
       </div>
-      <h2 className="mt-4 text-[30px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">{title}</h2>
+      <h2 ref={titleRef} className="mt-4 text-[30px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">
+        {title}
+      </h2>
       {description ? <p className="mt-3 max-w-[62ch] text-[15px] leading-7 text-[#64748B]">{description}</p> : null}
     </div>
   );
@@ -1090,6 +1028,10 @@ function UnifiedPlanSection({
   imageAlt,
   visualEyebrow,
   visualCopy,
+  yearly,
+  onYearlyChange,
+  displayPrice,
+  yearlySavingsLabel = "~%30 tasarruf",
 }: {
   badge: string;
   badgeTone: string;
@@ -1103,6 +1045,10 @@ function UnifiedPlanSection({
   imageAlt: string;
   visualEyebrow: string;
   visualCopy: string;
+  yearly?: boolean;
+  onYearlyChange?: (val: boolean) => void;
+  displayPrice?: string;
+  yearlySavingsLabel?: string;
 }) {
   const activePlan = plans.find((plan) => plan.key === activeKey)!;
   const accentClasses =
@@ -1125,21 +1071,30 @@ function UnifiedPlanSection({
       <SectionHead badge={badge} badgeTone={badgeTone} title={badge} description={activePlan.description} motto={motto} />
       <div className={`overflow-hidden rounded-[30px] border bg-white shadow-[0_18px_60px_rgba(15,23,42,0.05)] ${accentClasses.border}`}>
         <div className="p-7 md:p-10">
-          <div className="mb-5 flex flex-wrap gap-2">
-            {plans.map((plan) => (
-              <button
-                key={plan.key}
-                type="button"
-                onClick={() => onChange(plan.key)}
-                className={`rounded-[12px] border px-4 py-2.5 text-[13px] font-semibold transition-all ${
-                  activeKey === plan.key
-                    ? `${accentClasses.bg} ${accentClasses.text} border-current`
-                    : "border-black/10 bg-white text-[#64748B] hover:border-black/20"
-                }`}
-              >
-                {plan.label}
-              </button>
-            ))}
+          <div className="mb-5 space-y-3">
+            <div className="flex flex-wrap gap-2">
+              {plans.map((plan) => (
+                <button
+                  key={plan.key}
+                  type="button"
+                  onClick={() => onChange(plan.key)}
+                  className={`rounded-[12px] border px-4 py-2.5 text-[13px] font-semibold transition-all ${
+                    activeKey === plan.key
+                      ? `${accentClasses.bg} ${accentClasses.text} border-current`
+                      : "border-black/10 bg-white text-[#64748B] hover:border-black/20"
+                  }`}
+                >
+                  {plan.label}
+                </button>
+              ))}
+            </div>
+            {onYearlyChange !== undefined && activePlan.yearlyPrice && (
+              <BillingToggle
+                yearly={yearly ?? true}
+                onChange={onYearlyChange}
+                savingsLabel={yearlySavingsLabel}
+              />
+            )}
           </div>
 
           <div className="grid gap-0 xl:grid-cols-[minmax(0,1fr)_340px] xl:items-stretch">
@@ -1148,30 +1103,47 @@ function UnifiedPlanSection({
                 <div>
                   <div className="mt-1 flex flex-wrap items-end gap-2">
                     {!activePlan.quote ? <span className="text-[18px] font-bold text-[#0F172A]">₺</span> : null}
-                    <span className="text-[44px] font-extrabold leading-none tracking-[-0.05em] text-[#0F172A]">{activePlan.price}</span>
-                    <span className="pb-1 text-[14px] text-[#64748B]">{activePlan.note || "/ ay · KDV hariç"}</span>
+                    {!activePlan.quote && yearly && activePlan.yearlyPrice && (
+                      <span className="text-[18px] font-bold text-[#94A3B8] line-through">{activePlan.price}</span>
+                    )}
+                    <span className="text-[44px] font-extrabold leading-none tracking-[-0.05em] text-[#0F172A]">{displayPrice ?? activePlan.price}</span>
+                    {!activePlan.quote && <span className="pb-1 text-[14px] text-[#64748B]">{activePlan.note || "/ ay · KDV hariç"}</span>}
                   </div>
                   <p className="mt-2 text-[13px] text-[#64748B]">{activePlan.sublabel}</p>
                 </div>
 
-                <Link
-                  href={ctaHref}
-                  className={`inline-flex items-center justify-center gap-2 rounded-[16px] px-6 py-3.5 text-[14px] font-bold text-white transition-transform hover:-translate-y-0.5 ${accentClasses.button}`}
-                >
-                  {activePlan.quote ? activePlan.ctaLabel || "Teklif Al" : activePlan.ctaLabel || "Hemen Başla"}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href={ctaHref}
+                    className={`inline-flex items-center justify-center gap-2 rounded-[16px] px-6 py-3.5 text-[14px] font-bold text-white transition-transform hover:-translate-y-0.5 ${accentClasses.button}`}
+                  >
+                    {activePlan.quote ? activePlan.ctaLabel || "Teklif Al" : activePlan.ctaLabel || "Hemen Başla"}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  {!activePlan.quote && (
+                    <Link
+                      href="/iletisim"
+                      className="flex w-full items-center justify-center whitespace-nowrap rounded-[16px] border border-black/10 bg-white px-4 py-3 text-[12px] font-bold text-[#0F172A] transition-colors hover:bg-[#F8FAFC]"
+                    >
+                      Özel İhtiyacınız mı var? Teklif Al
+                    </Link>
+                  )}
+                </div>
               </div>
 
               <p className="max-w-[62ch] text-[15px] leading-7 text-[#64748B]">{activePlan.description}</p>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                {activePlan.features.map((feature) => (
-                  <div key={feature} className="flex items-start gap-3 rounded-[18px] border border-black/6 bg-[#F8FAFC] px-4 py-3 text-[14px] leading-6 text-[#475569]">
-                    <CheckCircle2 className={`mt-0.5 h-4 w-4 shrink-0 ${accentClasses.text}`} />
-                    <span>{feature}</span>
-                  </div>
-                ))}
+                {activePlan.features.map((feature) => {
+                  const isFree = feature.includes("(ücretsiz)");
+                  const label = isFree ? feature.replace(" (ücretsiz)", "") : feature;
+                  return (
+                    <div key={feature} className={`flex items-start gap-3 rounded-[18px] border px-4 py-3 text-[14px] leading-6 ${isFree ? "border-[#BBF7D0] bg-[#F0FDF4] text-[#166534]" : "border-black/6 bg-[#F8FAFC] text-[#475569]"}`}>
+                      <CheckCircle2 className={`mt-0.5 h-4 w-4 shrink-0 ${isFree ? "text-[#16A34A]" : accentClasses.text}`} />
+                      <span>{label}{isFree && <span className="ml-1.5 rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] font-bold text-[#15803D]">Ücretsiz</span>}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
