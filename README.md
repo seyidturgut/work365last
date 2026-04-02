@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Work365
 
-## Getting Started
+Work365, şirket kuruluşu, dijital ofis, görünürlük paketleri ve onboarding panel akışlarını aynı Next.js uygulaması içinde toplayan bir ürün sitesidir.
 
-First, run the development server:
+Bu repo şu anda hem pazarlama sitesi hem de demo seviyesinde auth/panel akışını içerir. Yazılım departmanına teknik teslim için detaylı döküman: [docs/handoff.md](/Users/seyidturgut/Works/My%20Work/work365/Weblast-v2/docs/handoff.md)
+
+## Stack
+
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- `node:fs/promises` tabanlı demo JSON store
+
+## Hızlı Başlangıç
+
+Önerilen ortam:
+
+- Node.js 20 LTS
+- npm 10+
+
+Kurulum:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Uygulama varsayılan olarak [http://localhost:3000](http://localhost:3000) adresinde çalışır.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Production build kontrolü:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## NPM Scriptleri
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev`: geliştirme sunucusu
+- `npm run build`: production build
+- `npm run start`: production server
+- `npm run lint`: ESLint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Mevcut Özellikler
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Pazarlama sayfaları: ana sayfa, fiyatlandırma, şirketini kur, dijital ofis, görünür ol, blog
+- Paket seçiminden `/kayit-ol` ekranına query tabanlı paket taşıma
+- Demo auth akışı:
+  - e-posta/şifre ile kayıt
+  - e-posta/şifre ile giriş
+  - Google demo giriş placeholder akışı
+- Demo panel:
+  - onboarding wizard
+  - ödeme wizard
+  - dashboard
 
-## Deploy on Vercel
+## Veri Saklama
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Panel tarafı şu anda veritabanı yerine JSON dosyası kullanır.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Geliştirme ortamında veri dosyası: `src/data/panel-users.json`
+- Production/Vercel ortamında veri dosyası: `/tmp/work365/panel-users.json`
+
+Bu yaklaşım demo amaçlıdır. Kalıcı production veri katmanı olarak değerlendirilmemelidir.
+
+## Environment Variables
+
+Bu repo şu anda çalışmak için zorunlu bir `.env` değişkeni gerektirmez.
+
+Buna rağmen production ortamına geçmeden önce aşağıdakiler tasarlanmalıdır:
+
+- gerçek auth secret ve session stratejisi
+- veritabanı bağlantı bilgileri
+- gerçek ödeme sağlayıcı ayarları
+- gerçek OAuth sağlayıcı ayarları
+
+## Önemli Notlar
+
+- Panel auth ve ödeme akışı demo seviyesindedir.
+- Vercel üzerinde dosya sistemi kalıcı değildir; `/tmp` yalnızca geçici runtime storage sağlar.
+- Route/redirect katmanında geçmiş yönlendirmeler bulunduğu için deploy öncesi gözden geçirme gerekir.
+
+## Teknik Teslim
+
+Yazılım departmanına devir için aşağıdaki belge esas alınmalıdır:
+
+- [docs/handoff.md](/Users/seyidturgut/Works/My%20Work/work365/Weblast-v2/docs/handoff.md)
