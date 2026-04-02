@@ -603,7 +603,7 @@ export default function FiyatlandirmaPage() {
       <Header />
       {isStickyPinned ? (
         <div className="fixed inset-x-0 top-[64px] z-40 hidden px-6 md:block">
-          <div className="mx-auto max-w-[1230px]">
+          <div className="mx-auto max-w-[1100px]">
             <div className="rounded-[22px] border border-[#DCEAF4] bg-white/96 px-3 py-2 shadow-[0_16px_34px_rgba(15,23,42,0.10)] backdrop-blur-xl">
               <div className="flex items-center justify-center">
                 {renderDesktopStickyNav()}
@@ -614,7 +614,7 @@ export default function FiyatlandirmaPage() {
       ) : null}
 
       <section id="sirketini-kur" className="px-6 py-12">
-        <div className="mx-auto max-w-[1230px]">
+        <div className="mx-auto max-w-[1100px]">
           <SectionHead
             badge="Şirketini Kur"
             badgeTone="bg-[#FEF3C7] text-[#92400E]"
@@ -704,7 +704,7 @@ export default function FiyatlandirmaPage() {
       </section>
 
       <section className="px-6 py-12">
-        <div className="mx-auto max-w-[1230px] space-y-12">
+        <div className="mx-auto max-w-[1100px] space-y-12">
           <div id="dijital-ofis">
             <UnifiedPlanSection
               badge="Dijital Ofis"
@@ -770,7 +770,7 @@ export default function FiyatlandirmaPage() {
       </section>
 
       <section className="px-6 py-10">
-        <div className="mx-auto max-w-[1230px] rounded-[34px] bg-[linear-gradient(135deg,#0F172A_0%,#1E3A5F_55%,#0F172A_100%)] px-8 py-10 text-white shadow-[0_24px_70px_rgba(15,23,42,0.20)] md:px-10">
+        <div className="mx-auto max-w-[1160px] rounded-[34px] bg-[linear-gradient(135deg,#0F172A_0%,#1E3A5F_55%,#0F172A_100%)] px-8 py-10 text-white shadow-[0_24px_70px_rgba(15,23,42,0.20)] md:px-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="text-[28px] font-extrabold tracking-[-0.04em] text-white">Daha fazla modül, daha fazla avantaj.</h2>
@@ -792,7 +792,7 @@ export default function FiyatlandirmaPage() {
       </section>
 
       <section id="magaza" className="px-6 py-12">
-        <div className="mx-auto max-w-[1230px]">
+        <div className="mx-auto max-w-[1160px]">
           <SectionHead
             badge="Mağaza"
             badgeTone="bg-[#EEF3F8] text-[#334155]"
@@ -837,7 +837,7 @@ export default function FiyatlandirmaPage() {
       </section>
 
       <section id="isini-buyut" className="px-6 py-12">
-        <div className="mx-auto max-w-[1230px]">
+        <div className="mx-auto max-w-[1160px]">
           <SectionHead
             badge="İşini Büyüt"
             badgeTone="bg-[#D1FAE5] text-[#065F46]"
@@ -911,7 +911,7 @@ export default function FiyatlandirmaPage() {
       </section>
 
       <section className="px-6 pb-16 pt-4">
-        <div className="mx-auto max-w-[1230px] rounded-[38px] bg-[#1B98D5] px-8 py-14 text-center text-white shadow-[0_24px_70px_rgba(27,152,213,0.20)] md:px-12">
+        <div className="mx-auto max-w-[1160px] rounded-[38px] bg-[#1B98D5] px-8 py-14 text-center text-white shadow-[0_24px_70px_rgba(27,152,213,0.20)] md:px-12">
           <h2 className="text-[32px] font-extrabold tracking-[-0.04em]">Hazırsanız doğru paketle bugün başlayın.</h2>
           <p className="mx-auto mt-3 max-w-[42ch] text-[17px] leading-8 text-white/78">
             Kuruluş, muhasebe ve dijital operasyon ihtiyaçlarını tek akışta toplayan yapı ile süreci gecikmeden başlatın.
