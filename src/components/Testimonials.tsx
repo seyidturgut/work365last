@@ -43,7 +43,7 @@ export default function Testimonials() {
   }, [testimonials.length]);
 
   return (
-    <section className="py-24 px-6 bg-white overflow-hidden">
+    <section className="py-24 px-6 bg-[#F5F7FA] overflow-hidden">
       <div className="max-w-[1230px] mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16 px-4">

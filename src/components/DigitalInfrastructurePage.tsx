@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -194,7 +195,7 @@ export default function DigitalInfrastructurePage() {
   const [bundlePeriod, setBundlePeriod] = useState<"1y" | "3y">("1y");
 
   return (
-    <main className="bg-[#FAFBFC] pt-[92px]">
+    <main className="bg-white pt-[92px]">
       <Header />
       <Breadcrumb items={[{ label: "Dijital Altyapı", href: "/digital-altyapi" }]} />
 
@@ -266,9 +267,15 @@ export default function DigitalInfrastructurePage() {
       </section>
 
       {/* ─── BENEFITS ─── */}
-      <section className="px-6 py-14">
+      <section className="px-6 py-14 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[1230px]">
-          <div className="mb-10 max-w-[720px]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 max-w-[720px]"
+          >
             <SectionTag>Neden Dijital Altyapı?</SectionTag>
             <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[44px]">
               Türkiye&apos;de resmi işlem yapmanın dijital yolu.
@@ -276,14 +283,18 @@ export default function DigitalInfrastructurePage() {
             <p className="mt-4 text-[17px] leading-8 text-[#64748B]">
               e-İmza ve KEP, Türkiye&apos;deki her şirketin resmi dijital kimliğidir. Vergi dairesi, SGK, e-Devlet ve mahkeme süreçlerinde yasal geçerliliğe sahip tek dijital araçlardır.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {benefits.map((item) => {
+            {benefits.map((item, i) => {
               const Icon = item.icon;
               return (
-                <div
+                <motion.div
                   key={item.title}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
                   className="group rounded-[24px] bg-white px-6 py-7 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div className="inline-flex rounded-[16px] bg-[#EEF7FF] p-3.5 transition-transform duration-300 group-hover:scale-110">
@@ -291,7 +302,7 @@ export default function DigitalInfrastructurePage() {
                   </div>
                   <h3 className="mt-5 text-[18px] font-bold text-[#0F172A]">{item.title}</h3>
                   <p className="mt-3 text-[14px] leading-7 text-[#64748B]">{item.body}</p>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -299,7 +310,7 @@ export default function DigitalInfrastructurePage() {
       </section>
 
       {/* ─── e-İMZA ─── */}
-      <section id="paketler" className="px-6 py-14">
+      <section id="paketler" className="px-6 py-14 bg-white">
         <div className="mx-auto max-w-[1230px]">
           <div className="mb-10 max-w-[720px]">
             <SectionTag>e-İmza — E-Tuğra Nitelikli</SectionTag>
@@ -389,7 +400,7 @@ export default function DigitalInfrastructurePage() {
       </section>
 
       {/* ─── KEP ─── */}
-      <section className="px-6 py-14">
+      <section className="px-6 py-14 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[1230px]">
           <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-[720px]">
@@ -465,7 +476,7 @@ export default function DigitalInfrastructurePage() {
       </section>
 
       {/* ─── BUNDLE ─── */}
-      <section className="px-6 py-14">
+      <section className="px-6 py-14 bg-white">
         <div className="mx-auto max-w-[1230px]">
           <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-[720px]">
@@ -565,14 +576,20 @@ export default function DigitalInfrastructurePage() {
       </section>
 
       {/* ─── FAQ ─── */}
-      <section className="px-6 pb-14 pt-8">
+      <section className="px-6 pb-14 pt-8 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[860px]">
-          <div className="mb-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 text-center"
+          >
             <SectionTag>Sık Sorulan Sorular</SectionTag>
             <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">
               Dijital Altyapı hakkında merak edilenler
             </h2>
-          </div>
+          </motion.div>
 
           <div className="space-y-4">
             <FaqItem

@@ -92,7 +92,7 @@ export default function Features() {
   const [activeTab, setActiveTab] = useState("Hepsi Bir Arada");
 
   return (
-    <section className="py-24 px-6 bg-[#F7F7F5] overflow-hidden">
+    <section className="py-24 px-6 bg-[#F5F7FA] overflow-hidden">
       <div className="max-w-[1230px] mx-auto">
         <div className="mb-14 flex flex-col gap-8 xl:flex-row xl:items-start xl:justify-between">
           <div className="min-w-0 flex-1">

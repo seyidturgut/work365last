@@ -703,7 +703,7 @@ export default function FiyatlandirmaPage() {
         </div>
       </section>
 
-      <section className="px-6 py-12">
+      <section className="px-6 py-12 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[1100px] space-y-12">
           <div id="dijital-ofis">
             <UnifiedPlanSection
@@ -836,7 +836,7 @@ export default function FiyatlandirmaPage() {
         </div>
       </section>
 
-      <section id="isini-buyut" className="px-6 py-12">
+      <section id="isini-buyut" className="px-6 py-12 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[1160px]">
           <SectionHead
             badge="İşini Büyüt"
@@ -881,14 +881,14 @@ export default function FiyatlandirmaPage() {
         </div>
       </section>
 
-      <section className="px-6 py-14">
+      <section className="px-6 py-14 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[760px]">
           <h2 className="text-center text-[28px] font-extrabold tracking-[-0.04em] text-[#0F172A]">
             Karar vermeden önce en çok merak edilenler
           </h2>
           <div className="mt-8 space-y-3">
             {faqs.map((faq, index) => (
-              <div key={faq.question} className="overflow-hidden rounded-[22px] border border-black/8 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
+              <div key={faq.question} className="overflow-hidden rounded-[22px] border border-[#E8ECEF] bg-white shadow-[0_4px_16px_rgba(15,23,42,0.05)]">
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? -1 : index)}

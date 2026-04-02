@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import BillingToggle from "@/components/pricing/BillingToggle";
 import PricingValue from "@/components/pricing/PricingValue";
@@ -189,7 +190,7 @@ export default function EkosistemPage() {
   const savingsLabel = `~%${calculateSavingsPercent(m1Plans[0].monthly, m1Plans[0].yearly)} tasarruf`;
 
   return (
-    <main className="bg-[#FAFBFC] pt-[92px]">
+    <main className="bg-white pt-[92px]">
       <Header />
       <Breadcrumb items={[{ label: "Ekosistem", href: "/ekosistem" }]} />
 
@@ -261,9 +262,15 @@ export default function EkosistemPage() {
       </section>
 
       {/* ─── OVERVIEW CARDS ─── */}
-      <section className="px-6 py-14">
+      <section className="px-6 py-14 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[1230px]">
-          <div className="mb-10 max-w-[720px]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 max-w-[720px]"
+          >
             <SectionTag>Neden Work365 Ekosistemi?</SectionTag>
             <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[44px]">
               Her modül bağımsız çalışır, birlikte güçlenir.
@@ -271,7 +278,7 @@ export default function EkosistemPage() {
             <p className="mt-4 text-[17px] leading-8 text-[#64748B]">
               İhtiyacınız olan modülü seçin, işletmeniz büyüdükçe yeni modüller ekleyin. Tüm hizmetler Work365 panelinden yönetilir ve Türkiye&apos;nin güvenilir operasyonel ortaklarıyla sunulur.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {[
@@ -279,11 +286,15 @@ export default function EkosistemPage() {
               { icon: Shield, title: "Güvenlik & Uyum", body: "MFA, Exchange politikaları, yedekleme izleme ve güvenlik raporlarıyla verilerinizi koruyun.", color: "#15803D" },
               { icon: Palette, title: "Profesyonel Web", body: "SEO uyumlu, mobil responsive web siteleri ile markanızı dijitalde güçlü şekilde konumlandırın.", color: "#B37A08" },
               { icon: TrendingUp, title: "Büyüme Motoru", body: "Sosyal medya yönetimi, içerik üretimi ve performans analitiği ile markanızı büyütün.", color: "#7C3AED" },
-            ].map((item) => {
+            ].map((item, i) => {
               const Icon = item.icon;
               return (
-                <div
+                <motion.div
                   key={item.title}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
                   className="group rounded-[24px] bg-white px-6 py-7 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div className="inline-flex rounded-[16px] p-3.5 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: `${item.color}12` }}>
@@ -291,7 +302,7 @@ export default function EkosistemPage() {
                   </div>
                   <h3 className="mt-5 text-[18px] font-bold text-[#0F172A]">{item.title}</h3>
                   <p className="mt-3 text-[14px] leading-7 text-[#64748B]">{item.body}</p>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -299,7 +310,7 @@ export default function EkosistemPage() {
       </section>
 
       {/* ─── M1: DİJİTAL OFİS & IT ─── */}
-      <section id="m1" className="px-6 py-14">
+      <section id="m1" className="px-6 py-14 bg-white">
         <div className="mx-auto max-w-[1230px]">
           <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-[720px]">
@@ -378,9 +389,15 @@ export default function EkosistemPage() {
       </section>
 
       {/* ─── M2: WEB SİTESİ & DİJİTAL VARLIK ─── */}
-      <section id="m2" className="px-6 py-14">
+      <section id="m2" className="px-6 py-14 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[1230px]">
-          <div className="mb-10 max-w-[720px]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 max-w-[720px]"
+          >
             <SectionTag color="#B37A08">Web Sitesi & Dijital Varlık</SectionTag>
             <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[44px]">
               Profesyonel web sitenizi kurun, dijitalde güçlü bir şekilde var olun.
@@ -388,7 +405,7 @@ export default function EkosistemPage() {
             <p className="mt-4 text-[17px] leading-8 text-[#64748B]">
               Work365 güvencesi + Beyincik İşleri operasyonu. Tek seferlik kurulum + aylık bakım modeli ile siteniz her zaman güncel, hızlı ve güvenli kalır.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-6 md:grid-cols-3">
             {m2Plans.map((plan) => (
@@ -451,9 +468,15 @@ export default function EkosistemPage() {
       </section>
 
       {/* ─── M3: SOSYAL MEDYA & İÇERİK ─── */}
-      <section id="m3" className="px-6 py-14">
+      <section id="m3" className="px-6 py-14 bg-white">
         <div className="mx-auto max-w-[1230px]">
-          <div className="mb-10 max-w-[720px]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 max-w-[720px]"
+          >
             <SectionTag color="#E11D48">Sosyal Medya & İçerik Yönetimi</SectionTag>
             <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[44px]">
               Markanızı sosyal medyada profesyonelce büyütün.
@@ -461,7 +484,7 @@ export default function EkosistemPage() {
             <p className="mt-4 text-[17px] leading-8 text-[#64748B]">
               Work365 arayüzünden onay — Lect Ajansı üretim. Tüm içerik yönetimi platform üzerinden yapılır; paylaşım takvimi, onay akışı ve raporlama tek yerden kontrol edilir.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {m3Plans.map((plan) => (
@@ -527,14 +550,20 @@ export default function EkosistemPage() {
       </section>
 
       {/* ─── FAQ ─── */}
-      <section className="px-6 pb-14 pt-8">
+      <section className="px-6 pb-14 pt-8 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[860px]">
-          <div className="mb-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 text-center"
+          >
             <SectionTag>Sık Sorulan Sorular</SectionTag>
             <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">
               Ekosistem modülleri hakkında merak edilenler
             </h2>
-          </div>
+          </motion.div>
 
           <div className="space-y-4">
             <FaqItem

@@ -68,7 +68,7 @@ const serviceCards = [
 
 export default function Hero() {
   return (
-    <section className="overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(27,152,213,0.08),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(17,24,39,0.04),_transparent_32%)] pt-40 pb-18">
+    <section className="overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(27,152,213,0.08),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(17,24,39,0.04),_transparent_32%)] pt-44 pb-20">
       <div className="px-6 max-w-[1230px] mx-auto">
         <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-center lg:gap-12">
           <motion.div

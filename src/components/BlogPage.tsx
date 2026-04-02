@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Search, Calendar, User } from "lucide-react";
 import Footer from "@/components/Footer";
@@ -23,7 +24,7 @@ export default function BlogPage() {
   });
 
   return (
-    <main className="bg-[#FAFBFC] pt-[92px]">
+    <main className="bg-white pt-[92px]">
       <Header />
       <Breadcrumb items={[{ label: "Blog & Rehberler", href: "/blog" }]} />
 
@@ -85,17 +86,23 @@ export default function BlogPage() {
       </section>
 
       {/* ─── BLOG GRID ─── */}
-      <section className="px-6 py-14">
+      <section className="px-6 py-14 bg-[#F5F7FA]">
         <div className="mx-auto max-w-[1230px]">
           {filteredPosts.length > 0 ? (
             <div className="grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-              {filteredPosts.map((post) => {
+              {filteredPosts.map((post, i) => {
                 const category = CATEGORIES.find((c) => c.id === post.categoryId);
 
                 return (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, y: 32 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: (i % 3) * 0.1, ease: "easeOut" }}
+                  >
                   <Link
                     href={`/blog/${post.slug}`}
-                    key={post.id}
                     className="group flex flex-col rounded-[24px] bg-white shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                   >
                     {/* Cover Image */}
@@ -146,6 +153,7 @@ export default function BlogPage() {
                       </div>
                     </div>
                   </Link>
+                  </motion.div>
                 );
               })}
             </div>

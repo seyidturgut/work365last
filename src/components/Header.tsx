@@ -100,9 +100,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 w-full transition-all duration-300 ${
-        isHome ? "bg-[aliceblue]" : "bg-white"
-      } py-3 ${isScrolled ? "shadow-sm" : ""}`}
+      className={`fixed left-0 right-0 top-0 z-50 w-full transition-all duration-300 bg-white py-3 ${isScrolled ? "shadow-sm" : ""}`}
     >
       <div className="mx-auto flex max-w-[1230px] items-center justify-between gap-6 px-6">
         <div className="flex min-w-0 items-center gap-8">

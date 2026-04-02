@@ -4,12 +4,13 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   
   /* Actual Work365 color palette from LOGO-END.svg */
-  --color-Work365-bg: aliceblue;
+  --color-Work365-bg: #FFFFFF;
+  --color-Work365-section: #F5F7FA;
   --color-Work365-text: #545454;    /* Updated to requested color */
   --color-Work365-primary: #1b98d5; /* Bright Blue from Logo */
   --color-Work365-accent: #1b98d5;
   --color-Work365-surface: #FFFFFF;
-  --color-Work365-border: #E5E5E5;
+  --color-Work365-border: #E8ECEF;
   --color-Work365-dark: #000000;    /* For headers */
 }
 

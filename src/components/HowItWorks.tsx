@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Building2, LayoutGrid, CheckCircle2, ArrowRight } from "lucide-react";
 
 const steps = [
@@ -35,10 +38,16 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="px-6 py-20 bg-[#F8FAFC]">
+    <section className="px-6 py-20 bg-[#F5F7FA]">
       <div className="max-w-[1230px] mx-auto">
-        {/* Header — left aligned */}
-        <div className="mb-14 max-w-[560px]">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-14 max-w-[560px]"
+        >
           <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#1b98d5]">
             Nasıl Çalışır
           </p>
@@ -48,7 +57,7 @@ export default function HowItWorks() {
           <p className="mt-3 text-[16px] text-[#64748B]">
             3 adımda şirketini kur, dijital altyapını hazırla.
           </p>
-        </div>
+        </motion.div>
 
         {/* Step cards */}
         <div className="grid gap-5 md:grid-cols-3">
@@ -56,8 +65,13 @@ export default function HowItWorks() {
             const Icon = step.icon;
             return (
               <div key={step.number} className="relative flex items-stretch">
-                {/* Card */}
-                <div className="relative flex flex-1 flex-col overflow-hidden rounded-[28px] bg-white p-8 pb-10 shadow-sm ring-1 ring-black/6">
+                <motion.div
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
+                  className="relative flex flex-1 flex-col overflow-hidden rounded-[28px] bg-white p-8 pb-10 shadow-sm ring-1 ring-black/6"
+                >
                   {/* Big decorative number */}
                   <span
                     className="pointer-events-none absolute -right-3 -top-5 select-none text-[120px] font-extrabold leading-none"
@@ -74,9 +88,7 @@ export default function HowItWorks() {
                   </div>
 
                   {/* Step label */}
-                  <p
-                    className={`mb-2 text-[11px] font-bold uppercase tracking-[0.16em] ${step.accentText}`}
-                  >
+                  <p className={`mb-2 text-[11px] font-bold uppercase tracking-[0.16em] ${step.accentText}`}>
                     Adım {step.number}
                   </p>
 
@@ -93,7 +105,7 @@ export default function HowItWorks() {
                     className="absolute bottom-0 left-0 right-0 h-1 rounded-b-[28px]"
                     style={{ backgroundColor: step.accent }}
                   />
-                </div>
+                </motion.div>
 
                 {/* Arrow connector between cards */}
                 {i < steps.length - 1 && (

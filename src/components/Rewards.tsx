@@ -57,10 +57,16 @@ const modules = [
 
 export default function Rewards() {
   return (
-    <section className="py-24 px-6 bg-[#F8F9FA]">
+    <section className="py-24 px-6 bg-[#F5F7FA]">
       <div className="max-w-[1230px] mx-auto flex flex-col lg:flex-row items-center gap-16">
         {/* Left Side Content */}
-        <div className="lg:w-1/2">
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="lg:w-1/2"
+        >
           <div className="flex items-center gap-3 mb-6">
             <img src="/LOGO-END.svg" alt="Work365" className="h-6 w-auto" />
             <span className="text-[#9A7B31] font-bold text-sm tracking-widest uppercase">
@@ -82,7 +88,7 @@ export default function Rewards() {
           >
             Tüm Modülleri Gör <ArrowRight className="w-5 h-5" />
           </Link>
-        </div>
+        </motion.div>
 
         {/* Right Side - Module Cards */}
         <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">

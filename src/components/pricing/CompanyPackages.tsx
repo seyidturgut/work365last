@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import BillingToggle from "@/components/pricing/BillingToggle";
 import PricingValue from "@/components/pricing/PricingValue";
 import { calculateSavingsPercent } from "@/lib/pricing";
@@ -51,6 +52,28 @@ const tierIcons: Record<string, React.ElementType> = {
   "Şirketini + Dijital Ofisini Kur + İşini Büyüt": TrendingUp,
 };
 
+// Her tier'a kendine özgü renk
+const tierColors: Record<string, { bg: string; text: string; light: string; gradient: string }> = {
+  "Şirketini Kur": {
+    bg: "#D97706",
+    text: "#ffffff",
+    light: "#FEF3C7",
+    gradient: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+  },
+  "Şirketini + Dijital Ofisini Kur": {
+    bg: "#1b98d5",
+    text: "#ffffff",
+    light: "#DBEAFE",
+    gradient: "linear-gradient(135deg, #38bdf8 0%, #1b98d5 100%)",
+  },
+  "Şirketini + Dijital Ofisini Kur + İşini Büyüt": {
+    bg: "#0F172A",
+    text: "#ffffff",
+    light: "#F1F5F9",
+    gradient: "linear-gradient(135deg, #334155 0%, #0F172A 100%)",
+  },
+};
+
 export default function CompanyPackages({ accent, packages }: Props) {
   const [yearly, setYearly] = useState(false);
   const discountValues = packages
@@ -70,11 +93,14 @@ export default function CompanyPackages({ accent, packages }: Props) {
     <section className="px-6 py-14">
       <div className="mx-auto max-w-[1230px]">
         {/* Section header */}
-        <div className="mb-10 max-w-[640px]">
-          <p
-            className="text-[13px] font-bold uppercase tracking-[0.14em]"
-            style={{ color: accent }}
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-10 max-w-[640px]"
+        >
+          <p className="text-[13px] font-bold uppercase tracking-[0.14em]" style={{ color: accent }}>
             Paketler
           </p>
           <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">
@@ -83,113 +109,119 @@ export default function CompanyPackages({ accent, packages }: Props) {
           <p className="mt-3 text-[15px] text-[#64748B]">
             Tüm fiyatlar +KDV · Aylık abonelik
           </p>
-        </div>
+        </motion.div>
 
         {/* Aylık / Yıllık toggle */}
         <BillingToggle yearly={yearly} onChange={setYearly} savingsLabel={savingsLabel} className="mb-8" />
 
         {/* 3-column package grid */}
         <div className="grid gap-6 md:grid-cols-3">
-          {packages.map((pkg) => {
+          {packages.map((pkg, i) => {
             const Icon = tierIcons[pkg.name] ?? Zap;
             const features = tierFeatures[pkg.name] ?? [];
             const isQuote = pkg.monthlyPrice === "Teklif";
             const displayPrice = isQuote ? "Teklif" : (yearly ? pkg.yearlyPrice : pkg.monthlyPrice);
+            const colors = tierColors[pkg.name] ?? { bg: accent, text: "#fff", light: "#f0f7ff", gradient: `linear-gradient(135deg, ${accent} 0%, ${accent} 100%)` };
 
             return (
-              <div
+              <motion.div
                 key={pkg.name}
-                className={`group flex flex-col rounded-[28px] bg-white p-8 transition-all duration-300 hover:-translate-y-1 ${
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+                className={`group flex flex-col rounded-[28px] overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
                   pkg.popular
-                    ? "shadow-2xl hover:shadow-2xl"
-                    : "shadow-sm ring-1 ring-black/6 hover:shadow-xl hover:ring-black/12"
+                    ? "shadow-[0_8px_40px_rgba(15,23,42,0.16)] hover:shadow-[0_14px_54px_rgba(15,23,42,0.20)]"
+                    : "shadow-[0_2px_12px_rgba(15,23,42,0.07)] hover:shadow-[0_8px_32px_rgba(15,23,42,0.12)]"
                 }`}
-                style={
-                  pkg.popular
-                    ? { outline: `2px solid ${accent}55`, outlineOffset: "-2px" }
-                    : undefined
-                }
               >
-                {pkg.popular && (
-                  <span
-                    className="mb-4 self-start rounded-full px-3 py-1 text-[11px] font-bold text-white"
-                    style={{ backgroundColor: accent }}
-                  >
-                    En Çok Tercih Edilen
-                  </span>
-                )}
-
-                {/* Icon badge */}
+                {/* Colored header band */}
                 <div
-                  className="mb-5 inline-flex items-center gap-2 rounded-[14px] px-4 py-2 w-fit transition-transform duration-300 group-hover:scale-105"
-                  style={{ backgroundColor: `${accent}14` }}
+                  className="px-7 pt-7 pb-6"
+                  style={{ background: colors.gradient }}
                 >
-                  <Icon className="h-5 w-5" style={{ color: accent }} />
-                  <span className="text-[13px] font-bold" style={{ color: accent }}>
-                    {pkg.name}
-                  </span>
-                </div>
-
-                {/* Pricing */}
-                <div className="mb-5">
-                  {isQuote ? (
-                    <div className="flex items-end gap-1.5">
-                      <span className="text-[36px] font-extrabold tracking-[-0.03em] text-[#0F172A]">Teklif</span>
-                      <span className="mb-1.5 text-[14px] text-black/50">bazlı</span>
-                    </div>
-                  ) : (
-                    <PricingValue
-                      currentPrice={displayPrice}
-                      crossedPrice={yearly ? `₺${pkg.monthlyPrice}/ay` : null}
-                      suffix={yearly ? "/ ay · KDV hariç · Yıllık" : "/ ay · KDV hariç · Aylık"}
-                      priceClassName="text-[36px]"
-                    />
-                  )}
-                </div>
-
-                {/* Features */}
-                <ul className="mb-8 flex-1 space-y-3">
-                  {features.map((f, i) => (
-                    <li key={f} className="flex items-start gap-2.5 text-[14px] leading-7 text-[#475569]">
-                      <CheckCircle2
-                        className="mt-0.5 h-4 w-4 shrink-0"
-                        style={{
-                          color: i === 0 && pkg.name !== "Şirketini Kur" ? `${accent}80` : accent,
-                        }}
-                        strokeWidth={i === 0 && pkg.name !== "Şirketini Kur" ? 2 : 2.5}
-                      />
-                      <span className={i === 0 && pkg.name !== "Şirketini Kur" ? "font-semibold text-[#0F172A]" : ""}>
-                        {f}
+                  <div className="flex items-center justify-between mb-4">
+                    <div
+                      className="inline-flex items-center gap-2 rounded-[10px] px-3 py-1.5"
+                      style={{ backgroundColor: "rgba(255,255,255,0.18)" }}
+                    >
+                      <Icon className="h-4 w-4 text-white" />
+                      <span className="text-[12px] font-bold text-white">
+                        {pkg.name === "Şirketini Kur" ? "Başlangıç"
+                          : pkg.name === "Şirketini + Dijital Ofisini Kur" ? "Profesyonel"
+                          : "Kurumsal"}
                       </span>
-                    </li>
-                  ))}
-                </ul>
+                    </div>
+                    {pkg.popular && (
+                      <span className="rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-[10px] font-bold text-white">
+                        ⭐ En Popüler
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[13px] text-white/70 leading-snug max-w-[20ch]">{pkg.name}</p>
+                </div>
 
-                {/* CTA */}
-                <Link
-                  href="/iletisim"
-                  className={`inline-flex items-center justify-center gap-2 rounded-full py-4 text-[14px] font-bold text-center transition-all duration-300 ${
-                    pkg.popular ? "text-white hover:opacity-90 shadow-lg" : "bg-black/5 text-[#0F172A] hover:bg-black/10"
-                  }`}
-                  style={
-                    pkg.popular
-                      ? { backgroundColor: accent, boxShadow: `0 8px 24px ${accent}40` }
-                      : undefined
-                  }
-                >
-                  {isQuote ? (
-                    <>Teklif Al <ArrowRight className="h-4 w-4" /></>
-                  ) : (
-                    <>Başla <ArrowRight className="h-4 w-4" /></>
-                  )}
-                </Link>
-              </div>
+                {/* White content */}
+                <div className="flex flex-col flex-1 bg-white p-7">
+                  {/* Pricing */}
+                  <div className="mb-5">
+                    {isQuote ? (
+                      <div className="flex items-end gap-1.5">
+                        <span className="text-[36px] font-extrabold tracking-[-0.03em] text-[#0F172A]">Teklif</span>
+                        <span className="mb-1.5 text-[14px] text-black/50">bazlı</span>
+                      </div>
+                    ) : (
+                      <PricingValue
+                        currentPrice={displayPrice}
+                        crossedPrice={yearly ? `₺${pkg.monthlyPrice}/ay` : null}
+                        suffix={yearly ? "/ ay · KDV hariç · Yıllık" : "/ ay · KDV hariç · Aylık"}
+                        priceClassName="text-[36px]"
+                      />
+                    )}
+                  </div>
+
+                  {/* Features */}
+                  <ul className="mb-8 flex-1 space-y-3">
+                    {features.map((f, fi) => (
+                      <li key={f} className="flex items-start gap-2.5 text-[14px] leading-7 text-[#475569]">
+                        <CheckCircle2
+                          className="mt-0.5 h-4 w-4 shrink-0"
+                          style={{
+                            color: fi === 0 && pkg.name !== "Şirketini Kur" ? `${colors.bg}80` : colors.bg,
+                          }}
+                          strokeWidth={fi === 0 && pkg.name !== "Şirketini Kur" ? 2 : 2.5}
+                        />
+                        <span className={fi === 0 && pkg.name !== "Şirketini Kur" ? "font-semibold text-[#0F172A]" : ""}>
+                          {f}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <Link
+                    href="/iletisim"
+                    className="inline-flex items-center justify-center gap-2 rounded-full py-4 text-[14px] font-bold text-center transition-all duration-300 text-white hover:opacity-90"
+                    style={{
+                      background: colors.gradient,
+                      boxShadow: `0 6px 20px ${colors.bg}35`,
+                    }}
+                  >
+                    {isQuote ? (
+                      <>Teklif Al <ArrowRight className="h-4 w-4" /></>
+                    ) : (
+                      <>Başla <ArrowRight className="h-4 w-4" /></>
+                    )}
+                  </Link>
+                </div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Comparison note */}
-        <div className="mt-8 flex items-center gap-3 rounded-[20px] bg-white px-6 py-4 shadow-sm ring-1 ring-black/6">
+        <div className="mt-8 flex items-center gap-3 rounded-[20px] bg-white px-6 py-4 shadow-sm ring-1 ring-[#E8ECEF]">
           <Globe className="h-5 w-5 shrink-0" style={{ color: accent }} />
           <p className="text-[13px] text-[#64748B]">
             Hangi paketin uygun olduğundan emin değilsen?{" "}

@@ -31,11 +31,17 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-24 px-6 bg-[#F5F7FA]">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Sıkça Sorulan Sorular</h2>
-        </div>
+        </motion.div>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
@@ -45,10 +51,10 @@ export default function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="border border-gray-200 rounded-2xl overflow-hidden"
+              className="border border-[#E8ECEF] rounded-2xl overflow-hidden bg-white"
             >
               <button
-                className="w-full text-left p-6 flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition-colors"
+                className="w-full text-left p-6 flex justify-between items-center focus:outline-none bg-white hover:bg-[#F9FAFB] transition-colors"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
                 <span className="font-semibold text-lg">{faq.question}</span>
@@ -60,7 +66,7 @@ export default function FAQ() {
               </button>
 
               {openIndex === index && (
-                <div className="p-6 pt-0 bg-gray-50 text-Work365-text leading-relaxed border-t border-gray-100">
+                <div className="p-6 pt-0 bg-white text-Work365-text leading-relaxed border-t border-[#E8ECEF]">
                   <p className="mt-4">{faq.answer}</p>
                 </div>
               )}
