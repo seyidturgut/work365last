@@ -179,7 +179,7 @@ export default function WebSitesiPage() {
 
       {/* ─── PAKETLER ─── */}
       <section className="px-6 py-16">
-        <div className="mx-auto max-w-[1230px]">
+        <div className="mx-auto max-w-[1400px]">
           <div className="mb-4 max-w-[600px]">
             <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-[#1b98d5]">Fiyatlandırma</p>
             <h2 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-[#0F172A] md:text-[42px]">
@@ -188,11 +188,11 @@ export default function WebSitesiPage() {
             <p className="mt-3 text-[15px] text-[#64748B]">Tüm fiyatlar +KDV · Kurulum + aylık bakım</p>
           </div>
 
-          <div className="mx-auto mt-10 grid max-w-[920px] gap-6 sm:grid-cols-2">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`group flex flex-col rounded-[28px] bg-white p-8 transition-all duration-300 hover:-translate-y-1 ${
+                className={`group flex flex-col rounded-[24px] bg-white p-7 transition-all duration-300 hover:-translate-y-1 ${
                   plan.popular
                     ? "shadow-2xl ring-2 ring-[#1b98d5]/40 hover:ring-[#1b98d5]/60"
                     : "shadow-sm ring-1 ring-black/6 hover:shadow-xl hover:ring-black/12"
@@ -209,12 +209,12 @@ export default function WebSitesiPage() {
                 <h3 className="text-[24px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{plan.name}</h3>
                 <p className="mt-2 text-[13px] leading-[1.6] text-[#64748B]">{plan.description}</p>
 
-                <div className="mt-6 mb-1">
+                <div className="mt-5 mb-1">
                   {plan.quote ? (
-                    <span className="text-[34px] font-extrabold tracking-[-0.03em] text-[#0F172A]">Teklif Al</span>
+                    <span className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">Teklif Al</span>
                   ) : (
                     <>
-                      <span className="text-[34px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{plan.setup}</span>
+                      <span className="text-[30px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{plan.setup}</span>
                       <span className="ml-1.5 text-[13px] text-black/50">{plan.priceNote}</span>
                     </>
                   )}
@@ -222,13 +222,13 @@ export default function WebSitesiPage() {
                 {plan.priceSub && (
                   <p className="mb-1 text-[14px] font-bold text-[#1b98d5]">{plan.priceSub}</p>
                 )}
-                <div className="mt-2 mb-6 flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1.5 w-fit">
+                <div className="mt-2 mb-5 flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1.5 w-fit">
                   <span className="text-[13px] font-semibold text-black/60">{plan.maintenance}</span>
                 </div>
 
-                <ul className="mb-8 flex-1 space-y-3">
+                <ul className="mb-6 flex-1 space-y-2.5">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-[14px] leading-7 text-[#475569]">
+                    <li key={f} className="flex items-start gap-2.5 text-[13.5px] leading-[1.5] text-[#475569]">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#1b98d5]" strokeWidth={2.5} />
                       {f}
                     </li>
@@ -236,7 +236,7 @@ export default function WebSitesiPage() {
                 </ul>
                 <Link
                   href="/iletisim"
-                  className={`mt-auto rounded-full py-4 text-[14px] font-bold text-center transition-all duration-300 ${
+                  className={`mt-auto rounded-full py-3.5 text-[14px] font-bold text-center transition-all duration-300 ${
                     plan.quote
                       ? "bg-[#0F172A] text-white hover:bg-[#1e293b]"
                       : plan.popular
