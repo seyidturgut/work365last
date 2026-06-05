@@ -15,49 +15,82 @@ import {
 
 export const metadata: Metadata = {
   title: "Web Sitesi | Görünür Ol | Work365",
-  description: "Kurumsal web sitesi tasarım ve bakımı. 20.000 TL'den başlayan kurulum fiyatlarıyla.",
+  description: "Kurumsal web sitesi tasarım ve bakımı. 30.000 TL'den başlayan kurulum fiyatlarıyla.",
 };
 
 const plans = [
   {
     name: "Başlangıç",
-    setup: "20.000",
-    monthly: "1.000",
-    description: "Tek sayfa landing, mobil uyumlu, temel SEO",
+    category: "Giriş Seviyesi",
+    quote: false,
+    setup: "30.000",
+    priceNote: "TL kurulum +KDV",
+    maintenance: "+ 3.000 TL/ay bakım +KDV",
+    description: "Tek sayfa landing — hızlı teslim, mobil uyumlu, temel SEO",
     features: [
-      "Hazır şablon, 1-3 sayfa",
-      "Mobil uyumlu tasarım",
-      "Temel SEO",
-      "Domain + SSL 1 yıl",
+      "Özel tasarım, 1–3 sayfa (hazır şablon değil)",
+      "Mobil uyumlu tasarım + hız optimizasyonu",
+      "Temel SEO + Google Search Console kurulumu",
+      "Domain + SSL (1 yıl)",
       "Analytics kurulumu",
+      "1 revizyon hakkı",
     ],
     popular: false,
   },
   {
     name: "Profesyonel",
-    setup: "30.000",
-    monthly: "2.000",
+    category: "En Çok Tercih Edilen",
+    quote: false,
+    setup: "50.000",
+    priceNote: "TL kurulum +KDV",
+    maintenance: "+ 5.000 TL/ay bakım +KDV",
     description: "5–10 sayfalı kurumsal site, blog, iletişim formu",
     features: [
-      "Özel tasarım, 5-10 sayfa",
+      "Özel tasarım, 5–10 sayfa",
       "Blog + iletişim formu",
-      "SEO optimizasyonu",
+      "Teknik SEO + schema markup",
       "CRM bağlantısı",
+      "WhatsApp entegrasyonu",
+      "Aylık performans raporu",
       "2 revizyon hakkı",
     ],
     popular: true,
   },
   {
     name: "Premium",
-    setup: "50.000",
-    monthly: "3.000",
+    category: "İleri Seviye",
+    quote: false,
+    setup: "75.000",
+    priceNote: "TL +KDV",
+    priceSub: "başlangıç fiyatıdır",
+    maintenance: "+ 10.000 TL/ay bakım +KDV",
     description: "Özel tasarım, e-ticaret veya özel fonksiyon, gelişmiş SEO",
     features: [
-      "Tam özel tasarım",
-      "E-ticaret veya özel fonksiyon",
+      "Tam özel tasarım + geliştirme",
+      "E-ticaret / ödeme altyapısı entegrasyonu",
       "SEO audit + strateji",
-      "Ads entegrasyonu",
+      "Meta / Google Ads entegrasyonu + dönüşüm takibi",
       "Performans dashboard",
+      "Süreç otomasyonu + AI içerik desteği",
+      "3 revizyon hakkı",
+    ],
+    popular: false,
+  },
+  {
+    name: "Kurumsal",
+    category: "Proje Bazlı",
+    quote: true,
+    priceSub: "ihtiyaç analizi sonrası fiyatlanır",
+    maintenance: "+ Özel SLA'lı bakım paketi",
+    description: "Büyük ölçekli platform, özel yazılım, kurumsal entegrasyon",
+    features: [
+      "Üyelik / abonelik / platform geliştirme",
+      "Çok dilli yapı, sınırsız sayfa",
+      "ERP / CRM / özel API entegrasyonları",
+      "Gelişmiş güvenlik + KVKK uyumu",
+      "Kapsamlı SEO + içerik mimarisi",
+      "SLA garantili öncelikli destek",
+      "Eğitim + teknik dokümantasyon",
     ],
     popular: false,
   },
@@ -155,7 +188,7 @@ export default function WebSitesiPage() {
             <p className="mt-3 text-[15px] text-[#64748B]">Tüm fiyatlar +KDV · Kurulum + aylık bakım</p>
           </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <div className="mx-auto mt-10 grid max-w-[920px] gap-6 sm:grid-cols-2">
             {plans.map((plan) => (
               <div
                 key={plan.name}
@@ -165,20 +198,32 @@ export default function WebSitesiPage() {
                     : "shadow-sm ring-1 ring-black/6 hover:shadow-xl hover:ring-black/12"
                 }`}
               >
-                {plan.popular && (
-                  <span className="mb-4 self-start rounded-full bg-[#1b98d5] px-3 py-1 text-[11px] font-bold text-white">
-                    En Çok Tercih Edilen
-                  </span>
-                )}
+                <span
+                  className={`mb-4 self-start rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] ${
+                    plan.popular ? "bg-[#1b98d5] text-white" : "bg-black/5 text-black/50"
+                  }`}
+                >
+                  {plan.category}
+                </span>
+
                 <h3 className="text-[24px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{plan.name}</h3>
-                <p className="mt-2 text-[13px] text-[#64748B]">{plan.description}</p>
+                <p className="mt-2 text-[13px] leading-[1.6] text-[#64748B]">{plan.description}</p>
 
                 <div className="mt-6 mb-1">
-                  <span className="text-[36px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{plan.setup}</span>
-                  <span className="ml-1.5 text-[14px] text-black/50">TL kurulum +KDV</span>
+                  {plan.quote ? (
+                    <span className="text-[34px] font-extrabold tracking-[-0.03em] text-[#0F172A]">Teklif Al</span>
+                  ) : (
+                    <>
+                      <span className="text-[34px] font-extrabold tracking-[-0.03em] text-[#0F172A]">{plan.setup}</span>
+                      <span className="ml-1.5 text-[13px] text-black/50">{plan.priceNote}</span>
+                    </>
+                  )}
                 </div>
-                <div className="mb-6 flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1.5 w-fit">
-                  <span className="text-[13px] font-semibold text-black/60">+ {plan.monthly} TL/ay bakım +KDV</span>
+                {plan.priceSub && (
+                  <p className="mb-1 text-[14px] font-bold text-[#1b98d5]">{plan.priceSub}</p>
+                )}
+                <div className="mt-2 mb-6 flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1.5 w-fit">
+                  <span className="text-[13px] font-semibold text-black/60">{plan.maintenance}</span>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-3">
@@ -191,13 +236,15 @@ export default function WebSitesiPage() {
                 </ul>
                 <Link
                   href="/iletisim"
-                  className={`rounded-full py-4 text-[14px] font-bold text-center transition-all duration-300 ${
-                    plan.popular
-                      ? "bg-[#1b98d5] text-white hover:bg-[#1580b3] shadow-[0_8px_24px_#1b98d540]"
-                      : "bg-black/5 text-[#0F172A] hover:bg-black/10"
+                  className={`mt-auto rounded-full py-4 text-[14px] font-bold text-center transition-all duration-300 ${
+                    plan.quote
+                      ? "bg-[#0F172A] text-white hover:bg-[#1e293b]"
+                      : plan.popular
+                        ? "bg-[#1b98d5] text-white hover:bg-[#1580b3] shadow-[0_8px_24px_#1b98d540]"
+                        : "bg-black/5 text-[#0F172A] hover:bg-black/10"
                   }`}
                 >
-                  Teklif Al
+                  {plan.quote ? "Teklif Al" : "Sepete Ekle"}
                 </Link>
               </div>
             ))}
