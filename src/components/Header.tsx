@@ -69,6 +69,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileCompanyOpen, setIsMobileCompanyOpen] = useState(false);
   const [isMobileGorunurOlOpen, setIsMobileGorunurOlOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -79,6 +80,19 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/auth/session", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d: { user: unknown }) => {
+        if (active) setLoggedIn(Boolean(d.user));
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [pathname]);
 
   useEffect(() => {
     setIsCompanyMenuOpen(false);
@@ -261,10 +275,10 @@ export default function Header() {
 
         <div className="hidden items-center gap-3 xl:flex">
           <Link
-            href="/giris"
+            href={loggedIn ? "/hesabim" : "/giris"}
             className="whitespace-nowrap text-[13px] font-semibold text-Work365-text transition-opacity hover:opacity-70"
           >
-            Giriş
+            {loggedIn ? "Hesabım" : "Giriş"}
           </Link>
           <Link
             href="/sirketini-kur"
@@ -413,10 +427,10 @@ export default function Header() {
 
             <div className="mt-4 flex gap-3">
               <Link
-                href="/giris"
+                href={loggedIn ? "/hesabim" : "/giris"}
                 className="inline-flex flex-1 items-center justify-center rounded-full border border-black/10 px-5 py-3 text-[13px] font-bold text-black"
               >
-                Giriş
+                {loggedIn ? "Hesabım" : "Giriş"}
               </Link>
               <Link
                 href="/sirketini-kur"

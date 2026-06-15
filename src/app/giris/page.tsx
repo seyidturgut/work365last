@@ -9,6 +9,7 @@ type GirisPageProps = {
     term?: string;
     description?: string;
     features?: string;
+    next?: string;
   }>;
 };
 
@@ -42,6 +43,10 @@ export default async function GirisPage({ searchParams }: GirisPageProps) {
 
   if (params?.features) {
     query.set("features", params.features);
+  }
+
+  if (params?.next) {
+    query.set("next", params.next);
   }
 
   redirect(`/kayit-ol?${query.toString()}`);

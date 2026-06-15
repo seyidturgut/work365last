@@ -1,45 +1,39 @@
 import { NextResponse } from "next/server";
-import { setPanelSessionCookies } from "@/lib/panel-session";
-import { createOrGetGoogleDemoUser, loginUser } from "@/lib/panel-store";
+import { setSessionCookie } from "@/lib/session";
+import { createGoogleDemoUser, verifyLogin } from "@/lib/user-store";
+
+export const runtime = "nodejs";
 
 type LoginPayload = {
   email?: string;
   password?: string;
   provider?: "google";
-    selectedPackage?: {
-      company?: string | null;
-      price?: string | number | null;
-      label?: string | null;
-      source?: string | null;
-      term?: string | null;
-      description?: string | null;
-      features?: string[] | null;
-    } | null;
+  next?: string;
 };
+
+function safeNext(next?: string): string {
+  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
+  return "/hesabim";
+}
 
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as LoginPayload;
+
     const user =
       body.provider === "google"
-        ? await createOrGetGoogleDemoUser(body.selectedPackage)
-        : await loginUser({
-            email: body.email?.trim().toLowerCase() ?? "",
-            password: body.password ?? "",
-            selectedPackage: body.selectedPackage,
-          });
+        ? await createGoogleDemoUser()
+        : await verifyLogin(body.email?.trim().toLowerCase() ?? "", body.password ?? "");
 
-    const redirectTo =
-      user.wizard.status === "completed"
-        ? user.payment.status === "paid"
-          ? "/panel/dashboard"
-          : "/panel/payment"
-        : "/panel";
-    const response = NextResponse.json({ ok: true, redirectTo, user });
-    setPanelSessionCookies(response, user);
+    const response = NextResponse.json({
+      ok: true,
+      redirectTo: safeNext(body.next),
+      user: { id: user.id, email: user.email, fullName: user.fullName },
+    });
+    setSessionCookie(response, user.id);
     return response;
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Giris sirasinda bir hata olustu.";
+    const message = error instanceof Error ? error.message : "Giriş sırasında bir hata oluştu.";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }

@@ -6,10 +6,12 @@ import { motion } from "framer-motion";
 import BillingToggle from "@/components/pricing/BillingToggle";
 import PricingValue from "@/components/pricing/PricingValue";
 import { calculateSavingsPercent } from "@/lib/pricing";
+import { skuFor } from "@/lib/catalog";
 import { ArrowRight, CheckCircle2, Globe, Laptop, TrendingUp, Zap } from "lucide-react";
 
 type Props = {
   accent: string;
+  companySlug: string;
   packages: readonly {
     name: string;
     monthlyPrice: string;
@@ -74,7 +76,7 @@ const tierColors: Record<string, { bg: string; text: string; light: string; grad
   },
 };
 
-export default function CompanyPackages({ accent, packages }: Props) {
+export default function CompanyPackages({ accent, companySlug, packages }: Props) {
   const [yearly, setYearly] = useState(false);
   const discountValues = packages
     .filter((pkg) => pkg.monthlyPrice !== "Teklif" && pkg.yearlyPrice !== "Teklif")
@@ -200,20 +202,24 @@ export default function CompanyPackages({ accent, packages }: Props) {
                   </ul>
 
                   {/* CTA */}
-                  <Link
-                    href="/iletisim"
-                    className="inline-flex items-center justify-center gap-2 rounded-full py-4 text-[14px] font-bold text-center transition-all duration-300 text-white hover:opacity-90"
-                    style={{
-                      background: colors.gradient,
-                      boxShadow: `0 6px 20px ${colors.bg}35`,
-                    }}
-                  >
-                    {isQuote ? (
-                      <>Teklif Al <ArrowRight className="h-4 w-4" /></>
-                    ) : (
-                      <>Başla <ArrowRight className="h-4 w-4" /></>
-                    )}
-                  </Link>
+                  {(() => {
+                    const sku = isQuote ? null : skuFor(companySlug, pkg.name, yearly ? "yearly" : "monthly");
+                    const ctaClass =
+                      "inline-flex items-center justify-center gap-2 rounded-full py-4 text-[14px] font-bold text-center transition-all duration-300 text-white hover:opacity-90 w-full";
+                    const ctaStyle = { background: colors.gradient, boxShadow: `0 6px 20px ${colors.bg}35` };
+                    if (sku) {
+                      return (
+                        <Link href={`/satin-al?sku=${sku}`} className={ctaClass} style={ctaStyle}>
+                          Satın Al <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      );
+                    }
+                    return (
+                      <Link href="/iletisim" className={ctaClass} style={ctaStyle}>
+                        Teklif Al <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    );
+                  })()}
                 </div>
               </motion.div>
             );

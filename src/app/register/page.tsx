@@ -10,6 +10,7 @@ type RegisterRedirectProps = {
     term?: string;
     description?: string;
     features?: string;
+    next?: string;
   }>;
 };
 
@@ -47,6 +48,10 @@ export default async function RegisterRedirectPage({ searchParams }: RegisterRed
 
   if (params?.features) {
     query.set("features", params.features);
+  }
+
+  if (params?.next) {
+    query.set("next", params.next);
   }
 
   const suffix = query.toString() ? `?${query.toString()}` : "";

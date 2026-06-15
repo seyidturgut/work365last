@@ -56,7 +56,6 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPackageVisible, setIsPackageVisible] = useState(Boolean(selectedPackage));
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   useEffect(() => {
     setMode(initialMode);
@@ -180,6 +179,7 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
     setFeedback(null);
 
     try {
+      const next = searchParams.get("next");
       const response = await fetch(mode === "login" ? "/api/auth/login" : "/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -188,6 +188,7 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
             ? {
                 email: loginFields.email,
                 password: loginFields.password,
+                next,
                 selectedPackage: getSelectedPackagePayload(),
               }
             : {
@@ -195,6 +196,7 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
                 phone: signupFields.phone,
                 email: signupFields.email,
                 password: signupFields.password,
+                next,
                 selectedPackage: getSelectedPackagePayload(),
               }
         ),
@@ -217,38 +219,7 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
     }
   };
 
-  const handleGoogleLogin = async () => {
-    setErrors({});
-    setFeedback("Google demo akışı başlatılıyor.");
-    setIsGoogleLoading(true);
-
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          provider: "google",
-          selectedPackage: getSelectedPackagePayload(),
-        }),
-      });
-
-      const payload = (await response.json()) as { error?: string; redirectTo?: string };
-
-      if (!response.ok) {
-        setErrors({ form: payload.error || "Google demo akışı başlatılamadı." });
-        setFeedback(null);
-        return;
-      }
-
-      router.push(payload.redirectTo || "/panel");
-      router.refresh();
-    } catch {
-      setErrors({ form: "Google demo akışı sırasında hata oluştu." });
-      setFeedback(null);
-    } finally {
-      setIsGoogleLoading(false);
-    }
-  };
+  // Google ile giriş geçici olarak devre dışı bırakıldı (daha sonra gerçek OAuth ile eklenecek).
 
   return (
     <div className="mx-auto flex h-full w-full max-w-[760px] flex-col rounded-[32px] border border-black/8 bg-white p-5 shadow-[0_30px_80px_rgba(15,23,42,0.08)] sm:p-7 lg:min-h-[calc(100vh-48px)] lg:p-8">
@@ -324,21 +295,7 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
       ) : null}
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        <button
-          type="button"
-          onClick={handleGoogleLogin}
-          disabled={isGoogleLoading || isSubmitting}
-          className="flex w-full items-center justify-center gap-3 rounded-[18px] border border-[#D7DFE8] bg-[#F8FBFD] px-5 py-3.5 text-[15px] font-bold text-[#0F172A] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          <span className="text-[18px]">G</span>
-          {isGoogleLoading ? "Google ile devam ediliyor..." : "Google ile Giriş"}
-        </button>
-
-        <div className="flex items-center gap-3 text-[12px] uppercase tracking-[0.22em] text-[#94A3B8]">
-          <span className="h-px flex-1 bg-[#E2E8F0]" />
-          veya e-posta ile devam et
-          <span className="h-px flex-1 bg-[#E2E8F0]" />
-        </div>
+        {/* Google ile Giriş geçici olarak kaldırıldı — daha sonra geri eklenecek. */}
 
         <AnimatePresence mode="wait">
           {mode === "login" ? (
@@ -405,16 +362,16 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
                   onChange={(value) => setSignupFields((current) => ({ ...current, phone: value }))}
                 />
               </div>
+              <Field
+                label="E-posta"
+                icon={<Mail className="h-4 w-4" />}
+                type="email"
+                placeholder="kurucu@marka.com"
+                value={signupFields.email}
+                error={errors.email}
+                onChange={(value) => setSignupFields((current) => ({ ...current, email: value }))}
+              />
               <div className="grid gap-4 md:grid-cols-2">
-                <Field
-                  label="E-posta"
-                  icon={<Mail className="h-4 w-4" />}
-                  type="email"
-                  placeholder="kurucu@marka.com"
-                  value={signupFields.email}
-                  error={errors.email}
-                  onChange={(value) => setSignupFields((current) => ({ ...current, email: value }))}
-                />
                 <Field
                   label="Şifre"
                   icon={<LockKeyhole className="h-4 w-4" />}
@@ -469,7 +426,7 @@ export default function AuthCard({ initialMode, selectedPackage }: AuthCardProps
 
         <button
           type="submit"
-          disabled={isSubmitting || isGoogleLoading}
+          disabled={isSubmitting}
           className="flex w-full items-center justify-center gap-2 rounded-[18px] bg-[#0F172A] px-5 py-3.5 text-[15px] font-bold text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-black"
         >
           {isSubmitting ? "İşleniyor..." : mode === "login" ? "Giriş Yap" : "Ücretsiz Hesap Oluştur"}
@@ -513,9 +470,9 @@ type FieldProps = {
 function Field({ label, icon, type, placeholder, value, error, onChange }: FieldProps) {
   return (
     <label className="block">
-      <span className="mb-2 block text-[14px] font-bold text-[#111827]">{label}</span>
+      <span className="mb-1.5 block text-[13px] font-bold text-[#111827]">{label}</span>
       <div
-        className={`flex items-center gap-3 rounded-[18px] border bg-white px-4 py-3 transition-shadow focus-within:shadow-[0_0_0_4px_rgba(27,152,213,0.12)] ${
+        className={`flex items-center gap-3 rounded-[16px] border bg-white px-4 py-2.5 transition-shadow focus-within:shadow-[0_0_0_4px_rgba(27,152,213,0.12)] ${
           error ? "border-[#FCA5A5]" : "border-[#D7DFE8]"
         }`}
       >

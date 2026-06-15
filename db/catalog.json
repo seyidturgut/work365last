@@ -1,0 +1,21 @@
+[
+  { "sku": "sahis-sirketi-baslangic-monthly", "companyType": "sahis-sirketi", "tier": "baslangic", "term": "monthly", "title": "Şahıs Şirketi · Şirketini Kur", "subtitle": "Aylık ödeme", "priceKurus": 590000, "sort": 11 },
+  { "sku": "sahis-sirketi-baslangic-yearly", "companyType": "sahis-sirketi", "tier": "baslangic", "term": "yearly", "title": "Şahıs Şirketi · Şirketini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 320000, "sort": 12 },
+  { "sku": "sahis-sirketi-profesyonel-monthly", "companyType": "sahis-sirketi", "tier": "profesyonel", "term": "monthly", "title": "Şahıs Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Aylık ödeme", "priceKurus": 1590000, "sort": 13 },
+  { "sku": "sahis-sirketi-profesyonel-yearly", "companyType": "sahis-sirketi", "tier": "profesyonel", "term": "yearly", "title": "Şahıs Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 1320000, "sort": 14 },
+
+  { "sku": "limited-sirketi-baslangic-monthly", "companyType": "limited-sirketi", "tier": "baslangic", "term": "monthly", "title": "Limited Şirketi · Şirketini Kur", "subtitle": "Aylık ödeme", "priceKurus": 990000, "sort": 21 },
+  { "sku": "limited-sirketi-baslangic-yearly", "companyType": "limited-sirketi", "tier": "baslangic", "term": "yearly", "title": "Limited Şirketi · Şirketini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 540000, "sort": 22 },
+  { "sku": "limited-sirketi-profesyonel-monthly", "companyType": "limited-sirketi", "tier": "profesyonel", "term": "monthly", "title": "Limited Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Aylık ödeme", "priceKurus": 1990000, "sort": 23 },
+  { "sku": "limited-sirketi-profesyonel-yearly", "companyType": "limited-sirketi", "tier": "profesyonel", "term": "yearly", "title": "Limited Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 1540000, "sort": 24 },
+
+  { "sku": "anonim-sirketi-baslangic-monthly", "companyType": "anonim-sirketi", "tier": "baslangic", "term": "monthly", "title": "Anonim Şirketi · Şirketini Kur", "subtitle": "Aylık ödeme", "priceKurus": 1190000, "sort": 31 },
+  { "sku": "anonim-sirketi-baslangic-yearly", "companyType": "anonim-sirketi", "tier": "baslangic", "term": "yearly", "title": "Anonim Şirketi · Şirketini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 650000, "sort": 32 },
+  { "sku": "anonim-sirketi-profesyonel-monthly", "companyType": "anonim-sirketi", "tier": "profesyonel", "term": "monthly", "title": "Anonim Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Aylık ödeme", "priceKurus": 2190000, "sort": 33 },
+  { "sku": "anonim-sirketi-profesyonel-yearly", "companyType": "anonim-sirketi", "tier": "profesyonel", "term": "yearly", "title": "Anonim Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 1650000, "sort": 34 },
+
+  { "sku": "bilanco-sirketi-baslangic-monthly", "companyType": "bilanco-sirketi", "tier": "baslangic", "term": "monthly", "title": "Bilanço Şirketi · Şirketini Kur", "subtitle": "Aylık ödeme", "priceKurus": 740000, "sort": 41 },
+  { "sku": "bilanco-sirketi-baslangic-yearly", "companyType": "bilanco-sirketi", "tier": "baslangic", "term": "yearly", "title": "Bilanço Şirketi · Şirketini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 430000, "sort": 42 },
+  { "sku": "bilanco-sirketi-profesyonel-monthly", "companyType": "bilanco-sirketi", "tier": "profesyonel", "term": "monthly", "title": "Bilanço Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Aylık ödeme", "priceKurus": 1740000, "sort": 43 },
+  { "sku": "bilanco-sirketi-profesyonel-yearly", "companyType": "bilanco-sirketi", "tier": "profesyonel", "term": "yearly", "title": "Bilanço Şirketi · Şirketini + Dijital Ofisini Kur", "subtitle": "Yıllık ödeme", "priceKurus": 1430000, "sort": 44 }
+]

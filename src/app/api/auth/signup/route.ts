@@ -1,22 +1,21 @@
 import { NextResponse } from "next/server";
-import { setPanelSessionCookies } from "@/lib/panel-session";
-import { signupUser } from "@/lib/panel-store";
+import { setSessionCookie } from "@/lib/session";
+import { createUser } from "@/lib/user-store";
+
+export const runtime = "nodejs";
 
 type SignupPayload = {
   fullName?: string;
   email?: string;
   phone?: string;
   password?: string;
-    selectedPackage?: {
-      company?: string | null;
-      price?: string | number | null;
-      label?: string | null;
-      source?: string | null;
-      term?: string | null;
-      description?: string | null;
-      features?: string[] | null;
-    } | null;
+  next?: string;
 };
+
+function safeNext(next?: string): string {
+  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
+  return "/hesabim";
+}
 
 export async function POST(request: Request) {
   try {
@@ -26,24 +25,24 @@ export async function POST(request: Request) {
     const phone = body.phone?.trim() ?? "";
     const password = body.password ?? "";
 
-    if (!fullName || !email || !phone || !password) {
-      return NextResponse.json({ error: "Lutfen zorunlu alanlari doldurun." }, { status: 400 });
+    if (!fullName || !email || !password) {
+      return NextResponse.json({ error: "Lütfen zorunlu alanları doldurun." }, { status: 400 });
+    }
+    if (password.length < 8) {
+      return NextResponse.json({ error: "Şifre en az 8 karakter olmalıdır." }, { status: 400 });
     }
 
-    const user = await signupUser({
-      fullName,
-      email,
-      phone,
-      password,
-      selectedPackage: body.selectedPackage,
+    const user = await createUser({ fullName, email, phone, password });
+
+    const response = NextResponse.json({
+      ok: true,
+      redirectTo: safeNext(body.next),
+      user: { id: user.id, email: user.email, fullName: user.fullName },
     });
-
-    const response = NextResponse.json({ ok: true, redirectTo: "/panel", user });
-    setPanelSessionCookies(response, user);
-
+    setSessionCookie(response, user.id);
     return response;
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Kayit sirasinda bir hata olustu.";
+    const message = error instanceof Error ? error.message : "Kayıt sırasında bir hata oluştu.";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }

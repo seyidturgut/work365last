@@ -232,7 +232,7 @@ export default function CompanyTypeStoryPage({ config }: CompanyTypeStoryPagePro
       </section>
 
       {/* ─── PAKETLER ─── */}
-      <CompanyPackages accent={config.accent} packages={config.packages} />
+      <CompanyPackages accent={config.accent} companySlug={config.slug} packages={config.packages} />
 
       {/* ─── STEPS ─── */}
       <section id="adimlar" className="px-6 py-14">

@@ -13,6 +13,9 @@ const nextConfig = {
       { source: "/sirketini-kur/bilanco", destination: "/sirketini-kur/bilanco-sirketi", permanent: true },
       { source: "/digital-altyapi", destination: "/dijitale-tasi", permanent: true },
       { source: "/ekosistem", destination: "/", permanent: true },
+      // Eski panel/onboarding akışı emekliye ayrıldı → yeni Hesabım sayfası
+      { source: "/panel", destination: "/hesabim", permanent: false },
+      { source: "/panel/:path*", destination: "/hesabim", permanent: false },
     ];
   },
 };
