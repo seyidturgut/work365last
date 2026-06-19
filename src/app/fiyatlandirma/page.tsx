@@ -15,7 +15,7 @@ import { ArrowRight, CheckCircle2, ChevronDown, CircleDollarSign, FileSignature,
 type CompanyTypeKey = "sahis" | "limited" | "anonim" | "bilanco";
 type OfficeTierKey = "do10" | "do30" | "do100" | "do300";
 type SocialTierKey = "sm4" | "sm8" | "sm12";
-type WebTierKey = "web1" | "web2" | "web3";
+type WebTierKey = "web1" | "web2" | "web3" | "web4";
 
 type CompanyPricing = {
   label: string;
@@ -259,59 +259,79 @@ const socialPlans: SelectPlan[] = [
 const webPlans: SelectPlan[] = [
   {
     key: "web1",
-    label: "Landing Page",
-    price: "20.000",
-    yearlyPrice: "17.000",
-    sublabel: "Tek sayfalı hızlı başlangıç sitesi",
-    description: "Hızlı yayına çıkmak isteyen markalar için net mesaj veren tek sayfalı bir web vitrini.",
+    label: "Başlangıç",
+    price: "30.000",
+    sublabel: "Tek sayfa landing — hızlı teslim, mobil uyumlu, temel SEO",
+    description: "Hızlı yayına çıkmak isteyen markalar için tek sayfalık, mobil uyumlu ve temel SEO'lu başlangıç sitesi.",
     source: "Fiyatlandırma sayfasından seçildi",
     term: "Kurulum paketi",
-    note: "kurulum · KDV hariç",
+    note: "kurulum +KDV · +3.000/ay bakım",
     features: [
-      "Mobil uyumlu, hızlı tasarım",
-      "SSL sertifikası + hosting dahil",
-      "Temel SEO optimizasyonu",
-      "İletişim formu + Google Analytics",
-      "Aylık bakım + güncelleme",
-      "Kendi alan adınızla yayın",
+      "Özel tasarım, 1–3 sayfa (hazır şablon değil)",
+      "Mobil uyumlu tasarım + hız optimizasyonu",
+      "Temel SEO + Google Search Console kurulumu",
+      "Domain + SSL (1 yıl)",
+      "Analytics kurulumu",
+      "1 revizyon hakkı",
     ],
   },
   {
     key: "web2",
-    label: "Kurumsal Site",
-    price: "30.000",
-    yearlyPrice: "25.500",
-    sublabel: "Kurumsal anlatım için çok sayfalı yapı",
-    description: "Hizmetlerinizi ve markanızı daha güçlü anlatmak için kapsamlı kurumsal site kurgusu kurun.",
+    label: "Profesyonel",
+    price: "50.000",
+    sublabel: "5–10 sayfalı kurumsal site, blog, iletişim formu",
+    description: "5–10 sayfalı kurumsal site, blog ve iletişim formuyla markanızı profesyonelce anlatın.",
     source: "Fiyatlandırma sayfasından seçildi",
     term: "Kurulum paketi",
-    note: "kurulum · KDV hariç",
+    note: "kurulum +KDV · +5.000/ay bakım",
     features: [
-      "Mobil uyumlu, hızlı tasarım",
-      "SSL sertifikası + hosting dahil",
-      "Temel SEO optimizasyonu",
-      "İletişim formu + Google Analytics",
-      "Aylık bakım + güncelleme",
-      "Kendi alan adınızla yayın",
+      "Özel tasarım, 5–10 sayfa",
+      "Blog + iletişim formu",
+      "Teknik SEO + schema markup",
+      "CRM bağlantısı",
+      "WhatsApp entegrasyonu",
+      "Aylık performans raporu",
+      "2 revizyon hakkı",
     ],
   },
   {
     key: "web3",
     label: "Premium",
-    price: "50.000",
-    yearlyPrice: "42.500",
-    sublabel: "Özel tasarım ve görünürlük odaklı üst paket",
-    description: "Daha güçlü tasarım, daha yüksek güven ve daha iyi görünürlük hedefi için premium web paketi seçin.",
+    price: "75.000",
+    sublabel: "Özel tasarım, e-ticaret veya özel fonksiyon, gelişmiş SEO",
+    description: "Özel tasarım, e-ticaret/özel fonksiyon ve gelişmiş SEO ile üst seviye bir web varlığı.",
     source: "Fiyatlandırma sayfasından seçildi",
     term: "Kurulum paketi",
-    note: "kurulum · KDV hariç",
+    note: "+KDV · başlangıç · +10.000/ay bakım",
     features: [
-      "Mobil uyumlu, hızlı tasarım",
-      "SSL sertifikası + hosting dahil",
-      "Temel SEO optimizasyonu",
-      "İletişim formu + Google Analytics",
-      "Aylık bakım + güncelleme",
-      "Kendi alan adınızla yayın",
+      "Tam özel tasarım + geliştirme",
+      "E-ticaret / ödeme altyapısı entegrasyonu",
+      "SEO audit + strateji",
+      "Meta / Google Ads entegrasyonu + dönüşüm takibi",
+      "Performans dashboard",
+      "Süreç otomasyonu + AI içerik desteği",
+      "3 revizyon hakkı",
+    ],
+  },
+  {
+    key: "web4",
+    label: "Kurumsal",
+    price: "Teklif",
+    quote: true,
+    ctaLabel: "Teklif Al",
+    sublabel: "Büyük ölçekli platform, özel yazılım, kurumsal entegrasyon",
+    description: "Büyük ölçekli platform, özel yazılım ve kurumsal entegrasyonlar için proje bazlı çözüm.",
+    source: "Fiyatlandırma sayfasından seçildi",
+    term: "Proje bazlı",
+    note: "ihtiyaç analizi sonrası fiyatlanır",
+    features: [
+      "Üyelik / abonelik / platform geliştirme",
+      "Çok dilli yapı, sınırsız sayfa",
+      "ERP / CRM / özel API entegrasyonları",
+      "Gelişmiş güvenlik + KVKK uyumu",
+      "Kapsamlı SEO + içerik mimarisi",
+      "SLA garantili öncelikli destek",
+      "Eğitim + teknik dokümantasyon",
     ],
   },
 ];
@@ -501,13 +521,15 @@ export default function FiyatlandirmaPage() {
   });
 
   const webDisplayPrice = webYearly && activeWeb.yearlyPrice ? activeWeb.yearlyPrice : activeWeb.price;
-  const webHref = buildPackageSignupHref(`Web Sitesi ${activeWeb.label}`, webDisplayPrice, {
-    label: `Web Sitesi ${activeWeb.label}`,
-    source: activeWeb.source,
-    term: webYearly ? "Yıllık plan" : "Aylık plan",
-    description: activeWeb.description,
-    features: activeWeb.features,
-  });
+  const webHref = activeWeb.quote
+    ? "/iletisim"
+    : buildPackageSignupHref(`Web Sitesi ${activeWeb.label}`, webDisplayPrice, {
+        label: `Web Sitesi ${activeWeb.label}`,
+        source: activeWeb.source,
+        term: "Kurulum paketi",
+        description: activeWeb.description,
+        features: activeWeb.features,
+      });
 
   const stickyNavItems = useMemo(
     () => [
