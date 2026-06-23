@@ -44,24 +44,24 @@ const sosyalMedyaPlans = [
 const webSitesiPlans = [
   {
     name: "Başlangıç",
-    setup: "20.000",
-    monthly: "1.000",
+    setup: "30.000",
+    monthly: "3.000",
     description: "1-3 sayfa landing, mobil uyumlu",
     popular: false,
     features: ["Hazır şablon, 1-3 sayfa", "Mobil uyumlu tasarım", "Temel SEO", "Analytics kurulumu"],
   },
   {
     name: "Profesyonel",
-    setup: "30.000",
-    monthly: "2.000",
+    setup: "50.000",
+    monthly: "5.000",
     description: "5–10 sayfalı kurumsal site, blog",
     popular: true,
     features: ["Özel tasarım, 5-10 sayfa", "Blog + iletişim formu", "SEO optimizasyonu", "CRM bağlantısı"],
   },
   {
     name: "Premium",
-    setup: "50.000",
-    monthly: "3.000",
+    setup: "75.000",
+    monthly: "10.000",
     description: "Tam özel tasarım, e-ticaret",
     popular: false,
     features: ["Tam özel tasarım", "E-ticaret veya özel fonksiyon", "SEO audit + strateji", "Ads entegrasyonu"],
@@ -139,7 +139,7 @@ export default function GorunurOlPlans() {
                       : "bg-black/5 text-black hover:bg-black/10"
                   }`}
                 >
-                  Teklif Al
+                  Hemen Al
                 </Link>
               </div>
             ))}
@@ -184,7 +184,7 @@ export default function GorunurOlPlans() {
                       : "bg-black/5 text-black hover:bg-black/10"
                   }`}
                 >
-                  Teklif Al
+                  Hemen Al
                 </Link>
               </div>
             ))}

@@ -1139,7 +1139,7 @@ function UnifiedPlanSection({
                     href={ctaHref}
                     className={`inline-flex items-center justify-center gap-2 rounded-[16px] px-6 py-3.5 text-[14px] font-bold text-white transition-transform hover:-translate-y-0.5 ${accentClasses.button}`}
                   >
-                    {activePlan.quote ? activePlan.ctaLabel || "Teklif Al" : activePlan.ctaLabel || "Hemen Başla"}
+                    {activePlan.quote ? activePlan.ctaLabel || "Teklif Al" : activePlan.ctaLabel || "Hemen Al"}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                   {!activePlan.quote && (

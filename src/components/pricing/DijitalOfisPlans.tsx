@@ -85,7 +85,7 @@ export default function DijitalOfisPlans() {
                   : "bg-black/5 text-black hover:bg-black/10"
               }`}
             >
-              Teklif Al
+              Hemen Al
             </Link>
           </div>
         ))}

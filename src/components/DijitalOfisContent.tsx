@@ -128,7 +128,7 @@ export default function DijitalOfisContent() {
                     href="/iletisim"
                     className="group/btn inline-flex items-center justify-center gap-2 rounded-full bg-[#1b98d5] px-8 py-4 text-[15px] font-bold text-white shadow-[0_8px_30px_#1b98d540] transition-all duration-300 hover:scale-[1.03] hover:bg-[#1580b3] hover:shadow-lg"
                   >
-                    Teklif Al <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                    Hemen Al <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                   </Link>
                   <Link
                     href="/fiyatlandirma"
@@ -322,7 +322,7 @@ export default function DijitalOfisContent() {
                       : "bg-black/5 text-[#0F172A] hover:bg-black/10"
                   }`}
                 >
-                  Teklif Al
+                  Hemen Al
                 </Link>
               </motion.div>
             ))}

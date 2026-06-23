@@ -1,8 +1,8 @@
 const oneTimeProducts = [
-  { name: "Nitelikli e-İmza", price: "1.500 TL/yıl", desc: "Yasal geçerli dijital imza" },
-  { name: "KEP Hesabı", price: "800 TL/yıl", desc: "Kayıtlı elektronik posta" },
-  { name: "Marka Tescil", price: "Teklif bazlı", desc: "Türkpatent marka tescili" },
-  { name: "Sanal Ofis", price: "1.200 TL/yıl", desc: "Yasal adres hizmeti" },
+  { name: "Nitelikli e-İmza", price: "2.300 TL/yıl", desc: "Yasal geçerli dijital imza" },
+  { name: "KEP Hesabı", price: "520 TL'den", desc: "Kayıtlı elektronik posta" },
+  { name: "Marka Tescil", price: "4.900 TL", desc: "Türkpatent marka tescili" },
+  { name: "Sanal Ofis", price: "490 TL/ay", desc: "Yasal adres hizmeti" },
 ];
 
 export default function TekSeferlikUrunler() {
