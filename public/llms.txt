@@ -1,0 +1,35 @@
+# Work365
+
+> Work365, kurucular için hepsi bir arada bir iş platformudur. Türkiye'de şirket kuruluşundan (Şahıs, Limited, Anonim, Bilanço), Microsoft 365 tabanlı dijital ofis kurulumuna, web sitesi/sosyal medya yönetimine ve büyüme danışmanlığına kadar tüm süreçleri tek platformda, dijital olarak yönetir.
+
+Bu dosya, LLM ajanlarının ve AI arama motorlarının Work365 hakkında doğru ve güncel bilgiye hızlıca erişmesi için hazırlanmıştır.
+
+## Şirketini Kur
+- [Şirketini Kur — Genel Bakış](https://work365.com.tr/sirketini-kur): Şirket türleri arasında karşılaştırma ve seçim rehberi.
+- [Şahıs Şirketi](https://work365.com.tr/sirketini-kur/sahis-sirketi): Hızlı ve düşük operasyon yüküyle şahıs şirketi kuruluşu.
+- [Limited Şirketi](https://work365.com.tr/sirketini-kur/limited-sirketi): Ortaklı yapılar için dengeli büyüme odaklı kuruluş paketi.
+- [Anonim Şirketi](https://work365.com.tr/sirketini-kur/anonim-sirketi): Kurumsal yapı ve yatırım odaklı şirket kuruluşu.
+- [Bilanço Şirketi](https://work365.com.tr/sirketini-kur/bilanco-sirketi): Yoğun operasyon ve kayıt disiplini gerektiren işletmeler için.
+
+## Dijital Ofis
+- [Dijital Ofis](https://work365.com.tr/digital-ofis): Microsoft 365 kurulumu, kurumsal e-posta, Teams, OneDrive ve help desk desteği tek pakette.
+
+## Görünür Ol
+- [Görünür Ol — Genel Bakış](https://work365.com.tr/gorunur-ol): Web sitesi ve sosyal medya yönetimi hizmetleri.
+- [Web Sitesi](https://work365.com.tr/gorunur-ol/web-sitesi): Kurumsal web sitesi tasarımı, kurulumu ve aylık bakımı.
+- [Sosyal Medya Yönetimi](https://work365.com.tr/gorunur-ol/sosyal-medya): Düzenli içerik üretimi ve marka yönetimi.
+
+## İşini Büyüt
+- [İşini Büyüt](https://work365.com.tr/buyut): Teşvik analizi, hibe başvuru desteği, yatırımcı erişimi ve uzman kiralama.
+
+## Fiyatlandırma
+- [Fiyatlandırma](https://work365.com.tr/fiyatlandirma): Tüm paket ve hizmetlerin güncel, tek sayfada karşılaştırmalı fiyat listesi.
+
+## Diğer
+- [Karşılaştır](https://work365.com.tr/karsilastir): Work365'i geleneksel danışmanlık/muhasebe süreçleriyle karşılaştıran sayfa.
+- [Blog](https://work365.com.tr/blog): Şirket kuruluşu, KOSGEB, e-Dönüşüm ve girişim ekosistemi hakkında rehberler.
+- [İletişim](https://work365.com.tr/iletisim): İletişim ve danışmanlık talep kanalları.
+
+## Notlar
+- Fiyatlar TL cinsinden ve +KDV'dir; güncel ve kanonik fiyat kaynağı /fiyatlandirma sayfasıdır.
+- Hesap, ödeme ve satın alma akışları (/hesabim, /satin-al, /odeme) kişiye özel içerik barındırdığı için indekslenmez.

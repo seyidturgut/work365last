@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import TrustBand from "@/components/TrustBand";
@@ -10,6 +11,14 @@ import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Work365 | Şirketini Kur, Dijitalleş, İşini Büyüt",
+  description:
+    "Kurucular için hepsi bir arada iş platformu. Şahıs, Limited, Anonim veya Bilanço şirketini dijital olarak kur; Microsoft 365 dijital ofisini, web sitesi ve sosyal medyanı tek yerden yönet.",
+  path: "/",
+});
 
 export default function Home() {
   return (

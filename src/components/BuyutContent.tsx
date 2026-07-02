@@ -109,7 +109,7 @@ export default function BuyutContent() {
 
                 <div className="mt-7 lg:hidden">
                   <div className="relative h-[250px] w-full overflow-hidden rounded-[30px]">
-                    <Image src="/auth-growth-meeting.jpg" alt="İşini Büyüt" fill className="object-cover object-top" sizes="100vw" priority />
+                    <Image src="/auth-growth-meeting.jpg" alt="İşini büyütmek için teşvik ve danışmanlık desteği alan girişimci" fill className="object-cover object-top" sizes="100vw" priority />
                     <div className="absolute inset-0 rounded-[30px]" style={{ background: "linear-gradient(to top, #16A34A30 0%, transparent 60%)" }} />
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default function BuyutContent() {
 
               <div className="hidden items-end justify-center lg:flex">
                 <div className="relative h-[380px] w-full overflow-hidden rounded-[32px]">
-                  <Image src="/auth-growth-meeting.jpg" alt="İşini Büyüt" fill className="object-cover object-top" sizes="(max-width: 1280px) 50vw, 560px" priority />
+                  <Image src="/auth-growth-meeting.jpg" alt="İşini büyütmek için teşvik ve danışmanlık desteği alan girişimci" fill className="object-cover object-top" sizes="(max-width: 1280px) 50vw, 560px" priority />
                   <div className="absolute inset-0 rounded-[32px]" style={{ background: "linear-gradient(to top, #16A34A30 0%, transparent 60%)" }} />
                 </div>
               </div>

@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { Home, ChevronRight } from "lucide-react";
+import { SITE_URL } from "@/lib/site";
 
 export type BreadcrumbItem = {
   label: string;
   href?: string;
 };
-
-const SITE_URL = "https://work365.com.tr";
 
 export default function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
   const allItems = [{ label: "Ana Sayfa", href: "/" }, ...items];

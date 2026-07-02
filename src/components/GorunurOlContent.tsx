@@ -71,7 +71,7 @@ export default function GorunurOlContent() {
 
                 <div className="mt-7 lg:hidden">
                   <div className="relative h-[250px] w-full overflow-hidden rounded-[30px]">
-                    <Image src="/hero_female.png" alt="Görünür Ol" fill className="object-cover object-top" sizes="100vw" priority />
+                    <Image src="/hero_female.png" alt="Web sitesi ve sosyal medya ile dijitalde görünür olan marka" fill className="object-cover object-top" sizes="100vw" priority />
                     <div className="absolute inset-0 rounded-[30px]" style={{ background: "linear-gradient(to top, #1b98d530 0%, transparent 60%)" }} />
                   </div>
                 </div>
@@ -102,7 +102,7 @@ export default function GorunurOlContent() {
 
               <div className="hidden items-end justify-center lg:flex">
                 <div className="relative h-[380px] w-full overflow-hidden rounded-[32px]">
-                  <Image src="/hero_female.png" alt="Görünür Ol" fill className="object-cover object-top" sizes="(max-width: 1280px) 50vw, 560px" priority />
+                  <Image src="/hero_female.png" alt="Web sitesi ve sosyal medya ile dijitalde görünür olan marka" fill className="object-cover object-top" sizes="(max-width: 1280px) 50vw, 560px" priority />
                   <div className="absolute inset-0 rounded-[32px]" style={{ background: "linear-gradient(to top, #1b98d530 0%, transparent 60%)" }} />
                 </div>
               </div>

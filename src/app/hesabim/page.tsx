@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -11,6 +12,12 @@ import { Package, ShoppingBag } from "lucide-react";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+// Kişisel hesap sayfası — arama motorlarında indekslenmemeli.
+export const metadata: Metadata = {
+  title: "Hesabım | Work365",
+  robots: { index: false, follow: false },
+};
 
 const STATUS_LABEL: Record<string, { text: string; cls: string }> = {
   paid: { text: "Ödendi", cls: "bg-[#DCFCE7] text-[#166534]" },

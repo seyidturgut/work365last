@@ -37,8 +37,22 @@ function FaqItemCard({ question, answer, accent }: FaqItem & { accent: string })
 }
 
 export function FaqAccordion({ items, accent }: { items: readonly FaqItem[]; accent: string }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
+  };
+
   return (
     <div className="space-y-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {items.map((item) => (
         <FaqItemCard
           key={item.question}

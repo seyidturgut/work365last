@@ -1,30 +1,39 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Breadcrumb from "@/components/Breadcrumb";
 import Link from "next/link";
 import { ArrowRight, Check, CheckCircle2, CircleHelp, ShieldCheck, Sparkles, WalletCards, X } from "lucide-react";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Work365 vs Geleneksel Muhasebe | Karşılaştır",
+  description:
+    "Work365'i geleneksel muhasebe ve danışmanlık süreçleriyle karşılaştırın: şeffaf paket fiyatları, dijital süreç ve tek noktadan yönetim.",
+  path: "/karsilastir",
+});
 
 const packages = [
   {
     name: "Şahıs Şirketi",
-    price: "4.500 TL",
+    price: "5.900 TL",
     details: "Defter: 36k/y · Mali müşavirlik: 36k/y",
     accent: "bg-[#FFF6D9]",
   },
   {
     name: "Limited Şirketi",
-    price: "7.500 TL",
+    price: "9.900 TL",
     details: "Defter: 72k/y · Mali müşavirlik: 72k/y",
     accent: "bg-[#EAF5FF]",
   },
   {
     name: "Anonim Şirketi",
-    price: "12.000 TL",
+    price: "11.900 TL",
     details: "Defter: 90k/y · Mali müşavirlik: 90k/y",
     accent: "bg-[#EAF8EF]",
   },
   {
     name: "Bilanço Şirketi",
-    price: "6.000 TL",
+    price: "7.400 TL",
     details: "Defter: 55k/y · Mali müşavirlik: 60k/y",
     accent: "bg-[#FFF0F4]",
   },
